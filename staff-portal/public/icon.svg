@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <rect width="512" height="512" rx="128" fill="#0284c7"/>
+  <rect x="32" y="32" width="448" height="448" rx="96" stroke="#ffffff" stroke-width="12" stroke-opacity="0.3"/>
+  <!-- Shield & Medical Cross Combination -->
+  <path d="M256 96c64 0 128 32 128 32v128c0 106.67-128 160-128 160S128 362.67 128 256V128s64-32 128-32z" fill="#0369a1" stroke="#ffffff" stroke-width="12"/>
+  <path d="M236 180h40v40h40v40h-40v40h-40v-40h-40v-40h40z" fill="#ffffff"/>
+  <!-- Connectivity Dots -->
+  <circle cx="150" cy="150" r="14" fill="#38bdf8"/>
+  <circle cx="362" cy="150" r="14" fill="#38bdf8"/>
+  <circle cx="256" cy="450" r="14" fill="#38bdf8"/>
+</svg>
