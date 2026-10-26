@@ -1,0 +1,10 @@
+{
+  "name": "sohag-health-insurance-portal-root",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix staff-portal run dev",
+    "build": "npm --prefix staff-portal run build",
+    "start": "npm --prefix staff-portal start"
+  }
+}

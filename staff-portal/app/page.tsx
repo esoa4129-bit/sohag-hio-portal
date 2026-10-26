@@ -35,7 +35,8 @@ import {
   RefreshCw,
   Wifi,
   WifiOff,
-  Radio
+  Radio,
+  CalendarCheck
 } from "lucide-react";
 
 // Types
@@ -776,13 +777,13 @@ export default function StaffPortalPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col justify-between bg-slate-50 dark:bg-slate-950 overflow-x-hidden">
+    <div className="min-h-screen flex flex-col justify-between bg-gradient-to-b from-slate-50 via-sky-50/20 to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 overflow-x-hidden selection:bg-sky-500 selection:text-white">
       {/* Header */}
-      <header className="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm transition-colors">
+      <header className="sticky top-0 z-40 bg-white/85 dark:bg-slate-900/85 backdrop-blur-xl border-b border-slate-200/80 dark:border-slate-800/80 shadow-sm transition-colors">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between gap-2 sm:gap-3">
-          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0">
             {/* Official Badge Logo */}
-            <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-white p-0.5 shadow-md border-2 border-sky-500/40 shrink-0">
+            <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-full overflow-hidden bg-white p-0.5 shadow-md shadow-sky-500/10 border-2 border-sky-500/30 shrink-0">
               <Image
                 src="/logo.png"
                 alt="شعار فرع سوهاج للتأمين الصحي"
@@ -798,7 +799,7 @@ export default function StaffPortalPage() {
                 <h1 className="font-extrabold text-xs sm:text-base md:text-lg text-slate-900 dark:text-white truncate leading-tight">
                   بوابة فرع سوهاج للتأمين الصحي
                 </h1>
-                <span className="hidden lg:inline-flex px-2 py-0.5 rounded text-[10px] font-bold bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300">
+                <span className="hidden lg:inline-flex px-2.5 py-0.5 rounded-full text-[10px] font-extrabold bg-gradient-to-r from-sky-500/10 to-blue-500/10 text-sky-700 dark:text-sky-300 border border-sky-300/40 dark:border-sky-700/40">
                   لوحة الموظفين المركزية
                 </span>
               </div>
@@ -812,10 +813,10 @@ export default function StaffPortalPage() {
             {/* Link to Team Page */}
             <Link
               href="/team"
-              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 dark:hover:bg-amber-900/50 text-amber-800 dark:text-amber-200 border border-amber-200/60 dark:border-amber-800/40 text-xs sm:text-sm font-bold transition shadow-sm"
+              className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-amber-50 to-amber-100/80 hover:from-amber-100 hover:to-amber-200/90 dark:from-amber-950/40 dark:to-amber-900/40 dark:hover:from-amber-900/50 text-amber-800 dark:text-amber-200 border border-amber-300/60 dark:border-amber-700/50 text-xs sm:text-sm font-bold transition shadow-sm hover:shadow"
               title="فريق العمل والقيادات"
             >
-              <Award className="w-4 h-4 text-amber-600 dark:text-amber-400" />
+              <Award className="w-4 h-4 text-amber-600 dark:text-amber-400 animate-pulse" />
               <span className="hidden sm:inline">فريق العمل والقيادات</span>
               <span className="sm:hidden">القيادات</span>
             </Link>
@@ -942,6 +943,54 @@ export default function StaffPortalPage() {
 
       {/* Main Body */}
       <main className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6 w-full flex-grow space-y-4 sm:space-y-6">
+        {/* UNIFIED HERO BANNER: Clinic Booking Dedicated Section */}
+        <section className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-900 text-white p-5 sm:p-6 shadow-xl shadow-emerald-900/15 border border-emerald-500/30">
+          <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl pointer-events-none" />
+          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3.5 sm:gap-4 text-center md:text-right">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center text-white shrink-0 shadow-inner">
+                <CalendarCheck className="w-6 h-6 sm:w-7 sm:h-7 text-emerald-300" />
+              </div>
+              <div className="space-y-1">
+                <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
+                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/30 border border-emerald-300/40 text-[10px] sm:text-xs font-bold text-emerald-100">
+                    خدمة المنتفعين والمواطنين
+                  </span>
+                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-200">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>متاح ويعمل الآن</span>
+                  </span>
+                </div>
+                <h2 className="text-base sm:text-xl font-extrabold tracking-tight">
+                  بوابة حجز عيادات التأمين الصحي - فرع سوهاج
+                </h2>
+                <p className="text-xs text-emerald-100/90 leading-relaxed max-w-xl">
+                  تطبيق إلكتروني مستقل مخصص للمواطنين لحجز مواعيد الكشف بالعيادات بالرقم القومي مع إمكانية التثبيت المباشر على الهاتف.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-center justify-center gap-2 w-full md:w-auto shrink-0">
+              <Link
+                href="/booking"
+                className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-white hover:bg-emerald-50 text-emerald-950 font-bold text-xs sm:text-sm shadow-md transition transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2"
+              >
+                <span>صفحة الحجز المستقلة</span>
+                <ExternalLink className="w-3.5 h-3.5 text-emerald-600" />
+              </Link>
+              <button
+                onClick={() => {
+                  window.open("https://reserv.hiocdis.org/hioClinicReservation.aspx", "_blank");
+                }}
+                className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-emerald-800/80 hover:bg-emerald-800 border border-emerald-400/40 text-white font-bold text-xs sm:text-sm transition flex items-center justify-center gap-2"
+              >
+                <CalendarCheck className="w-3.5 h-3.5" />
+                <span>حجز مباشر سريع</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
         {/* Last Opened Indicator */}
         {lastOpened && (
           <div className="p-3 rounded-2xl bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-900/50 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-sky-900 dark:text-sky-200">
@@ -1353,7 +1402,7 @@ export default function StaffPortalPage() {
       <div
         key={(isFavSection ? "fav_" : "") + system.id}
         onClick={() => launchSystem(system)}
-        className="group relative p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-slate-800 hover:border-sky-500/50 dark:hover:border-sky-500/50 shadow-sm hover:shadow-xl transition-all duration-200 cursor-pointer flex flex-col justify-between"
+        className="group relative p-4 sm:p-5 rounded-2xl sm:rounded-3xl bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm border border-slate-200/90 dark:border-slate-800/90 hover:border-sky-500/60 dark:hover:border-sky-500/60 shadow-sm hover:shadow-xl hover:shadow-sky-500/10 dark:hover:shadow-sky-500/5 transition-all duration-300 hover:-translate-y-0.5 cursor-pointer flex flex-col justify-between"
       >
         <div className="space-y-2.5 sm:space-y-3">
           {/* Card Top: Status & Connection Badges */}
@@ -1376,7 +1425,7 @@ export default function StaffPortalPage() {
                   checkSingleSystemHealth(system);
                 }}
                 title="إعادة فحص اتصال هذا السيرفر"
-                className="p-1.5 rounded-lg text-slate-400 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 transition"
+                className="p-1.5 rounded-xl text-slate-400 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 transition"
               >
                 <RefreshCw className={`w-3.5 h-3.5 ${isChecking ? "animate-spin text-sky-600" : ""}`} />
               </button>
@@ -1385,7 +1434,7 @@ export default function StaffPortalPage() {
                 <button
                   onClick={(e) => handleOpenEdit(system, e)}
                   title="تعديل الرابط"
-                  className="p-1.5 rounded-lg text-slate-400 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 transition"
+                  className="p-1.5 rounded-xl text-slate-400 hover:text-sky-600 hover:bg-sky-50 dark:hover:bg-slate-800 transition"
                 >
                   <Edit2 className="w-3.5 h-3.5" />
                 </button>
@@ -1395,7 +1444,7 @@ export default function StaffPortalPage() {
                 <button
                   onClick={(e) => handleDeleteCustom(system.id, e)}
                   title="حذف هذا الرابط المخصص"
-                  className="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-slate-800 transition"
+                  className="p-1.5 rounded-xl text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-slate-800 transition"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                 </button>
@@ -1404,10 +1453,10 @@ export default function StaffPortalPage() {
               <button
                 onClick={(e) => toggleFavorite(system.id, e)}
                 title={isFav ? "إزالة من المفضلة" : "تثبيت في المفضلة"}
-                className={`p-1.5 rounded-lg transition ${
+                className={`p-1.5 rounded-xl transition ${
                   isFav
-                    ? "text-amber-500 hover:text-amber-600"
-                    : "text-slate-300 dark:text-slate-600 hover:text-amber-500"
+                    ? "text-amber-500 hover:text-amber-600 bg-amber-50 dark:bg-amber-950/40"
+                    : "text-slate-300 dark:text-slate-600 hover:text-amber-500 hover:bg-slate-50 dark:hover:bg-slate-800"
                 }`}
               >
                 <Star className={`w-4 h-4 ${isFav ? "fill-amber-500" : ""}`} />
@@ -1417,18 +1466,18 @@ export default function StaffPortalPage() {
 
           {/* Title & Description */}
           <div>
-            <h3 className="font-bold text-slate-900 dark:text-white text-xs sm:text-sm md:text-base group-hover:text-sky-600 dark:group-hover:text-sky-400 transition leading-snug">
+            <h3 className="font-extrabold text-slate-900 dark:text-white text-xs sm:text-sm md:text-base group-hover:text-sky-600 dark:group-hover:text-sky-400 transition leading-snug">
               {system.name}
             </h3>
-            <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mt-1 leading-relaxed">
+            <p className="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 line-clamp-2 mt-1.5 leading-relaxed">
               {system.description}
             </p>
           </div>
         </div>
 
         {/* Card Bottom: URL snippet & Actions */}
-        <div className="mt-3 sm:mt-4 pt-2.5 sm:pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs">
-          <span className="font-mono text-[10px] sm:text-[11px] text-slate-400 dark:text-slate-500 truncate max-w-[140px] sm:max-w-[180px]" dir="ltr">
+        <div className="mt-3.5 sm:mt-4 pt-2.5 sm:pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs">
+          <span className="font-mono text-[10px] sm:text-[11px] text-slate-400 dark:text-slate-500 truncate max-w-[130px] sm:max-w-[170px]" dir="ltr">
             {system.url.replace(/^https?:\/\//, "")}
           </span>
 
@@ -1436,7 +1485,7 @@ export default function StaffPortalPage() {
             <button
               onClick={(e) => copyLink(system, e)}
               title="نسخ الرابط"
-              className="p-1.5 rounded-lg bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition"
+              className="p-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition"
             >
               {isCopied ? (
                 <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
@@ -1450,10 +1499,10 @@ export default function StaffPortalPage() {
                 e.stopPropagation();
                 launchSystem(system);
               }}
-              className="flex items-center gap-1 px-2.5 py-1.5 rounded-xl bg-sky-50 dark:bg-sky-950/60 hover:bg-sky-600 text-sky-700 dark:text-sky-300 hover:text-white font-medium text-[11px] sm:text-xs transition shadow-sm"
+              className="flex items-center gap-1 px-3 py-1.5 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 text-white font-bold text-[11px] sm:text-xs transition shadow-sm shadow-sky-500/20 active:scale-95"
             >
               <span>دخول</span>
-              <ExternalLink className="w-3 h-3" />
+              <ExternalLink className="w-3 h-3 opacity-90" />
             </button>
           </div>
         </div>
