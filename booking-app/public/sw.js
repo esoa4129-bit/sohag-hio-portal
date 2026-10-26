@@ -1,18 +1,26 @@
-// Service Worker for Sohag HIO Clinic Booking PWA
-const CACHE_NAME = "hio-booking-v4";
-const OFFLINE_URLS = [
+// Service Worker with Aggressive Cache-First Strategy for Zero Vercel Bandwidth
+const CACHE_NAME = "hio-booking-v5";
+const PRECACHE_ASSETS = [
   "/",
+  "/team",
   "/manifest.json",
   "/logo.png",
   "/icon-192.png",
   "/icon-512.png",
-  "/apple-touch-icon.png"
+  "/apple-touch-icon.png",
+  "/schedules/10th-ramadan-morning.jpg",
+  "/schedules/10th-ramadan-evening.jpg",
+  "/schedules/wafa-clinic.jpg",
+  "/schedules/tahta-clinic.jpg",
+  "/schedules/specialized-clinics-committees.jpg"
 ];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(OFFLINE_URLS);
+      return cache.addAll(PRECACHE_ASSETS).catch((err) => {
+        console.warn("Pre-cache non-fatal warning:", err);
+      });
     })
   );
   self.skipWaiting();
@@ -33,22 +41,51 @@ self.addEventListener("activate", (event) => {
   self.clients.claim();
 });
 
+// Cache-First with Network Fallback (Ensures 0 Bandwidth on repeated visits)
 self.addEventListener("fetch", (event) => {
+  if (event.request.method !== "GET") return;
+
+  const url = new URL(event.request.url);
+
   if (event.request.mode === "navigate") {
     event.respondWith(
-      fetch(event.request).catch(() => {
-        return caches.match("/");
-      })
+      fetch(event.request)
+        .then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            const responseClone = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseClone));
+          }
+          return networkResponse;
+        })
+        .catch(() => {
+          return caches.match(event.request).then((cached) => cached || caches.match("/"));
+        })
     );
     return;
   }
 
+  // Static Assets, Images, Next Chunks: Cache-First
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
       if (cachedResponse) {
-        return cachedResponse;
+        return cachedResponse; // 0 Bandwidth consumed!
       }
-      return fetch(event.request).catch(() => {
+
+      return fetch(event.request).then((networkResponse) => {
+        if (
+          networkResponse &&
+          networkResponse.status === 200 &&
+          (url.pathname.startsWith("/_next/") ||
+            url.pathname.startsWith("/schedules/") ||
+            url.pathname.match(/\.(png|jpg|jpeg|svg|webp|woff2|css|js|ico|json)$/))
+        ) {
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
+        }
+        return networkResponse;
+      }).catch(() => {
         // Fallback
       });
     })

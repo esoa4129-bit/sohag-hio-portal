@@ -47,6 +47,16 @@ export default function BookingPage() {
   const [latency, setLatency] = useState<number | null>(null);
 
   const checkBookingHealth = async () => {
+    // Extreme Bandwidth Optimization: Use client sessionStorage cache (15 mins) to prevent zero-purpose serverless hits
+    try {
+      const cached = sessionStorage.getItem("hio_booking_health_cache");
+      const cachedAt = sessionStorage.getItem("hio_booking_health_time");
+      if (cached && cachedAt && Date.now() - Number(cachedAt) < 15 * 60 * 1000) {
+        setServerStatus(cached as "online" | "checking" | "offline");
+        return;
+      }
+    } catch {}
+
     setServerStatus("checking");
     try {
       const res = await fetch(`/api/check-status?url=${encodeURIComponent(BOOKING_URL)}`);
@@ -55,6 +65,10 @@ export default function BookingPage() {
         if (data.online) {
           setServerStatus("online");
           if (data.latency) setLatency(data.latency);
+          try {
+            sessionStorage.setItem("hio_booking_health_cache", "online");
+            sessionStorage.setItem("hio_booking_health_time", Date.now().toString());
+          } catch {}
           return;
         }
       }
@@ -66,6 +80,10 @@ export default function BookingPage() {
         await fetch(BOOKING_URL, { mode: "no-cors", signal: controller.signal, cache: "no-store" });
         clearTimeout(timeoutId);
         setServerStatus("online");
+        try {
+          sessionStorage.setItem("hio_booking_health_cache", "online");
+          sessionStorage.setItem("hio_booking_health_time", Date.now().toString());
+        } catch {}
       } catch {
         setServerStatus("offline");
       }
