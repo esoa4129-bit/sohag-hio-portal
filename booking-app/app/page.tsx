@@ -24,8 +24,10 @@ import {
   MapPin,
   Stethoscope,
   Info,
-  Award
+  Award,
+  CalendarDays
 } from "lucide-react";
+import ClinicSchedules from "./components/ClinicSchedules";
 
 const BOOKING_URL = "https://reserv.hiocdis.org/hioClinicReservation.aspx";
 
@@ -276,7 +278,7 @@ export default function BookingPage() {
             </p>
 
             {/* Main Action Buttons */}
-            <div className="pt-2 w-full sm:w-auto flex flex-col sm:flex-row items-center gap-2.5 sm:gap-3">
+            <div className="pt-2 w-full sm:w-auto flex flex-col sm:flex-row items-center gap-2.5 sm:gap-3 flex-wrap justify-center">
               <button
                 onClick={handleOpenBooking}
                 className="w-full sm:w-auto px-6 sm:px-8 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl bg-white hover:bg-emerald-50 text-emerald-900 font-bold text-sm sm:text-base md:text-lg shadow-lg shadow-black/10 flex items-center justify-center gap-2 sm:gap-3 transition transform hover:-translate-y-0.5 active:translate-y-0 min-h-[48px]"
@@ -285,6 +287,14 @@ export default function BookingPage() {
                 <span>احجز موعدك الآن بالعيادة</span>
                 <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-500 opacity-70" />
               </button>
+
+              <a
+                href="#schedules-section"
+                className="w-full sm:w-auto px-4 sm:px-5 py-3 sm:py-4 rounded-xl sm:rounded-2xl bg-teal-800/80 hover:bg-teal-700 border border-teal-400/40 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 backdrop-blur-sm transition min-h-[48px]"
+              >
+                <CalendarDays className="w-4 h-4 sm:w-5 sm:h-5 text-teal-200" />
+                <span>مواعيد وجداول العيادات بالأيام</span>
+              </a>
 
               <button
                 onClick={handleCopyLink}
@@ -382,6 +392,11 @@ export default function BookingPage() {
             </div>
           </div>
         </section>
+
+        {/* Interactive Clinic & Specialized Committees Schedules Gallery */}
+        <div id="schedules-section" className="scroll-mt-20">
+          <ClinicSchedules />
+        </div>
 
         {/* Required Documents & Notes */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">

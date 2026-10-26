@@ -36,7 +36,8 @@ import {
   Wifi,
   WifiOff,
   Radio,
-  CalendarCheck
+  CalendarCheck,
+  Calendar
 } from "lucide-react";
 
 // Types
@@ -975,8 +976,15 @@ export default function StaffPortalPage() {
                 href="/booking"
                 className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-white hover:bg-emerald-50 text-emerald-950 font-bold text-xs sm:text-sm shadow-md transition transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2"
               >
-                <span>صفحة الحجز المستقلة</span>
+                <span>بوابة الحجز والمواعيد</span>
                 <ExternalLink className="w-3.5 h-3.5 text-emerald-600" />
+              </Link>
+              <Link
+                href="/booking#schedules-section"
+                className="flex-1 sm:flex-none px-3.5 py-2.5 rounded-xl bg-teal-800/80 hover:bg-teal-700 border border-teal-400/40 text-white font-semibold text-xs sm:text-sm transition flex items-center justify-center gap-1.5"
+              >
+                <Calendar className="w-3.5 h-3.5 text-teal-200" />
+                <span>جداول ومواعيد العيادات</span>
               </Link>
               <button
                 onClick={() => {
@@ -985,7 +993,7 @@ export default function StaffPortalPage() {
                 className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-emerald-800/80 hover:bg-emerald-800 border border-emerald-400/40 text-white font-bold text-xs sm:text-sm transition flex items-center justify-center gap-2"
               >
                 <CalendarCheck className="w-3.5 h-3.5" />
-                <span>حجز مباشر سريع</span>
+                <span>حجز سريع</span>
               </button>
             </div>
           </div>
