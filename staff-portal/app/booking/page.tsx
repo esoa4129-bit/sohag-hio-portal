@@ -94,9 +94,7 @@ export default function BookingPortalPage() {
 
   useEffect(() => {
     if ("serviceWorker" in navigator) {
-      window.addEventListener("load", () => {
-        navigator.serviceWorker.register("/sw.js").catch(() => {});
-      });
+      navigator.serviceWorker.register("/sw.js").catch(() => {});
     }
 
     if (
@@ -132,9 +130,25 @@ export default function BookingPortalPage() {
       }
     } catch {}
 
+    // Check if prompt was already captured by head script
+    if (typeof window !== "undefined" && (window as unknown as { __pwaInstallPrompt?: BeforeInstallPromptEvent }).__pwaInstallPrompt) {
+      setDeferredPrompt((window as unknown as { __pwaInstallPrompt?: BeforeInstallPromptEvent }).__pwaInstallPrompt || null);
+    }
+
+    // Expose ready callback for head script
+    if (typeof window !== "undefined") {
+      (window as unknown as { __onPwaPromptReady?: (e: BeforeInstallPromptEvent) => void }).__onPwaPromptReady = (e: BeforeInstallPromptEvent) => {
+        setDeferredPrompt(e);
+      };
+    }
+
     const handleBeforeInstall = (e: Event) => {
       e.preventDefault();
-      setDeferredPrompt(e as BeforeInstallPromptEvent);
+      const p = e as BeforeInstallPromptEvent;
+      setDeferredPrompt(p);
+      if (typeof window !== "undefined") {
+        (window as unknown as { __pwaInstallPrompt?: unknown }).__pwaInstallPrompt = p;
+      }
     };
 
     window.addEventListener("beforeinstallprompt", handleBeforeInstall);
@@ -183,21 +197,37 @@ export default function BookingPortalPage() {
   };
 
   const handleInstallClick = async () => {
+    // 1. Direct one-click prompt: Try state or global captured prompt
+    const promptEvent =
+      deferredPrompt ||
+      (typeof window !== "undefined" &&
+        (window as unknown as { __pwaInstallPrompt?: BeforeInstallPromptEvent }).__pwaInstallPrompt);
+
+    if (promptEvent) {
+      try {
+        await promptEvent.prompt();
+        const choice = await promptEvent.userChoice;
+        if (choice && choice.outcome === "accepted") {
+          setDeferredPrompt(null);
+          if (typeof window !== "undefined") {
+            (window as unknown as { __pwaInstallPrompt?: unknown }).__pwaInstallPrompt = null;
+          }
+        }
+        return;
+      } catch (err) {
+        console.error("Direct install error:", err);
+      }
+    }
+
+    // 2. iOS Guide
     const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as unknown as { MSStream: unknown }).MSStream;
     if (isIos) {
       setShowIosGuide(true);
       return;
     }
 
-    if (deferredPrompt) {
-      await deferredPrompt.prompt();
-      const choice = await deferredPrompt.userChoice;
-      if (choice.outcome === "accepted") {
-        setDeferredPrompt(null);
-      }
-    } else {
-      setShowIosGuide(true);
-    }
+    // 3. Fallback guide
+    setShowIosGuide(true);
   };
 
   return (
