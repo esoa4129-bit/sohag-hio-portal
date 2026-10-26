@@ -42,6 +42,7 @@ export default function BookingPortalPage() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isStandalone, setIsStandalone] = useState(false);
   const [showIosGuide, setShowIosGuide] = useState(false);
+  const [dismissFloating, setDismissFloating] = useState(false);
   const [lastBookedTime, setLastBookedTime] = useState<string | null>(null);
   const [serverStatus, setServerStatus] = useState<"online" | "checking" | "offline">("checking");
   const [latency, setLatency] = useState<number | null>(null);
@@ -117,6 +118,19 @@ export default function BookingPortalPage() {
     }
 
     checkBookingHealth();
+
+    // Ensure dedicated booking PWA manifest is active with official emblem
+    try {
+      const manifestLink = document.querySelector('link[rel="manifest"]');
+      if (manifestLink) {
+        manifestLink.setAttribute("href", "/manifest-booking.json?v=3");
+      } else {
+        const link = document.createElement("link");
+        link.rel = "manifest";
+        link.href = "/manifest-booking.json?v=3";
+        document.head.appendChild(link);
+      }
+    } catch {}
 
     const handleBeforeInstall = (e: Event) => {
       e.preventDefault();
@@ -307,6 +321,14 @@ export default function BookingPortalPage() {
                 <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-500 opacity-70" />
               </button>
 
+              <button
+                onClick={handleInstallClick}
+                className="w-full sm:w-auto px-5 sm:px-6 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl bg-amber-400 hover:bg-amber-300 text-slate-950 font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-black/15 transition transform hover:-translate-y-0.5 active:translate-y-0 min-h-[48px]"
+              >
+                <Smartphone className="w-4 h-4 sm:w-5 sm:h-5 text-slate-950" />
+                <span>تثبيت تطبيق الحجز على الهاتف</span>
+              </button>
+
               <a
                 href="#schedules-section"
                 className="w-full sm:w-auto px-4 sm:px-5 py-3 sm:py-4 rounded-xl sm:rounded-2xl bg-teal-800/80 hover:bg-teal-700 border border-teal-400/40 text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 backdrop-blur-sm transition min-h-[48px]"
@@ -341,6 +363,54 @@ export default function BookingPortalPage() {
             )}
           </div>
         </div>
+
+        {/* Dedicated PWA Mobile Install Showcase Card */}
+        {!isStandalone && (
+          <section className="bg-gradient-to-r from-emerald-50 via-teal-50 to-sky-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800 rounded-2xl sm:rounded-3xl p-4 sm:p-6 border border-emerald-500/30 shadow-md flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3 sm:gap-4 w-full md:w-auto">
+              <div className="relative w-14 h-14 sm:w-16 sm:h-16 rounded-2xl overflow-hidden bg-white p-1 shadow-md border-2 border-emerald-500 shrink-0">
+                <Image
+                  src="/logo.png?v=3"
+                  alt="شعار فرع سوهاج للتأمين الصحي"
+                  width={64}
+                  height={64}
+                  className="object-contain"
+                />
+              </div>
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-300">
+                    تطبيق ويب معتمد (PWA)
+                  </span>
+                  <span className="text-[10px] text-slate-500">حجم خفيف جداً</span>
+                </div>
+                <h3 className="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white">
+                  تثبيت تطبيق حجز العيادات على هاتفك
+                </h3>
+                <p className="text-[11px] sm:text-xs text-slate-600 dark:text-slate-300">
+                  ثبت التطبيق بشعار التأمين الصحي الرسمي للوصول السريع لخدمة الحجز وجداول الأطباء مباشرة بنقرة واحدة.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2 w-full md:w-auto shrink-0">
+              <button
+                onClick={handleInstallClick}
+                className="flex-1 md:flex-none px-5 py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm transition active:scale-95"
+              >
+                <Smartphone className="w-4 h-4" />
+                <span>تثبيت التطبيق الآن</span>
+              </button>
+              <button
+                onClick={() => setShowIosGuide(true)}
+                className="px-3.5 py-3 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 font-semibold text-xs sm:text-sm transition"
+                title="طريقة التثبيت"
+              >
+                <HelpCircle className="w-4 h-4" />
+              </button>
+            </div>
+          </section>
+        )}
 
         {/* 4 Steps Guide */}
         <section className="space-y-3 sm:space-y-4">
@@ -476,6 +546,36 @@ export default function BookingPortalPage() {
             </a>
           </div>
         </div>
+
+        {/* Mobile Sticky Floating Install Prompt */}
+        {!isStandalone && !dismissFloating && (
+          <div className="fixed bottom-3 inset-x-3 z-30 md:hidden bg-slate-900/95 backdrop-blur-md text-white p-3 rounded-2xl border border-emerald-500/40 shadow-2xl flex items-center justify-between gap-2.5 animate-in slide-in-from-bottom-5">
+            <div className="flex items-center gap-2.5 min-w-0">
+              <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-white p-0.5 shrink-0 border border-emerald-400">
+                <Image src="/logo.png?v=3" alt="شعار سوهاج" width={40} height={40} className="object-contain" />
+              </div>
+              <div className="min-w-0">
+                <p className="font-bold text-xs truncate">تطبيق حجز عيادات سوهاج</p>
+                <p className="text-[10px] text-emerald-400 truncate">تثبيت فوري على الشاشة الرئيسية</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-1.5 shrink-0">
+              <button
+                onClick={handleInstallClick}
+                className="px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs transition"
+              >
+                تثبيت
+              </button>
+              <button
+                onClick={() => setDismissFloating(true)}
+                className="p-1 rounded-lg text-slate-400 hover:text-white"
+                title="إغلاق"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+          </div>
+        )}
       </main>
 
       {/* Installation Guide Modal */}

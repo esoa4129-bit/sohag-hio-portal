@@ -4,6 +4,7 @@ const PRECACHE_ASSETS = [
   "/",
   "/team",
   "/manifest.json",
+  "/manifest-booking.json",
   "/favicon.ico",
   "/logo.png?v=3",
   "/icon-192.png?v=3",
