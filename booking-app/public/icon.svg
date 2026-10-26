@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
-  <rect width="512" height="512" rx="128" fill="#059669"/>
-  <rect x="32" y="32" width="448" height="448" rx="96" stroke="#ffffff" stroke-width="12" stroke-opacity="0.3"/>
-  <!-- Hospital / Medical Cross Symbol -->
-  <path d="M216 128h80v88h88v80h-88v88h-80v-88h-88v-80h88z" fill="#ffffff" rx="16"/>
-  <!-- Calendar / Clock Small Emblem -->
-  <circle cx="372" cy="372" r="76" fill="#10b981" stroke="#ffffff" stroke-width="12"/>
-  <path d="M372 328v44l32 20" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
-</svg>

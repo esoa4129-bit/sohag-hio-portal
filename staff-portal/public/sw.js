@@ -1,9 +1,12 @@
 // Service Worker for Sohag HIO Staff Portal PWA
-const CACHE_NAME = "hio-staff-v1";
+const CACHE_NAME = "hio-staff-v4";
 const OFFLINE_URLS = [
   "/",
   "/manifest.json",
-  "/icon.svg"
+  "/logo.png",
+  "/icon-192.png",
+  "/icon-512.png",
+  "/apple-touch-icon.png"
 ];
 
 self.addEventListener("install", (event) => {

@@ -1,9 +1,12 @@
 // Service Worker for Sohag HIO Clinic Booking PWA
-const CACHE_NAME = "hio-booking-v1";
+const CACHE_NAME = "hio-booking-v4";
 const OFFLINE_URLS = [
   "/",
   "/manifest.json",
-  "/icon.svg"
+  "/logo.png",
+  "/icon-192.png",
+  "/icon-512.png",
+  "/apple-touch-icon.png"
 ];
 
 self.addEventListener("install", (event) => {
@@ -31,7 +34,6 @@ self.addEventListener("activate", (event) => {
 });
 
 self.addEventListener("fetch", (event) => {
-  // Network first, fallback to cache for offline support
   if (event.request.mode === "navigate") {
     event.respondWith(
       fetch(event.request).catch(() => {
@@ -47,7 +49,7 @@ self.addEventListener("fetch", (event) => {
         return cachedResponse;
       }
       return fetch(event.request).catch(() => {
-        // Return empty or fallback
+        // Fallback
       });
     })
   );
