@@ -1,8 +1,9 @@
 {
+  "id": "/booking?v=3",
   "name": "حجز عيادات التأمين الصحي - فرع سوهاج",
-  "short_name": "حجز العيادات",
+  "short_name": "حجز عيادات سوهاج",
   "description": "البوابة الإلكترونية المباشرة لحجز مواعيد عيادات التأمين الصحي بفرع سوهاج للمواطنين والمنتفعين",
-  "start_url": "/",
+  "start_url": "/?v=3",
   "scope": "/",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -13,25 +14,25 @@
   "categories": ["medical", "health", "government"],
   "icons": [
     {
-      "src": "/icon-192.png",
+      "src": "/icon-192.png?v=3",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icon-512.png",
+      "src": "/icon-512.png?v=3",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/icon-512.png",
+      "src": "/icon-512.png?v=3",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "/logo.png",
+      "src": "/logo.png?v=3",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"

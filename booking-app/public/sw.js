@@ -1,13 +1,14 @@
 // Service Worker with Aggressive Cache-First Strategy for Zero Vercel Bandwidth
-const CACHE_NAME = "hio-booking-v6";
+const CACHE_NAME = "hio-booking-v7";
 const PRECACHE_ASSETS = [
   "/",
   "/team",
   "/manifest.json",
-  "/logo.png",
-  "/icon-192.png",
-  "/icon-512.png",
-  "/apple-touch-icon.png",
+  "/favicon.ico",
+  "/logo.png?v=3",
+  "/icon-192.png?v=3",
+  "/icon-512.png?v=3",
+  "/apple-touch-icon.png?v=3",
   "/schedules/10th-ramadan-morning.jpg",
   "/schedules/10th-ramadan-evening.jpg",
   "/schedules/wafa-clinic.jpg",
