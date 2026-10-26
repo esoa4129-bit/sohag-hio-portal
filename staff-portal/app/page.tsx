@@ -462,15 +462,33 @@ export default function StaffPortalPage() {
       }
     }
 
-    // PWA event
+    // PWA event — also read early-captured global prompt
+    if (typeof window !== "undefined") {
+      const globalPrompt = (window as unknown as { __pwaInstallPrompt?: BeforeInstallPromptEvent }).__pwaInstallPrompt;
+      if (globalPrompt) {
+        setDeferredPrompt(globalPrompt);
+      }
+      // Callback for when the head script captures the event after mount
+      (window as unknown as { __onPwaPromptReady?: (e: BeforeInstallPromptEvent) => void }).__onPwaPromptReady = (e) => {
+        setDeferredPrompt(e);
+      };
+    }
+
     const handleBeforeInstall = (e: Event) => {
       e.preventDefault();
-      setDeferredPrompt(e as BeforeInstallPromptEvent);
+      const p = e as BeforeInstallPromptEvent;
+      setDeferredPrompt(p);
+      if (typeof window !== "undefined") {
+        (window as unknown as { __pwaInstallPrompt?: unknown }).__pwaInstallPrompt = p;
+      }
     };
 
     window.addEventListener("beforeinstallprompt", handleBeforeInstall);
     return () => {
       window.removeEventListener("beforeinstallprompt", handleBeforeInstall);
+      if (typeof window !== "undefined") {
+        (window as unknown as { __onPwaPromptReady?: unknown }).__onPwaPromptReady = undefined;
+      }
     };
   }, []);
 
@@ -634,19 +652,36 @@ export default function StaffPortalPage() {
 
   // Install PWA
   const handleInstallClick = async () => {
-    const isIos = /iPad|iPhone|iPod/.test(navigator.userAgent) && !(window as unknown as { MSStream: unknown }).MSStream;
+    const promptEvent =
+      deferredPrompt ||
+      (typeof window !== "undefined"
+        ? (window as unknown as { __pwaInstallPrompt?: BeforeInstallPromptEvent }).__pwaInstallPrompt
+        : null);
+
+    if (promptEvent) {
+      try {
+        await promptEvent.prompt();
+        const choice = await promptEvent.userChoice;
+        if (choice && choice.outcome === "accepted") {
+          setDeferredPrompt(null);
+          if (typeof window !== "undefined") {
+            (window as unknown as { __pwaInstallPrompt?: unknown }).__pwaInstallPrompt = null;
+          }
+        }
+        return;
+      } catch (err) {
+        console.error("Direct install error:", err);
+      }
+    }
+
+    const isIos =
+      /iPad|iPhone|iPod/.test(navigator.userAgent) &&
+      !(window as unknown as { MSStream: unknown }).MSStream;
     if (isIos) {
       setShowIosGuide(true);
       return;
     }
-
-    if (deferredPrompt) {
-      await deferredPrompt.prompt();
-      await deferredPrompt.userChoice;
-      setDeferredPrompt(null);
-    } else {
-      setShowIosGuide(true);
-    }
+    setShowIosGuide(true);
   };
 
   // Filter systems
