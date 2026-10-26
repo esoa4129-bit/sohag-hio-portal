@@ -328,7 +328,19 @@ export default function StaffPortalPage() {
         }
       }
 
-      // 2. Client-side browser probe for internal IPs (if on user's health network)
+      // 2. Client-side browser probe for internal IPs (only if same protocol or safe to probe)
+      const isHttpsPage = typeof window !== "undefined" && window.location.protocol === "https:";
+      const isHttpTarget = system.url.startsWith("http://");
+
+      // Prevent Mixed Active Content Block: Browsers forbid fetching http:// from an https:// page
+      if (isHttpsPage && isHttpTarget) {
+        setHealthMap((prev) => ({
+          ...prev,
+          [system.id]: { status: isDirectIp ? "intranet" : "offline" },
+        }));
+        return;
+      }
+
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 2500);
 

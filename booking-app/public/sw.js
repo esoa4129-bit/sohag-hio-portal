@@ -1,5 +1,5 @@
 // Service Worker with Aggressive Cache-First Strategy for Zero Vercel Bandwidth
-const CACHE_NAME = "hio-booking-v5";
+const CACHE_NAME = "hio-booking-v6";
 const PRECACHE_ASSETS = [
   "/",
   "/team",
@@ -47,6 +47,11 @@ self.addEventListener("fetch", (event) => {
 
   const url = new URL(event.request.url);
 
+  // CRITICAL: Never intercept cross-origin requests (external IPs, external portals, APIs)
+  if (url.origin !== self.location.origin) {
+    return;
+  }
+
   if (event.request.mode === "navigate") {
     event.respondWith(
       fetch(event.request)
@@ -71,23 +76,25 @@ self.addEventListener("fetch", (event) => {
         return cachedResponse; // 0 Bandwidth consumed!
       }
 
-      return fetch(event.request).then((networkResponse) => {
-        if (
-          networkResponse &&
-          networkResponse.status === 200 &&
-          (url.pathname.startsWith("/_next/") ||
-            url.pathname.startsWith("/schedules/") ||
-            url.pathname.match(/\.(png|jpg|jpeg|svg|webp|woff2|css|js|ico|json)$/))
-        ) {
-          const responseToCache = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
-        }
-        return networkResponse;
-      }).catch(() => {
-        // Fallback
-      });
+      return fetch(event.request)
+        .then((networkResponse) => {
+          if (
+            networkResponse &&
+            networkResponse.status === 200 &&
+            (url.pathname.startsWith("/_next/") ||
+              url.pathname.startsWith("/schedules/") ||
+              url.pathname.match(/\.(png|jpg|jpeg|svg|webp|woff2|css|js|ico|json)$/))
+          ) {
+            const responseToCache = networkResponse.clone();
+            caches.open(CACHE_NAME).then((cache) => {
+              cache.put(event.request, responseToCache);
+            });
+          }
+          return networkResponse;
+        })
+        .catch(() => {
+          return new Response(null, { status: 404, statusText: "Offline Asset Not Found" });
+        });
     })
   );
 });
