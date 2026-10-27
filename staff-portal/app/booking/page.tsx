@@ -18,7 +18,6 @@ import {
   Sun,
   Share2,
   HelpCircle,
-  ArrowRight,
   X,
   Sparkles,
   MapPin,
@@ -265,16 +264,6 @@ export default function BookingPortalPage() {
           </div>
 
           <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-            {/* Return to Staff Portal */}
-            <Link
-              href="/"
-              className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-sky-50 hover:bg-sky-100 dark:bg-slate-800 dark:hover:bg-slate-700 text-sky-800 dark:text-sky-200 text-xs sm:text-sm font-bold border border-sky-200/60 dark:border-slate-700 transition"
-              title="العودة لبوابة المنظومات الرئيسية"
-            >
-              <ArrowRight className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
-              <span className="hidden sm:inline">بوابة المنظومات</span>
-            </Link>
-
             {/* Link to Team Page */}
             <Link
               href="/team"
