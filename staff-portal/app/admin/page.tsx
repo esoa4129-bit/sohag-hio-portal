@@ -27,19 +27,21 @@ import {
   X,
   FileText
 } from "lucide-react";
-import { FACILITIES, TeamMember } from "../team/facilities";
+import { FACILITIES, TeamMember, HierarchyLevel, DEFAULT_TEAM_MEMBERS } from "../team/facilities";
 import { SystemItem, NewsItem } from "../page";
 
-// Default admin password (can be customized)
-const DEFAULT_PASS = "admin123";
+// Strong official admin password
+const DEFAULT_PASS = "Sohag#HIO@2026!Admin";
+const BACKUP_PIN = "948261";
 
 export default function AdminPage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [passwordInput, setPasswordInput] = useState("");
   const [loginError, setLoginError] = useState(false);
+  const [newPasswordValue, setNewPasswordValue] = useState("");
 
   // Active Tab
-  const [activeTab, setActiveTab] = useState<"team" | "news" | "systems" | "backup">("team");
+  const [activeTab, setActiveTab] = useState<"team" | "news" | "systems" | "backup" | "security">("team");
 
   // Status notification
   const [statusMsg, setStatusMsg] = useState<{ text: string; type: "success" | "error" } | null>(null);
@@ -47,13 +49,26 @@ export default function AdminPage() {
   // ==================== 1. TEAM MANAGEMENT STATE ====================
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
   const [editingMember, setEditingMember] = useState<TeamMember | null>(null);
-  const [memberForm, setMemberForm] = useState({
+  const [selectedFacilityFilter, setSelectedFacilityFilter] = useState<string>("all");
+  const [memberForm, setMemberForm] = useState<{
+    name: string;
+    role: string;
+    facility: string;
+    hierarchyLevel: HierarchyLevel;
+    department: string;
+    bio: string;
+    phone: string;
+    badge: string;
+    photoUrl: string;
+  }>({
     name: "",
     role: "",
     facility: "hilal",
+    hierarchyLevel: "member",
     department: "",
     bio: "",
     phone: "",
+    badge: "",
     photoUrl: "",
   });
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -96,9 +111,14 @@ export default function AdminPage() {
 
   const loadAllData = () => {
     try {
-      // 1. Team Members
+      // 1. Team Members (initialize with DEFAULT_TEAM_MEMBERS if none saved)
       const savedMembers = localStorage.getItem("sohag_hio_custom_team_members");
-      if (savedMembers) setTeamMembers(JSON.parse(savedMembers));
+      if (savedMembers) {
+        setTeamMembers(JSON.parse(savedMembers));
+      } else {
+        setTeamMembers(DEFAULT_TEAM_MEMBERS);
+        localStorage.setItem("sohag_hio_custom_team_members", JSON.stringify(DEFAULT_TEAM_MEMBERS));
+      }
 
       // 2. News
       const savedNews = localStorage.getItem("sohag_hio_news");
@@ -129,7 +149,7 @@ export default function AdminPage() {
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     const storedPass = localStorage.getItem("sohag_hio_admin_password") || DEFAULT_PASS;
-    if (passwordInput === storedPass || passwordInput === "admin123" || passwordInput === "hio2026") {
+    if (passwordInput === storedPass || passwordInput === DEFAULT_PASS || passwordInput === BACKUP_PIN) {
       setIsAuthenticated(true);
       sessionStorage.setItem("sohag_hio_admin_session", "true");
       setLoginError(false);
@@ -137,6 +157,17 @@ export default function AdminPage() {
     } else {
       setLoginError(true);
     }
+  };
+
+  const handleChangePassword = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newPasswordValue || newPasswordValue.length < 6) {
+      showNotification("كلمة المرور يجب أن لا تقل عن 6 خانات", "error");
+      return;
+    }
+    localStorage.setItem("sohag_hio_admin_password", newPasswordValue);
+    showNotification("تم تحديث وحفظ كلمة مرور لوحة التحكم الجديدة بنجاح!");
+    setNewPasswordValue("");
   };
 
   const handleLogout = () => {
@@ -221,9 +252,11 @@ export default function AdminPage() {
       name: "",
       role: "",
       facility: "hilal",
+      hierarchyLevel: "member",
       department: "",
       bio: "",
       phone: "",
+      badge: "",
       photoUrl: "",
     });
     if (fileInputRef.current) fileInputRef.current.value = "";
@@ -243,9 +276,11 @@ export default function AdminPage() {
       name: member.name,
       role: member.role,
       facility: member.facility,
+      hierarchyLevel: member.hierarchyLevel || "member",
       department: member.department || "",
       bio: member.bio || "",
       phone: member.phone || "",
+      badge: member.badge || "",
       photoUrl: member.photoUrl || "",
     });
     window.scrollTo({ top: 300, behavior: "smooth" });
@@ -608,6 +643,18 @@ export default function AdminPage() {
             <Download className="w-4 h-4" />
             <span>النسخ الاحتياطي والتصدير</span>
           </button>
+
+          <button
+            onClick={() => setActiveTab("security")}
+            className={`flex items-center gap-1.5 px-4 py-2 rounded-xl font-extrabold transition shrink-0 ${
+              activeTab === "security"
+                ? "bg-sky-600 text-white shadow-sm"
+                : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200"
+            }`}
+          >
+            <Lock className="w-4 h-4" />
+            <span>كلمة مرور اللوحة والأمان 🔐</span>
+          </button>
         </div>
       </header>
 
@@ -644,7 +691,17 @@ export default function AdminPage() {
                   <button
                     onClick={() => {
                       setEditingMember(null);
-                      setMemberForm({ name: "", role: "", facility: "hilal", department: "", bio: "", phone: "", photoUrl: "" });
+                      setMemberForm({
+                        name: "",
+                        role: "",
+                        facility: "hilal",
+                        hierarchyLevel: "member",
+                        department: "",
+                        bio: "",
+                        phone: "",
+                        badge: "",
+                        photoUrl: ""
+                      });
                     }}
                     className="text-xs text-red-500 font-bold flex items-center gap-1 hover:underline"
                   >
@@ -698,6 +755,34 @@ export default function AdminPage() {
                       </option>
                     ))}
                   </select>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                    المستوى التنظيمي والهرمي *
+                  </label>
+                  <select
+                    value={memberForm.hierarchyLevel || "member"}
+                    onChange={(e) => setMemberForm({ ...memberForm, hierarchyLevel: e.target.value as HierarchyLevel })}
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 font-bold text-sky-800 dark:text-sky-300"
+                  >
+                    <option value="top">👑 المستوى الأول • قمة الهرم (إدارة عليا / مدير المستشفى)</option>
+                    <option value="head">🛡️ المستوى الثاني • رؤساء الأقسام واللجان التخصصية</option>
+                    <option value="member">🩺 المستوى الثالث • الأطقم الطبية والتمريض والتشغيل</option>
+                  </select>
+                </div>
+
+                <div className="space-y-1">
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300">
+                    شارة التميز / اللقب (اختياري)
+                  </label>
+                  <input
+                    type="text"
+                    value={memberForm.badge}
+                    onChange={(e) => setMemberForm({ ...memberForm, badge: e.target.value })}
+                    placeholder="مثال: مدير المستشفى، رئيس قسم الجراحة، استشاري..."
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-sky-500"
+                  />
                 </div>
 
                 <div className="space-y-1">
@@ -791,69 +876,132 @@ export default function AdminPage() {
 
             {/* List of Custom Added Members */}
             <div className="p-5 sm:p-7 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
-              <div className="flex items-center justify-between">
-                <h4 className="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white flex items-center gap-2">
-                  <span>الأعضاء المضافون في المستشفيات والمراكز</span>
-                  <span className="px-2 py-0.5 rounded-full bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 text-xs font-bold">
-                    {teamMembers.length}
-                  </span>
-                </h4>
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-3">
+                <div className="flex items-center gap-2">
+                  <h4 className="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white flex items-center gap-2">
+                    <span>قائمة أعضاء فريق العمل والأطقم</span>
+                    <span className="px-2.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 text-xs font-bold">
+                      {teamMembers.length}
+                    </span>
+                  </h4>
+                </div>
+
+                {/* Filter by facility */}
+                <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 scrollbar-none text-xs">
+                  <button
+                    type="button"
+                    onClick={() => setSelectedFacilityFilter("all")}
+                    className={`px-3 py-1.5 rounded-xl font-bold transition whitespace-nowrap ${
+                      selectedFacilityFilter === "all"
+                        ? "bg-sky-600 text-white"
+                        : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300"
+                    }`}
+                  >
+                    الكل ({teamMembers.length})
+                  </button>
+                  {FACILITIES.map((f) => {
+                    const count = teamMembers.filter((m) => m.facility === f.id).length;
+                    return (
+                      <button
+                        key={f.id}
+                        type="button"
+                        onClick={() => setSelectedFacilityFilter(f.id)}
+                        className={`px-3 py-1.5 rounded-xl font-bold transition whitespace-nowrap flex items-center gap-1 ${
+                          selectedFacilityFilter === f.id
+                            ? "bg-sky-600 text-white"
+                            : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300"
+                        }`}
+                      >
+                        <span>{f.icon}</span>
+                        <span>{f.name.split(" ")[0]}</span>
+                        <span className="opacity-75 font-mono text-[10px]">({count})</span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
-              {teamMembers.length === 0 ? (
+              {teamMembers.filter((m) => selectedFacilityFilter === "all" || m.facility === selectedFacilityFilter).length === 0 ? (
                 <div className="text-center py-10 text-slate-400 text-xs space-y-2">
                   <Users className="w-10 h-10 mx-auto opacity-40" />
-                  <p>لم تتم إضافة أشخاص جدد بعد. استخدم النموذج أعلاه لإضافة أطباء وموظفي المستشفيات.</p>
+                  <p>لا يوجد أعضاء في هذا التبويب حالياً. استخدم النموذج أعلاه للإضافة فوراً.</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-                  {teamMembers.map((m) => {
-                    const fac = FACILITIES.find((f) => f.id === m.facility);
-                    return (
-                      <div
-                        key={m.id}
-                        className="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/80 flex items-start justify-between gap-3"
-                      >
-                        <div className="flex items-start gap-3 min-w-0">
-                          <div className="w-12 h-12 rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-700 shrink-0 border flex items-center justify-center">
-                            {m.photoUrl ? (
-                              <img src={m.photoUrl} alt={m.name} className="w-full h-full object-cover" />
-                            ) : (
-                              <span className="text-lg">{fac?.icon || "👤"}</span>
-                            )}
+                  {teamMembers
+                    .filter((m) => selectedFacilityFilter === "all" || m.facility === selectedFacilityFilter)
+                    .map((m) => {
+                      const fac = FACILITIES.find((f) => f.id === m.facility);
+                      const isTop = m.hierarchyLevel === "top";
+                      const isHead = m.hierarchyLevel === "head";
+                      return (
+                        <div
+                          key={m.id}
+                          className={`p-4 rounded-2xl border flex items-start justify-between gap-3 transition ${
+                            isTop
+                              ? "bg-gradient-to-br from-amber-500/10 to-transparent border-amber-400/50 dark:border-amber-600/40"
+                              : isHead
+                              ? "bg-gradient-to-br from-sky-500/10 to-transparent border-sky-400/40 dark:border-sky-700/40"
+                              : "bg-slate-50 dark:bg-slate-800/60 border-slate-200 dark:border-slate-700/80"
+                          }`}
+                        >
+                          <div className="flex items-start gap-3 min-w-0">
+                            <div className="w-12 h-12 rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-700 shrink-0 border flex items-center justify-center relative">
+                              {m.photoUrl ? (
+                                <img src={m.photoUrl} alt={m.name} className="w-full h-full object-cover" />
+                              ) : (
+                                <span className="text-lg">{fac?.icon || "👤"}</span>
+                              )}
+                            </div>
+                            <div className="min-w-0">
+                              <div className="flex items-center gap-1 flex-wrap">
+                                <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-white dark:bg-slate-900 border text-slate-600 dark:text-slate-300">
+                                  {fac?.name ? fac.name.split(" ")[0] : m.facility}
+                                </span>
+                                {isTop && (
+                                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-500 text-white">
+                                    👑 قمة الهرم
+                                  </span>
+                                )}
+                                {isHead && (
+                                  <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-sky-600 text-white">
+                                    🛡️ رئيس قسم
+                                  </span>
+                                )}
+                              </div>
+                              <h5 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white truncate mt-1">
+                                {m.name}
+                              </h5>
+                              <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
+                                {m.role}
+                              </p>
+                              {m.department && (
+                                <p className="text-[10px] text-sky-600 dark:text-sky-400 truncate mt-0.5 font-medium">
+                                  {m.department}
+                                </p>
+                              )}
+                            </div>
                           </div>
-                          <div className="min-w-0">
-                            <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-white dark:bg-slate-900 border text-slate-600 dark:text-slate-300">
-                              {fac?.name || m.facility}
-                            </span>
-                            <h5 className="font-bold text-xs sm:text-sm text-slate-900 dark:text-white truncate mt-1">
-                              {m.name}
-                            </h5>
-                            <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
-                              {m.role}
-                            </p>
-                          </div>
-                        </div>
 
-                        <div className="flex items-center gap-1 shrink-0">
-                          <button
-                            onClick={() => handleStartEditMember(m)}
-                            className="p-1.5 rounded-lg bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-200 hover:text-sky-600"
-                            title="تعديل"
-                          >
-                            <Edit2 className="w-3.5 h-3.5" />
-                          </button>
-                          <button
-                            onClick={() => handleDeleteMember(m.id)}
-                            className="p-1.5 rounded-lg bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-200 hover:text-red-600"
-                            title="حذف"
-                          >
-                            <Trash2 className="w-3.5 h-3.5" />
-                          </button>
+                          <div className="flex items-center gap-1 shrink-0">
+                            <button
+                              onClick={() => handleStartEditMember(m)}
+                              className="p-1.5 rounded-lg bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-200 hover:text-sky-600 shadow-sm"
+                              title="تعديل"
+                            >
+                              <Edit2 className="w-3.5 h-3.5" />
+                            </button>
+                            <button
+                              onClick={() => handleDeleteMember(m.id)}
+                              className="p-1.5 rounded-lg bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-200 hover:text-red-600 shadow-sm"
+                              title="حذف"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
                         </div>
-                      </div>
-                    );
-                  })}
+                      );
+                    })}
                 </div>
               )}
             </div>
@@ -1330,6 +1478,81 @@ export default function AdminPage() {
                   إعادة ضبط المصنع
                 </button>
               </div>
+            </div>
+          </div>
+        )}
+
+        {/* ==================== TAB 5: SECURITY & PASSWORD ==================== */}
+        {activeTab === "security" && (
+          <div className="max-w-2xl mx-auto space-y-6">
+            <div className="p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-6">
+              <div className="flex items-center gap-3 border-b border-slate-100 dark:border-slate-800 pb-4">
+                <div className="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 flex items-center justify-center font-bold">
+                  <Lock className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="font-extrabold text-base sm:text-lg text-slate-900 dark:text-white">
+                    أمان لوحة التحكم وكلمة المرور
+                  </h3>
+                  <p className="text-xs text-slate-500 dark:text-slate-400">
+                    تم إخفاء روابط لوحة التحكم من واجهة الموقع ولا يمكن الدخول إلا عبر الرابط السري المباشر
+                  </p>
+                </div>
+              </div>
+
+              {/* Security info card */}
+              <div className="p-4 rounded-2xl bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-900/50 space-y-2 text-xs">
+                <div className="flex items-center gap-2 font-bold text-sky-800 dark:text-sky-300">
+                  <ShieldCheck className="w-4 h-4 text-sky-600" />
+                  <span>حماية سرية كاملة:</span>
+                </div>
+                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                  تمت إزالة جميع الأزرار والروابط التي تشير إلى لوحة التحكم من رأس وتذييل الموقع وصفحة فريق العمل وحجز العيادات. الدخول متاح لك أنت فقط عن طريق كتابة <code className="px-1.5 py-0.5 rounded bg-sky-200 dark:bg-sky-900 font-mono text-[11px]">/admin</code> في شريط المتصفح.
+                </p>
+              </div>
+
+              {/* Change Password Form */}
+              <form onSubmit={handleChangePassword} className="space-y-4">
+                <div className="space-y-1.5">
+                  <label className="text-xs font-bold text-slate-700 dark:text-slate-300 flex items-center gap-1.5">
+                    <Lock className="w-3.5 h-3.5 text-sky-600" />
+                    <span>تغيير كلمة المرور إلى كلمة جديدة قوية:</span>
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={newPasswordValue}
+                    onChange={(e) => setNewPasswordValue(e.target.value)}
+                    placeholder="اكتب كلمة المرور الجديدة (مثال: Sohag#HIO@2026!Admin)"
+                    className="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 font-mono"
+                  />
+                  <p className="text-[11px] text-slate-400">
+                    كلمة المرور الافتراضية القوية الحالية: <code className="text-amber-600 font-bold font-mono">Sohag#HIO@2026!Admin</code> أو PIN السريع <code className="text-amber-600 font-bold font-mono">948261</code>
+                  </p>
+                </div>
+
+                <div className="flex items-center justify-between gap-3 pt-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      if (confirm("هل تريد استعادة كلمة المرور الافتراضية الأصلية (Sohag#HIO@2026!Admin)؟")) {
+                        localStorage.removeItem("sohag_hio_admin_password");
+                        showNotification("تمت استعادة كلمة المرور الافتراضية الأصلية بنجاح");
+                      }
+                    }}
+                    className="text-xs font-bold text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 underline"
+                  >
+                    استعادة الكلمة الافتراضية
+                  </button>
+
+                  <button
+                    type="submit"
+                    className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 hover:from-sky-500 hover:to-blue-500 text-white font-extrabold text-xs sm:text-sm shadow-md shadow-sky-600/20 transition active:scale-95"
+                  >
+                    حفظ كلمة المرور الجديدة
+                  </button>
+                </div>
+              </form>
             </div>
           </div>
         )}

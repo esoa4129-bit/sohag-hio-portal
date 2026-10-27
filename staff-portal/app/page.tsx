@@ -899,15 +899,6 @@ export default function StaffPortalPage() {
               <span>فريق العمل</span>
             </Link>
 
-            {/* Link to Admin */}
-            <Link
-              href="/admin"
-              className="p-2 sm:p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition font-bold text-xs flex items-center justify-center"
-              title="لوحة التحكم والإدارة"
-            >
-              <span className="text-sm">⚙️</span>
-            </Link>
-
             {!isStandalone && (
               <button
                 onClick={handleInstallClick}
@@ -1384,13 +1375,6 @@ export default function StaffPortalPage() {
           >
             <Award className="w-3.5 h-3.5 text-amber-500" />
             <span>لوحة الشرف وفريق العمل</span>
-          </Link>
-          <span>•</span>
-          <Link
-            href="/admin"
-            className="text-slate-500 hover:text-sky-600 dark:text-slate-400 dark:hover:text-sky-400 font-semibold hover:underline inline-flex items-center gap-1"
-          >
-            <span>لوحة التحكم ⚙️</span>
           </Link>
         </div>
       </footer>
