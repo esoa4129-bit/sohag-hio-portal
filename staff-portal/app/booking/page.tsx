@@ -560,14 +560,25 @@ export default function BookingPortalPage() {
           </div>
         </section>
 
-        {/* Interactive Clinic & Specialized Committees Schedules Gallery */}
-        <div id="schedules-section" className="scroll-mt-20">
-          <ClinicSchedules />
-        </div>
-
         {/* Hospitals & Branch Overview Showcase */}
         <div id="hospitals-section" className="scroll-mt-20">
           <HospitalsShowcase onOpenBooking={handleOpenBooking} />
+        </div>
+
+        {/* Quick Navigation to Schedules */}
+        <div className="flex items-center justify-center">
+          <a
+            href="#schedules-section"
+            className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-teal-600 to-emerald-700 hover:from-teal-500 hover:to-emerald-600 text-white font-extrabold text-sm shadow-xl shadow-teal-900/20 transition transform hover:-translate-y-0.5 active:translate-y-0"
+          >
+            <CalendarDays className="w-5 h-5 text-teal-200 group-hover:animate-bounce" />
+            <span>📋 عرض جداول ومواعيد تشغيل العيادات بالأيام</span>
+          </a>
+        </div>
+
+        {/* Interactive Clinic & Specialized Committees Schedules Gallery */}
+        <div id="schedules-section" className="scroll-mt-20">
+          <ClinicSchedules />
         </div>
 
         {/* Required Documents & Notes */}
