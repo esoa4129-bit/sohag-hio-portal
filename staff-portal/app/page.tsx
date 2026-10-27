@@ -273,7 +273,8 @@ const CATEGORIES = [
 ];
 
 export default function StaffPortalPage() {
-  const [activeMainTab, setActiveMainTab] = useState<"overview" | "systems">("overview");
+  // Staff portal starts directly on the systems tab (for internal employees only)
+  const [activeMainTab, setActiveMainTab] = useState<"overview" | "systems">("systems");
   const [systems, setSystems] = useState<SystemItem[]>(INITIAL_SYSTEMS);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -411,14 +412,6 @@ export default function StaffPortalPage() {
       (window.navigator as unknown as { standalone?: boolean }).standalone === true
     ) {
       setIsStandalone(true);
-    }
-
-    // Check query params for tab
-    if (typeof window !== "undefined") {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get("tab") === "systems") {
-        setActiveMainTab("systems");
-      }
     }
 
     // Theme

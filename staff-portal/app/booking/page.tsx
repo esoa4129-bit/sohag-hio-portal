@@ -28,6 +28,7 @@ import {
   CalendarDays
 } from "lucide-react";
 import ClinicSchedules from "./ClinicSchedules";
+import HospitalsShowcase from "../components/HospitalsShowcase";
 
 const BOOKING_URL = "https://reserv.hiocdis.org/hioClinicReservation.aspx";
 const SOFREG_URL = "https://196.219.219.184/sofreg/registerdata.aspx";
@@ -562,6 +563,11 @@ export default function BookingPortalPage() {
         {/* Interactive Clinic & Specialized Committees Schedules Gallery */}
         <div id="schedules-section" className="scroll-mt-20">
           <ClinicSchedules />
+        </div>
+
+        {/* Hospitals & Branch Overview Showcase */}
+        <div id="hospitals-section" className="scroll-mt-20">
+          <HospitalsShowcase onOpenBooking={handleOpenBooking} />
         </div>
 
         {/* Required Documents & Notes */}
