@@ -27,7 +27,7 @@ import {
   X,
   FileText
 } from "lucide-react";
-import { FACILITIES, TeamMember, HierarchyLevel, DEFAULT_TEAM_MEMBERS } from "../team/facilities";
+import { FACILITIES, TeamMember, HierarchyLevel, DEFAULT_TEAM_MEMBERS, BRANCH_CORE_LEADERSHIP } from "../team/facilities";
 import { SystemItem, NewsItem } from "../page";
 
 // Strong official admin password
@@ -111,13 +111,26 @@ export default function AdminPage() {
 
   const loadAllData = () => {
     try {
-      // 1. Team Members (initialize with DEFAULT_TEAM_MEMBERS if none saved)
+      // 1. Team Members (custom facility members only, no dummy placeholders)
       const savedMembers = localStorage.getItem("sohag_hio_custom_team_members");
       if (savedMembers) {
-        setTeamMembers(JSON.parse(savedMembers));
+        try {
+          const parsed = JSON.parse(savedMembers);
+          if (Array.isArray(parsed)) {
+            const clean = parsed.filter(
+              (m: TeamMember) =>
+                !m.id.startsWith("dummy-") &&
+                !["hilal-1","hilal-2","hilal-3","hilal-4","hilal-5","tahta-1","tahta-2","girga-1","girga-2","akhmim-1","balyana-1","centers-1","centers-2","core-1","core-2","core-3","core-4","core-5","core-6"].includes(m.id)
+            );
+            setTeamMembers(clean);
+          } else {
+            setTeamMembers([]);
+          }
+        } catch (e) {
+          setTeamMembers([]);
+        }
       } else {
-        setTeamMembers(DEFAULT_TEAM_MEMBERS);
-        localStorage.setItem("sohag_hio_custom_team_members", JSON.stringify(DEFAULT_TEAM_MEMBERS));
+        setTeamMembers([]);
       }
 
       // 2. News
@@ -569,6 +582,7 @@ export default function AdminPage() {
             <Link
               href="/"
               target="_blank"
+              prefetch={false}
               className="hidden md:inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-xs font-bold transition"
             >
               <Eye className="w-3.5 h-3.5 text-sky-600" />
@@ -578,6 +592,7 @@ export default function AdminPage() {
             <Link
               href="/team"
               target="_blank"
+              prefetch={false}
               className="hidden md:inline-flex items-center gap-1 px-3 py-1.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-xs font-bold transition"
             >
               <Users className="w-3.5 h-3.5 text-amber-500" />
@@ -675,6 +690,57 @@ export default function AdminPage() {
         {/* ==================== TAB 1: TEAM & HOSPITALS ==================== */}
         {activeTab === "team" && (
           <div className="space-y-6">
+            {/* PERMANENT CORE LEADERSHIP SHOWCASE (فرع سوهاج للتأمين الصحي) */}
+            <div className="p-5 sm:p-6 rounded-3xl bg-gradient-to-br from-amber-500/10 via-sky-500/5 to-transparent border-2 border-amber-400/60 dark:border-amber-600/50 shadow-sm space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-amber-200/60 dark:border-amber-900/40 pb-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 rounded-xl bg-amber-500 text-white flex items-center justify-center font-bold shadow-md shadow-amber-500/20">
+                    <ShieldCheck className="w-4 h-4" />
+                  </div>
+                  <div>
+                    <h3 className="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white flex items-center gap-2">
+                      <span>القيادة الدائمة والمحمية لفرع سوهاج للتأمين الصحي</span>
+                      <span className="px-2 py-0.5 rounded-full bg-amber-500 text-white text-[10px] font-extrabold">
+                        مثبتة تلقائياً في قمة الصفحة 👑
+                      </span>
+                    </h3>
+                    <p className="text-xs text-slate-500 dark:text-slate-400">
+                      هؤلاء القيادات الـ 6 محفوظون تلقائياً في قمة الهرم الإداري لصفحة الفريق ولا يحتاجون لإعادة كتابة أو إضافة يدوية.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {BRANCH_CORE_LEADERSHIP.map((leader) => (
+                  <div
+                    key={leader.id}
+                    className="p-3.5 rounded-2xl bg-white dark:bg-slate-900 border border-amber-200 dark:border-amber-900/50 shadow-sm flex items-start gap-3"
+                  >
+                    <div className="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-950/70 text-amber-700 dark:text-amber-400 font-bold flex items-center justify-center shrink-0">
+                      🏛️
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">
+                        {leader.badge}
+                      </span>
+                      <h5 className="font-extrabold text-xs sm:text-sm text-slate-900 dark:text-white truncate mt-1">
+                        {leader.name}
+                      </h5>
+                      <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">
+                        {leader.role}
+                      </p>
+                      {leader.department && (
+                        <p className="text-[10px] text-sky-600 dark:text-sky-400 font-semibold truncate">
+                          {leader.department}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {/* Add / Edit Member Form */}
             <div className="p-5 sm:p-7 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-5">
               <div className="flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">

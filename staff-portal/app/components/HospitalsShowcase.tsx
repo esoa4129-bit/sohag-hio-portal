@@ -82,71 +82,6 @@ export const SOHAG_FACILITIES: HospitalFacility[] = [
     heroPattern: "from-sky-700 via-blue-800 to-indigo-950"
   },
   {
-    id: "tahta",
-    name: "مستشفى طهطا للتأمين الصحي",
-    type: "مستشفى تخصصي - القطاع الشمالي",
-    city: "طهطا (شمال سوهاج)",
-    address: "مدينة طهطا - شارع المستشفى العام",
-    phone: "093-5812345 / 093-5819876",
-    emergency: true,
-    emergencyHours: "24 ساعة طوال أيام الأسبوع",
-    workingHours: "العيادات: 8:00 ص - 3:00 م | الطوارئ: 24 ساعة",
-    bedsCount: "120 سريراً + 12 عناية مركزة + 8 حضانات",
-    description: "ثاني أكبر مستشفيات فرع سوهاج، يخدم المنتفعين بقطاع شمال المحافظة ويوفر رعاية تخصصية وجراحية شاملة مع طوارئ واستقبال مجهز على مدار الساعة.",
-    specialties: [
-      "عيادات الباطنة والقلب والأوعية الدموية",
-      "عيادات الجراحة العامة وجراحة المناظير",
-      "عيادات العظام والكسور والروماتيزم",
-      "عيادات الأطفال والحضانات والوبائية",
-      "عيادات الرمد وفحص النظر",
-      "عيادات الأنف والأذن والحنجرة",
-      "عيادات النساء والتوليد والعقم",
-      "معامل تحاليل وأشعة متقدمة"
-    ],
-    keyFeatures: [
-      "استقبال وطوارئ 24/7 بالقطاع الشمالي",
-      "غرف عمليات مجهزة بأحدث المعدات",
-      "مختبرات تحاليل ومعامل حديثة"
-    ],
-    accentGradient: "from-emerald-600 via-green-800 to-slate-950",
-    badgeColor: "bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 border-emerald-500/30",
-    iconText: "🏨",
-    heroEmoji: "🏨",
-    heroPattern: "from-emerald-700 via-teal-800 to-slate-950"
-  },
-  {
-    id: "girga",
-    name: "مستشفى جرجا للتأمين الصحي",
-    type: "مستشفى تخصصي - القطاع الجنوبي",
-    city: "جرجا (جنوب سوهاج)",
-    address: "مدينة جرجا - الشارع الرئيسي",
-    phone: "093-4601234 / 093-4605678",
-    emergency: true,
-    emergencyHours: "24 ساعة طوال أيام الأسبوع",
-    workingHours: "العيادات: 8:00 ص - 3:00 م | الطوارئ: 24 ساعة",
-    bedsCount: "100 سريراً + 10 عناية مركزة",
-    description: "مستشفى تأميني متكامل يخدم منتفعي القطاع الجنوبي بجرجا وما حولها، ويقدم خدمات جراحية وتخصصية شاملة مع قسم طوارئ واستقبال يعمل 24/7.",
-    specialties: [
-      "عيادات الباطنة والغدد الصماء",
-      "عيادات الجراحة العامة والتخصصية",
-      "عيادات العظام والعلاج الطبيعي",
-      "عيادات الأطفال وحديثي الولادة",
-      "عيادات الأسنان وجراحة الوجه والفكين",
-      "الأشعة التشخيصية والتصوير الطبي",
-      "معمل التحاليل والدم وبنك الدم"
-    ],
-    keyFeatures: [
-      "قسم طوارئ مجهز بالقطاع الجنوبي",
-      "مركز لجان طبية إقليمي",
-      "صيدلية صرف مميكنة"
-    ],
-    accentGradient: "from-rose-700 via-pink-900 to-slate-950",
-    badgeColor: "bg-rose-500/20 text-rose-700 dark:text-rose-300 border-rose-500/30",
-    iconText: "🏩",
-    heroEmoji: "🏩",
-    heroPattern: "from-rose-700 via-pink-800 to-slate-950"
-  },
-  {
     id: "akhmim",
     name: "مجمع عيادات أخميم للتأمين الصحي",
     type: "مجمع عيادات تخصصية خارجية",
@@ -379,9 +314,7 @@ export default function HospitalsShowcase({ onOpenBooking }: HospitalsShowcasePr
         <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 scrollbar-none text-xs">
           {[
             { key: "all", label: `الكل (${SOHAG_FACILITIES.length})`, emoji: "🏥" },
-            { key: "مدينة سوهاج", label: "سوهاج", emoji: "🌆" },
-            { key: "طهطا", label: "طهطا", emoji: "🏘️" },
-            { key: "جرجا", label: "جرجا", emoji: "🏘️" },
+            { key: "مدينة سوهاج", label: "مدينة سوهاج", emoji: "🌆" },
             { key: "أخميم", label: "أخميم", emoji: "🏘️" },
             { key: "البلينا", label: "البلينا", emoji: "🏘️" }
           ].map((city) => (
