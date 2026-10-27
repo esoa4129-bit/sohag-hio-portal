@@ -936,8 +936,8 @@ export default function AdminPage() {
                 </div>
 
                 <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-                  <div className="flex items-center gap-4 text-xs font-bold">
-                    <span className="text-slate-700 dark:text-slate-300">أماكن العرض:</span>
+                  <div className="flex items-center gap-3 text-xs font-bold flex-wrap">
+                    <span className="text-slate-700 dark:text-slate-300">أماكن وموضع العرض:</span>
                     <label className="flex items-center gap-1.5 cursor-pointer">
                       <input
                         type="radio"
@@ -951,10 +951,19 @@ export default function AdminPage() {
                       <input
                         type="radio"
                         name="news-target"
+                        checked={(newsForm.target as string) === "home"}
+                        onChange={() => setNewsForm({ ...newsForm, target: "home" as any })}
+                      />
+                      <span>الصفحة الرئيسية (الموقع الخارجي والمستشفيات)</span>
+                    </label>
+                    <label className="flex items-center gap-1.5 cursor-pointer">
+                      <input
+                        type="radio"
+                        name="news-target"
                         checked={newsForm.target === "staff"}
                         onChange={() => setNewsForm({ ...newsForm, target: "staff" })}
                       />
-                      <span>بوابة الموظفين فقط</span>
+                      <span>متابعة السيرفرات فقط</span>
                     </label>
                     <label className="flex items-center gap-1.5 cursor-pointer">
                       <input
@@ -1010,7 +1019,13 @@ export default function AdminPage() {
                           </span>
                           <span className="text-slate-500 font-mono">{item.date}</span>
                           <span className="px-2 py-0.5 rounded-full bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-bold">
-                            {item.target === "all" ? "جميع الصفحات" : item.target === "staff" ? "بوابة الموظفين" : "حجز العيادات"}
+                            {item.target === "all"
+                              ? "جميع المنصات"
+                              : (item.target as string) === "home"
+                              ? "الصفحة الرئيسية والمستشفيات"
+                              : item.target === "staff"
+                              ? "متابعة السيرفرات"
+                              : "حجز العيادات"}
                           </span>
                           {!item.active && (
                             <span className="px-2 py-0.5 rounded-full bg-slate-400 text-white font-bold">معطل</span>

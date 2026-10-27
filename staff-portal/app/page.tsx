@@ -39,6 +39,7 @@ import {
   CalendarCheck,
   Calendar
 } from "lucide-react";
+import HospitalsShowcase from "./components/HospitalsShowcase";
 
 // Types
 export type ConnectionType = "HTTPS" | "HTTP" | "HTTPS_IP" | "HTTP_IP" | "PORT";
@@ -62,7 +63,7 @@ export interface NewsItem {
   content: string;
   date: string;
   type: "urgent" | "info" | "warning";
-  target: "all" | "staff" | "booking";
+  target: "all" | "staff" | "booking" | "home";
   active: boolean;
 }
 
@@ -272,6 +273,7 @@ const CATEGORIES = [
 ];
 
 export default function StaffPortalPage() {
+  const [activeMainTab, setActiveMainTab] = useState<"overview" | "systems">("overview");
   const [systems, setSystems] = useState<SystemItem[]>(INITIAL_SYSTEMS);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -411,6 +413,14 @@ export default function StaffPortalPage() {
       setIsStandalone(true);
     }
 
+    // Check query params for tab
+    if (typeof window !== "undefined") {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("tab") === "systems") {
+        setActiveMainTab("systems");
+      }
+    }
+
     // Theme
     const savedTheme = localStorage.getItem("sohag_hio_staff_theme");
     if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
@@ -433,7 +443,7 @@ export default function StaffPortalPage() {
     if (savedNews) {
       try {
         const parsedNews: NewsItem[] = JSON.parse(savedNews);
-        setNewsList(parsedNews.filter((n) => n.active && (n.target === "all" || n.target === "staff")));
+        setNewsList(parsedNews.filter((n) => n.active && (n.target === "all" || n.target === "staff" || n.target === "home")));
       } catch {}
     }
 
@@ -927,110 +937,166 @@ export default function StaffPortalPage() {
           </div>
         </div>
 
-        {/* Live Health Overview Bar */}
-        <div className="bg-slate-100/80 dark:bg-slate-900/80 border-t border-slate-200/60 dark:border-slate-800/60 py-1.5 px-3 sm:px-4">
-          <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 text-xs">
-            <div className="flex items-center gap-3 overflow-x-auto scrollbar-none py-0.5">
-              <span className="text-slate-500 dark:text-slate-400 font-bold flex items-center gap-1 shrink-0">
-                <Radio className="w-3.5 h-3.5 text-sky-600" />
-                حالة السيرفرات:
-              </span>
+        {/* PRIMARY PORTAL TABS SWITCHER: Overview & Hospitals vs Systems Monitoring */}
+        <div className="bg-white/95 dark:bg-slate-900/95 border-t border-slate-200/80 dark:border-slate-800/80 px-3 sm:px-4 py-2">
+          <div className="max-w-7xl mx-auto flex items-center justify-between gap-3 flex-wrap">
+            <div className="flex items-center gap-2">
+              <button
+                onClick={() => setActiveMainTab("overview")}
+                className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all duration-200 ${
+                  activeMainTab === "overview"
+                    ? "bg-gradient-to-r from-sky-600 to-blue-700 text-white shadow-md shadow-sky-600/25 scale-[1.02]"
+                    : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
+                }`}
+              >
+                <span>🏛️</span>
+                <span>عن فرع سوهاج والمستشفيات</span>
+              </button>
 
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-200 font-bold shrink-0">
-                <span className="w-2 h-2 rounded-full bg-emerald-500" />
-                <span>نشط: {healthStats.online}</span>
-              </span>
-
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-200 font-bold shrink-0">
-                <span className="w-2 h-2 rounded-full bg-amber-500" />
-                <span>شبكة داخلية: {healthStats.intranet}</span>
-              </span>
-
-              {healthStats.offline > 0 && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-200 font-bold shrink-0">
-                  <span className="w-2 h-2 rounded-full bg-rose-500" />
-                  <span>غير متاح: {healthStats.offline}</span>
-                </span>
-              )}
+              <button
+                onClick={() => setActiveMainTab("systems")}
+                className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all duration-200 ${
+                  activeMainTab === "systems"
+                    ? "bg-gradient-to-r from-sky-600 to-blue-700 text-white shadow-md shadow-sky-600/25 scale-[1.02]"
+                    : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
+                }`}
+              >
+                <span>🖥️</span>
+                <span>متابعة السيرفرات والمنظومات (22)</span>
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+              </button>
             </div>
 
             <div className="flex items-center gap-2">
-              <button
-                onClick={() => setFilterOnlineOnly(!filterOnlineOnly)}
-                className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition flex items-center gap-1 ${
-                  filterOnlineOnly
-                    ? "bg-emerald-600 text-white"
-                    : "bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200"
-                }`}
+              <Link
+                href="/booking"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/40 text-emerald-800 dark:text-emerald-200 text-xs font-bold border border-emerald-300/50 transition"
               >
-                <Wifi className="w-3 h-3" />
-                <span>{filterOnlineOnly ? "إلغاء فلتر النشط" : "النشطة فقط"}</span>
-              </button>
-
-              <button
-                onClick={() => checkAllSystemsHealth()}
-                disabled={isCheckingAll}
-                className="px-2.5 py-1 rounded-lg bg-sky-600 hover:bg-sky-700 disabled:opacity-50 text-white text-[11px] font-bold flex items-center gap-1 transition shadow-sm"
-              >
-                <RefreshCw className={`w-3 h-3 ${isCheckingAll ? "animate-spin" : ""}`} />
-                <span>{isCheckingAll ? "جارِ الفحص..." : "فحص الكل"}</span>
-              </button>
+                <CalendarCheck className="w-3.5 h-3.5 text-emerald-600" />
+                <span>حجز العيادات</span>
+              </Link>
             </div>
           </div>
         </div>
 
-        {/* Search & Categories Bar */}
-        <div className="max-w-7xl mx-auto px-3 sm:px-4 pb-2.5 sm:pb-3 pt-2 flex flex-col md:flex-row gap-2.5 sm:gap-3 items-stretch md:items-center justify-between">
-          {/* Search Input */}
-          <div className="relative flex-1 max-w-md">
-            <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="ابحث باسم المنظومة، الرابط، أو القسم..."
-              className="w-full pr-10 pl-8 py-2 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 text-slate-900 dark:text-white placeholder:text-slate-400"
-            />
-            {searchQuery && (
-              <button
-                onClick={() => setSearchQuery("")}
-                className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            )}
-          </div>
+        {/* Live Health Overview Bar (Visible when in systems tab) */}
+        {activeMainTab === "systems" && (
+          <div className="bg-slate-100/80 dark:bg-slate-900/80 border-t border-slate-200/60 dark:border-slate-800/60 py-1.5 px-3 sm:px-4">
+            <div className="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2 text-xs">
+              <div className="flex items-center gap-3 overflow-x-auto scrollbar-none py-0.5">
+                <span className="text-slate-500 dark:text-slate-400 font-bold flex items-center gap-1 shrink-0">
+                  <Radio className="w-3.5 h-3.5 text-sky-600" />
+                  حالة السيرفرات:
+                </span>
 
-          {/* Category Filter Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none text-xs -mx-3 px-3 sm:mx-0 sm:px-0">
-            {CATEGORIES.map((cat) => {
-              const Icon = cat.icon;
-              const isActive = selectedCategory === cat.id;
-              return (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-200 font-bold shrink-0">
+                  <span className="w-2 h-2 rounded-full bg-emerald-500" />
+                  <span>نشط: {healthStats.online}</span>
+                </span>
+
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-200 font-bold shrink-0">
+                  <span className="w-2 h-2 rounded-full bg-amber-500" />
+                  <span>شبكة داخلية: {healthStats.intranet}</span>
+                </span>
+
+                {healthStats.offline > 0 && (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-200 font-bold shrink-0">
+                    <span className="w-2 h-2 rounded-full bg-rose-500" />
+                    <span>غير متاح: {healthStats.offline}</span>
+                  </span>
+                )}
+              </div>
+
+              <div className="flex items-center gap-2">
                 <button
-                  key={cat.id}
-                  onClick={() => setSelectedCategory(cat.id)}
-                  className={`flex items-center gap-1 px-3 py-1.5 rounded-lg whitespace-nowrap font-medium transition shrink-0 ${
-                    isActive
-                      ? "bg-sky-600 text-white shadow-sm"
-                      : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
+                  onClick={() => setFilterOnlineOnly(!filterOnlineOnly)}
+                  className={`px-2.5 py-1 rounded-lg text-[11px] font-bold transition flex items-center gap-1 ${
+                    filterOnlineOnly
+                      ? "bg-emerald-600 text-white"
+                      : "bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200"
                   }`}
                 >
-                  <Icon className="w-3.5 h-3.5" />
-                  <span>{cat.label}</span>
+                  <Wifi className="w-3 h-3" />
+                  <span>{filterOnlineOnly ? "إلغاء فلتر النشط" : "النشطة فقط"}</span>
                 </button>
-              );
-            })}
+
+                <button
+                  onClick={() => checkAllSystemsHealth()}
+                  disabled={isCheckingAll}
+                  className="px-2.5 py-1 rounded-lg bg-sky-600 hover:bg-sky-700 disabled:opacity-50 text-white text-[11px] font-bold flex items-center gap-1 transition shadow-sm"
+                >
+                  <RefreshCw className={`w-3 h-3 ${isCheckingAll ? "animate-spin" : ""}`} />
+                  <span>{isCheckingAll ? "جارِ الفحص..." : "فحص الكل"}</span>
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
+
+        {/* Search & Categories Bar (Visible when in systems tab) */}
+        {activeMainTab === "systems" && (
+          <div className="max-w-7xl mx-auto px-3 sm:px-4 pb-2.5 sm:pb-3 pt-2 flex flex-col md:flex-row gap-2.5 sm:gap-3 items-stretch md:items-center justify-between">
+            {/* Search Input */}
+            <div className="relative flex-1 max-w-md">
+              <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="ابحث باسم المنظومة، الرابط، أو القسم..."
+                className="w-full pr-10 pl-8 py-2 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-sky-500 text-slate-900 dark:text-white placeholder:text-slate-400"
+              />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery("")}
+                  className="absolute left-2.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+                >
+                  <X className="w-4 h-4" />
+                </button>
+              )}
+            </div>
+
+            {/* Category Filter Pills */}
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 scrollbar-none text-xs -mx-3 px-3 sm:mx-0 sm:px-0">
+              {CATEGORIES.map((cat) => {
+                const Icon = cat.icon;
+                const isActive = selectedCategory === cat.id;
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => setSelectedCategory(cat.id)}
+                    className={`flex items-center gap-1 px-3 py-1.5 rounded-lg whitespace-nowrap font-medium transition shrink-0 ${
+                      isActive
+                        ? "bg-sky-600 text-white shadow-sm"
+                        : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
+                    }`}
+                  >
+                    <Icon className="w-3.5 h-3.5" />
+                    <span>{cat.label}</span>
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </header>
 
       {/* Main Body */}
       <main className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6 w-full flex-grow space-y-4 sm:space-y-6">
         {/* Dynamic News / Announcements Banner from Admin */}
-        {newsList.length > 0 && (
+        {newsList.filter((item) =>
+          activeMainTab === "overview"
+            ? item.target === "all" || item.target === "home"
+            : item.target === "all" || item.target === "staff"
+        ).length > 0 && (
           <div className="space-y-2.5">
-            {newsList.map((item) => (
+            {newsList
+              .filter((item) =>
+                activeMainTab === "overview"
+                  ? item.target === "all" || item.target === "home"
+                  : item.target === "all" || item.target === "staff"
+              )
+              .map((item) => (
               <div
                 key={item.id}
                 className={`relative overflow-hidden rounded-2xl p-4 sm:p-5 border transition shadow-sm ${
@@ -1061,140 +1127,187 @@ export default function StaffPortalPage() {
           </div>
         )}
 
-        {/* UNIFIED HERO BANNER: Clinic Booking Dedicated Section */}
-        <section className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-900 text-white p-5 sm:p-6 shadow-xl shadow-emerald-900/15 border border-emerald-500/30">
-          <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl pointer-events-none" />
-          <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-3.5 sm:gap-4 text-center md:text-right">
-              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center text-white shrink-0 shadow-inner">
-                <CalendarCheck className="w-6 h-6 sm:w-7 sm:h-7 text-emerald-300" />
+        {/* ========================================================================= */}
+        {/* VIEW 1: OVERVIEW & HOSPITALS SHOWCASE (الصفحة الرئيسية والمستشفيات) */}
+        {/* ========================================================================= */}
+        {activeMainTab === "overview" && (
+          <div className="space-y-8 sm:space-y-10">
+            {/* Hospitals & Centers Showcase Component */}
+            <HospitalsShowcase onOpenBooking={() => window.open("/booking", "_self")} />
+
+            {/* Quick Transition Banner to Systems Platform */}
+            <section className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-sky-950 to-indigo-950 text-white p-6 sm:p-8 border border-sky-700/50 shadow-2xl">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
+              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-5">
+                <div className="space-y-2 text-center md:text-right">
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sky-500/20 text-sky-200 border border-sky-400/30 text-xs font-bold">
+                    <Server className="w-3.5 h-3.5 text-sky-400" />
+                    منظومة الموظفين والربط الشبكي
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-extrabold text-white">
+                    منصة إطلاق ومتابعة السيرفرات والمنظومات الطبية (22 منظومة)
+                  </h3>
+                  <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
+                    متابعة حية وفورية لحالة السيرفرات الوزارية، أنظمة اللجان الطبية، صرف الأورام والسكر، حركة المخازن والشراء الموحد، مع إمكانية التشغيل السريع بالنافذة الذكية.
+                  </p>
+                </div>
+
+                <button
+                  onClick={() => {
+                    setActiveMainTab("systems");
+                    window.scrollTo({ top: 0, behavior: "smooth" });
+                  }}
+                  className="px-6 sm:px-8 py-3.5 sm:py-4 rounded-2xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white font-black text-xs sm:text-sm shadow-xl shadow-sky-600/30 flex items-center justify-center gap-2 transition transform hover:-translate-y-0.5 active:translate-y-0 shrink-0"
+                >
+                  <span>الانتقال لمنصة السيرفرات</span>
+                  <ExternalLink className="w-4 h-4" />
+                </button>
               </div>
-              <div className="space-y-1">
-                <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
-                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/30 border border-emerald-300/40 text-[10px] sm:text-xs font-bold text-emerald-100">
-                    خدمة المنتفعين والمواطنين
-                  </span>
-                  <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-200">
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    <span>متاح ويعمل الآن</span>
+            </section>
+          </div>
+        )}
+
+        {/* ========================================================================= */}
+        {/* VIEW 2: SERVERS & SYSTEMS MONITORING DASHBOARD (متابعة السيرفرات والمنظومات) */}
+        {/* ========================================================================= */}
+        {activeMainTab === "systems" && (
+          <div className="space-y-6">
+            {/* UNIFIED HERO BANNER: Clinic Booking Dedicated Section */}
+            <section className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-900 text-white p-5 sm:p-6 shadow-xl shadow-emerald-900/15 border border-emerald-500/30">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl pointer-events-none" />
+              <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-4">
+                <div className="flex items-center gap-3.5 sm:gap-4 text-center md:text-right">
+                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-white/10 border border-white/20 backdrop-blur-md flex items-center justify-center text-white shrink-0 shadow-inner">
+                    <CalendarCheck className="w-6 h-6 sm:w-7 sm:h-7 text-emerald-300" />
+                  </div>
+                  <div className="space-y-1">
+                    <div className="flex flex-wrap items-center justify-center md:justify-start gap-2">
+                      <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/30 border border-emerald-300/40 text-[10px] sm:text-xs font-bold text-emerald-100">
+                        خدمة المنتفعين والمواطنين
+                      </span>
+                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-emerald-200">
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                        <span>متاح ويعمل الآن</span>
+                      </span>
+                    </div>
+                    <h2 className="text-base sm:text-xl font-extrabold tracking-tight">
+                      بوابة حجز عيادات التأمين الصحي - فرع سوهاج
+                    </h2>
+                    <p className="text-xs text-emerald-100/90 leading-relaxed max-w-xl">
+                      تطبيق إلكتروني مستقل مخصص للمواطنين لحجز مواعيد الكشف بالعيادات بالرقم القومي مع إمكانية التثبيت المباشر على الهاتف.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex flex-wrap items-center justify-center gap-2 w-full md:w-auto shrink-0">
+                  <Link
+                    href="/booking"
+                    className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-white hover:bg-emerald-50 text-emerald-950 font-bold text-xs sm:text-sm shadow-md transition transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2"
+                  >
+                    <span>بوابة الحجز والمواعيد</span>
+                    <ExternalLink className="w-3.5 h-3.5 text-emerald-600" />
+                  </Link>
+                  <Link
+                    href="/booking#schedules-section"
+                    className="flex-1 sm:flex-none px-3.5 py-2.5 rounded-xl bg-teal-800/80 hover:bg-teal-700 border border-teal-400/40 text-white font-semibold text-xs sm:text-sm transition flex items-center justify-center gap-1.5"
+                  >
+                    <Calendar className="w-3.5 h-3.5 text-teal-200" />
+                    <span>جداول ومواعيد العيادات</span>
+                  </Link>
+                  <button
+                    onClick={() => {
+                      window.open("https://reserv.hiocdis.org/hioClinicReservation.aspx", "_blank");
+                    }}
+                    className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-emerald-800/80 hover:bg-emerald-800 border border-emerald-400/40 text-white font-bold text-xs sm:text-sm transition flex items-center justify-center gap-2"
+                  >
+                    <CalendarCheck className="w-3.5 h-3.5" />
+                    <span>حجز سريع</span>
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            {/* Last Opened Indicator */}
+            {lastOpened && (
+              <div className="p-3 rounded-2xl bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-900/50 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-sky-900 dark:text-sky-200">
+                <div className="flex items-center gap-2">
+                  <Clock className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0" />
+                  <span>
+                    آخر منظومة تم تشغيلها: <strong>{lastOpened.name}</strong> (اليوم في الساعة {lastOpened.time})
                   </span>
                 </div>
-                <h2 className="text-base sm:text-xl font-extrabold tracking-tight">
-                  بوابة حجز عيادات التأمين الصحي - فرع سوهاج
-                </h2>
-                <p className="text-xs text-emerald-100/90 leading-relaxed max-w-xl">
-                  تطبيق إلكتروني مستقل مخصص للمواطنين لحجز مواعيد الكشف بالعيادات بالرقم القومي مع إمكانية التثبيت المباشر على الهاتف.
-                </p>
+                <button
+                  onClick={() => {
+                    const sys = systems.find((s) => s.id === lastOpened.id);
+                    if (sys) launchSystem(sys);
+                  }}
+                  className="text-xs font-bold text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-1 self-end sm:self-auto"
+                >
+                  إعادة الفتح الآن
+                  <ExternalLink className="w-3 h-3" />
+                </button>
               </div>
-            </div>
-
-            <div className="flex flex-wrap items-center justify-center gap-2 w-full md:w-auto shrink-0">
-              <Link
-                href="/booking"
-                className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-white hover:bg-emerald-50 text-emerald-950 font-bold text-xs sm:text-sm shadow-md transition transform hover:-translate-y-0.5 active:translate-y-0 flex items-center justify-center gap-2"
-              >
-                <span>بوابة الحجز والمواعيد</span>
-                <ExternalLink className="w-3.5 h-3.5 text-emerald-600" />
-              </Link>
-              <Link
-                href="/booking#schedules-section"
-                className="flex-1 sm:flex-none px-3.5 py-2.5 rounded-xl bg-teal-800/80 hover:bg-teal-700 border border-teal-400/40 text-white font-semibold text-xs sm:text-sm transition flex items-center justify-center gap-1.5"
-              >
-                <Calendar className="w-3.5 h-3.5 text-teal-200" />
-                <span>جداول ومواعيد العيادات</span>
-              </Link>
-              <button
-                onClick={() => {
-                  window.open("https://reserv.hiocdis.org/hioClinicReservation.aspx", "_blank");
-                }}
-                className="flex-1 sm:flex-none px-4 py-2.5 rounded-xl bg-emerald-800/80 hover:bg-emerald-800 border border-emerald-400/40 text-white font-bold text-xs sm:text-sm transition flex items-center justify-center gap-2"
-              >
-                <CalendarCheck className="w-3.5 h-3.5" />
-                <span>حجز سريع</span>
-              </button>
-            </div>
-          </div>
-        </section>
-
-        {/* Last Opened Indicator */}
-        {lastOpened && (
-          <div className="p-3 rounded-2xl bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-900/50 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs text-sky-900 dark:text-sky-200">
-            <div className="flex items-center gap-2">
-              <Clock className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0" />
-              <span>
-                آخر منظومة تم تشغيلها: <strong>{lastOpened.name}</strong> (اليوم في الساعة {lastOpened.time})
-              </span>
-            </div>
-            <button
-              onClick={() => {
-                const sys = systems.find((s) => s.id === lastOpened.id);
-                if (sys) launchSystem(sys);
-              }}
-              className="text-xs font-bold text-sky-600 dark:text-sky-400 hover:underline flex items-center gap-1 self-end sm:self-auto"
-            >
-              إعادة الفتح الآن
-              <ExternalLink className="w-3 h-3" />
-            </button>
-          </div>
-        )}
-
-        {/* Pinned / Favorites Section */}
-        {favoriteSystems.length > 0 && selectedCategory === "all" && !searchQuery && (
-          <section className="space-y-3">
-            <h2 className="text-xs sm:text-sm md:text-base font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
-              <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-              المنظومات المثبتة والمفضلة لديك ({favoriteSystems.length})
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-              {favoriteSystems.map((system) => renderSystemCard(system, true))}
-            </div>
-          </section>
-        )}
-
-        {/* Systems Grid */}
-        <section className="space-y-3">
-          <div className="flex items-center justify-between">
-            <h2 className="text-xs sm:text-sm md:text-base font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
-              <Server className="w-4 h-4 text-sky-600 dark:text-sky-400" />
-              قائمة المنظومات والسيرفرات ({filteredSystems.length})
-            </h2>
-
-            {selectedCategory !== "all" && (
-              <button
-                onClick={() => setSelectedCategory("all")}
-                className="text-xs text-sky-600 dark:text-sky-400 hover:underline"
-              >
-                عرض كافة الأقسام
-              </button>
             )}
-          </div>
 
-          {filteredSystems.length === 0 ? (
-            <div className="p-8 sm:p-12 text-center rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
-              <AlertTriangle className="w-10 h-10 text-amber-500 mx-auto" />
-              <p className="text-slate-700 dark:text-slate-300 font-bold text-sm sm:text-base">
-                لم يتم العثور على أي منظومة تطابق بحثك أو فلتر الحالة
-              </p>
-              <p className="text-xs text-slate-400">
-                جرب تغيير خيارات الفلترة أو مسح شريط البحث
-              </p>
-              <button
-                onClick={() => {
-                  setSearchQuery("");
-                  setSelectedCategory("all");
-                  setFilterOnlineOnly(false);
-                }}
-                className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-semibold hover:bg-slate-200"
-              >
-                إعادة ضبط البحث والفلاتر
-              </button>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-              {filteredSystems.map((system) => renderSystemCard(system, false))}
-            </div>
-          )}
-        </section>
+            {/* Pinned / Favorites Section */}
+            {favoriteSystems.length > 0 && selectedCategory === "all" && !searchQuery && (
+              <section className="space-y-3">
+                <h2 className="text-xs sm:text-sm md:text-base font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                  <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
+                  المنظومات المثبتة والمفضلة لديك ({favoriteSystems.length})
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                  {favoriteSystems.map((system) => renderSystemCard(system, true))}
+                </div>
+              </section>
+            )}
+
+            {/* Systems Grid */}
+            <section className="space-y-3">
+              <div className="flex items-center justify-between">
+                <h2 className="text-xs sm:text-sm md:text-base font-bold text-slate-800 dark:text-slate-200 flex items-center gap-2">
+                  <Server className="w-4 h-4 text-sky-600 dark:text-sky-400" />
+                  قائمة المنظومات والسيرفرات ({filteredSystems.length})
+                </h2>
+
+                {selectedCategory !== "all" && (
+                  <button
+                    onClick={() => setSelectedCategory("all")}
+                    className="text-xs text-sky-600 dark:text-sky-400 hover:underline"
+                  >
+                    عرض كافة الأقسام
+                  </button>
+                )}
+              </div>
+
+              {filteredSystems.length === 0 ? (
+                <div className="p-8 sm:p-12 text-center rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-3">
+                  <AlertTriangle className="w-10 h-10 text-amber-500 mx-auto" />
+                  <p className="text-slate-700 dark:text-slate-300 font-bold text-sm sm:text-base">
+                    لم يتم العثور على أي منظومة تطابق بحثك أو فلتر الحالة
+                  </p>
+                  <p className="text-xs text-slate-400">
+                    جرب تغيير خيارات الفلترة أو مسح شريط البحث
+                  </p>
+                  <button
+                    onClick={() => {
+                      setSearchQuery("");
+                      setSelectedCategory("all");
+                      setFilterOnlineOnly(false);
+                    }}
+                    className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-xs font-semibold hover:bg-slate-200"
+                  >
+                    إعادة ضبط البحث والفلاتر
+                  </button>
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
+                  {filteredSystems.map((system) => renderSystemCard(system, false))}
+                </div>
+              )}
+            </section>
+          </div>
+        )}
 
         {/* TEAM SHOWCASE SECTION ON MAIN PAGE */}
         <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-sky-950 to-slate-900 text-white p-5 sm:p-7 shadow-xl border border-sky-800/40 space-y-6">
