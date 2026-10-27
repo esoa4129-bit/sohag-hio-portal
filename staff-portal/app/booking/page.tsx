@@ -30,6 +30,7 @@ import {
 import ClinicSchedules from "./ClinicSchedules";
 
 const BOOKING_URL = "https://reserv.hiocdis.org/hioClinicReservation.aspx";
+const SOFREG_URL = "https://196.219.219.184/sofreg/registerdata.aspx";
 
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
@@ -190,6 +191,10 @@ export default function BookingPortalPage() {
     }
   };
 
+  const handleOpenSofreg = () => {
+    window.open(SOFREG_URL, "_blank");
+  };
+
   const handleCopyLink = () => {
     navigator.clipboard.writeText(BOOKING_URL);
     setCopied(true);
@@ -272,11 +277,11 @@ export default function BookingPortalPage() {
             {/* Link to Team Page */}
             <Link
               href="/team"
-              className="flex items-center gap-1 px-2.5 sm:px-3 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-200 border border-amber-300/50 text-xs sm:text-sm font-bold transition"
-              title="فريق العمل والقيادات"
+              className="flex items-center gap-1.5 px-2.5 sm:px-3 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 dark:bg-amber-950/40 text-amber-800 dark:text-amber-200 border border-amber-300/50 text-xs sm:text-sm font-bold transition shadow-sm"
+              title="فريق العمل"
             >
               <Award className="w-3.5 h-3.5 text-amber-600" />
-              <span className="hidden md:inline">القيادات</span>
+              <span>فريق العمل</span>
             </Link>
 
             <button
@@ -349,6 +354,15 @@ export default function BookingPortalPage() {
                 <CalendarCheck className="w-5 h-5 sm:w-6 sm:h-6 text-emerald-600" />
                 <span>احجز موعدك الآن بالعيادة</span>
                 <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-500 opacity-70" />
+              </button>
+
+              <button
+                onClick={handleOpenSofreg}
+                className="w-full sm:w-auto px-5 sm:px-7 py-3.5 sm:py-4 rounded-xl sm:rounded-2xl bg-sky-400 hover:bg-sky-300 text-slate-950 font-black text-xs sm:text-sm md:text-base flex items-center justify-center gap-2 shadow-lg shadow-black/15 transition transform hover:-translate-y-0.5 active:translate-y-0 min-h-[48px]"
+              >
+                <IdCard className="w-4 h-4 sm:w-5 sm:h-5 text-slate-950" />
+                <span>تسجيل بيانات المنتفعين (SofReg)</span>
+                <ExternalLink className="w-3.5 h-3.5 text-slate-950 opacity-70" />
               </button>
 
               <button
@@ -441,6 +455,39 @@ export default function BookingPortalPage() {
             </div>
           </section>
         )}
+
+        {/* SofReg Beneficiary Registration Card */}
+        <section className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-r from-sky-900/90 via-slate-900 to-blue-950 text-white p-5 sm:p-6 border-2 border-sky-500/40 shadow-xl shadow-sky-950/20">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <div className="flex items-center gap-3.5 text-center md:text-right">
+              <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-sky-500/20 border border-sky-400/30 flex items-center justify-center text-sky-300 shrink-0 shadow-inner">
+                <IdCard className="w-6 h-6 sm:w-7 sm:h-7 text-sky-400" />
+              </div>
+              <div className="space-y-1">
+                <div className="flex items-center justify-center md:justify-start gap-2">
+                  <span className="px-2.5 py-0.5 rounded-full bg-sky-500/20 border border-sky-400/30 text-[10px] sm:text-xs font-bold text-sky-300">
+                    تسجيل وتحديث بيانات المنتفعين (SofReg)
+                  </span>
+                  <span className="text-[11px] text-slate-300 hidden sm:inline">سيرفر مباشر</span>
+                </div>
+                <h3 className="text-sm sm:text-base md:text-lg font-bold text-white">
+                  بياناتك غير مسجلة أو ترغب في تحديث الرقم القومي؟
+                </h3>
+                <p className="text-xs text-slate-300 max-w-xl leading-relaxed">
+                  يمكنك الدخول مباشرة إلى منظومة SofReg لتسجيل بيانات البطاقة التأمينية وتحديث الرقم القومي لتتمكن من حجز العيادات بنجاح.
+                </p>
+              </div>
+            </div>
+
+            <button
+              onClick={handleOpenSofreg}
+              className="w-full md:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-sky-600/30 transition transform hover:-translate-y-0.5 active:translate-y-0 shrink-0 min-h-[44px]"
+            >
+              <ExternalLink className="w-4 h-4" />
+              <span>تسجيل وتحديث البيانات الآن</span>
+            </button>
+          </div>
+        </section>
 
         {/* 4 Steps Guide */}
         <section className="space-y-3 sm:space-y-4">
@@ -672,7 +719,7 @@ export default function BookingPortalPage() {
             className="text-emerald-600 dark:text-emerald-400 font-bold hover:underline inline-flex items-center gap-1"
           >
             <Award className="w-3.5 h-3.5" />
-            <span>لوحة الشرف وفريق العمل والقيادات</span>
+            <span>لوحة الشرف وفريق العمل</span>
           </Link>
         </div>
       </footer>

@@ -203,7 +203,7 @@ export default function TeamPage() {
                 </div>
               </div>
 
-              {/* Card 2B: مدير الشئون المالية والإدارية (معتز بالله حمادي) */}
+              {/* Card 2B: مدير الشئون المالية والإدارية (معتز بالله فاروق حمادي) */}
               <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-slate-900 border-2 border-indigo-300 dark:border-indigo-800/70 p-5 sm:p-6 shadow-lg shadow-indigo-500/5 hover:border-indigo-500 transition-all duration-300 flex flex-col justify-between">
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
@@ -221,7 +221,7 @@ export default function TeamPage() {
                       مدير الشئون المالية والإدارية بفرع سوهاج
                     </p>
                     <h4 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
-                      أستاذ / معتز بالله حمادي
+                      أستاذ / معتز بالله فاروق حمادي
                     </h4>
                   </div>
 

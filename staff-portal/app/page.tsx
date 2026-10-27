@@ -56,6 +56,16 @@ export interface SystemItem {
   isCustom?: boolean;
 }
 
+export interface NewsItem {
+  id: string;
+  title: string;
+  content: string;
+  date: string;
+  type: "urgent" | "info" | "warning";
+  target: "all" | "staff" | "booking";
+  active: boolean;
+}
+
 interface BeforeInstallPromptEvent extends Event {
   prompt: () => Promise<void>;
   userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
@@ -87,14 +97,6 @@ const INITIAL_SYSTEMS: SystemItem[] = [
     category: "committees",
     description: "منظومة كشوفات اللياقة والفحص الطبي الشامل للموظفين والمنتفعين",
     connectionType: "HTTPS_IP",
-  },
-  {
-    id: "rpd-councils",
-    name: "المجالس الطبية المتخصصة (RPD)",
-    url: "https://rpd.smcegy.com/login.aspx?ReturnUrl=%2f",
-    category: "committees",
-    description: "بوابة قرارات العلاج على نفقة الدولة واللجان المتخصصة",
-    connectionType: "HTTPS",
   },
   {
     id: "sma-councils",
@@ -282,6 +284,7 @@ export default function StaffPortalPage() {
   // Health Status state: id -> { status, latency }
   const [healthMap, setHealthMap] = useState<Record<string, { status: ServerHealth; latency?: number }>>({});
   const [isCheckingAll, setIsCheckingAll] = useState(false);
+  const [newsList, setNewsList] = useState<NewsItem[]>([]);
 
   // PWA Prompt
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
@@ -425,27 +428,52 @@ export default function StaffPortalPage() {
       }
     }
 
-    // Custom & Edited Systems
+    // News from Admin
+    const savedNews = localStorage.getItem("sohag_hio_news");
+    if (savedNews) {
+      try {
+        const parsedNews: NewsItem[] = JSON.parse(savedNews);
+        setNewsList(parsedNews.filter((n) => n.active && (n.target === "all" || n.target === "staff")));
+      } catch {}
+    }
+
+    // Custom & Edited & Deleted Systems
     const savedCustoms = localStorage.getItem("sohag_hio_staff_custom_systems");
     const editedMap = localStorage.getItem("sohag_hio_staff_edited_urls");
+    const editedFull = localStorage.getItem("sohag_hio_staff_edited_systems");
+    const deletedList = localStorage.getItem("sohag_hio_staff_deleted_systems");
 
     let combined = [...INITIAL_SYSTEMS];
+
+    // Filter out deleted from admin
+    if (deletedList) {
+      try {
+        const parsedDeleted: string[] = JSON.parse(deletedList);
+        combined = combined.filter((s) => !parsedDeleted.includes(s.id));
+      } catch {}
+    }
+
+    // Apply URL edits
     if (editedMap) {
       try {
         const parsedMap: Record<string, string> = JSON.parse(editedMap);
         combined = combined.map((s) => (parsedMap[s.id] ? { ...s, url: parsedMap[s.id] } : s));
-      } catch {
-        // ignore
-      }
+      } catch {}
+    }
+
+    // Apply full item edits from admin (name, category, description, url)
+    if (editedFull) {
+      try {
+        const parsedFull: Record<string, Partial<SystemItem>> = JSON.parse(editedFull);
+        combined = combined.map((s) => (parsedFull[s.id] ? { ...s, ...parsedFull[s.id] } : s));
+      } catch {}
     }
 
     if (savedCustoms) {
       try {
         const parsedCustoms: SystemItem[] = JSON.parse(savedCustoms);
         combined = [...combined, ...parsedCustoms];
-      } catch {
-        // ignore
-      }
+      } catch {}
     }
     setSystems(combined);
 
@@ -862,11 +890,19 @@ export default function StaffPortalPage() {
             <Link
               href="/team"
               className="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-gradient-to-r from-amber-50 to-amber-100/80 hover:from-amber-100 hover:to-amber-200/90 dark:from-amber-950/40 dark:to-amber-900/40 dark:hover:from-amber-900/50 text-amber-800 dark:text-amber-200 border border-amber-300/60 dark:border-amber-700/50 text-xs sm:text-sm font-bold transition shadow-sm hover:shadow"
-              title="فريق العمل والقيادات"
+              title="فريق العمل"
             >
               <Award className="w-4 h-4 text-amber-600 dark:text-amber-400 animate-pulse" />
-              <span className="hidden sm:inline">فريق العمل والقيادات</span>
-              <span className="sm:hidden">القيادات</span>
+              <span>فريق العمل</span>
+            </Link>
+
+            {/* Link to Admin */}
+            <Link
+              href="/admin"
+              className="p-2 sm:p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition font-bold text-xs flex items-center justify-center"
+              title="لوحة التحكم والإدارة"
+            >
+              <span className="text-sm">⚙️</span>
             </Link>
 
             {!isStandalone && (
@@ -991,6 +1027,40 @@ export default function StaffPortalPage() {
 
       {/* Main Body */}
       <main className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-6 w-full flex-grow space-y-4 sm:space-y-6">
+        {/* Dynamic News / Announcements Banner from Admin */}
+        {newsList.length > 0 && (
+          <div className="space-y-2.5">
+            {newsList.map((item) => (
+              <div
+                key={item.id}
+                className={`relative overflow-hidden rounded-2xl p-4 sm:p-5 border transition shadow-sm ${
+                  item.type === "urgent"
+                    ? "bg-red-50 dark:bg-red-950/40 border-red-300 dark:border-red-800 text-red-900 dark:text-red-200"
+                    : item.type === "warning"
+                    ? "bg-amber-50 dark:bg-amber-950/40 border-amber-300 dark:border-amber-800 text-amber-900 dark:text-amber-200"
+                    : "bg-sky-50 dark:bg-sky-950/40 border-sky-300 dark:border-sky-800 text-sky-900 dark:text-sky-200"
+                }`}
+              >
+                <div className="flex items-start gap-3">
+                  <span className="text-xl sm:text-2xl shrink-0 mt-0.5">
+                    {item.type === "urgent" ? "🚨" : item.type === "warning" ? "⚠️" : "📢"}
+                  </span>
+                  <div className="space-y-1 flex-1">
+                    <div className="flex items-center gap-2 flex-wrap">
+                      <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/70 dark:bg-black/40 border border-current">
+                        {item.type === "urgent" ? "إعلان عاجل" : item.type === "warning" ? "تنبيه هام" : "خبر رسمي"}
+                      </span>
+                      <span className="text-[10px] opacity-75 font-mono">{item.date}</span>
+                    </div>
+                    <h4 className="font-extrabold text-sm sm:text-base leading-snug">{item.title}</h4>
+                    <p className="text-xs sm:text-sm opacity-90 leading-relaxed whitespace-pre-line">{item.content}</p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
         {/* UNIFIED HERO BANNER: Clinic Booking Dedicated Section */}
         <section className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-900 text-white p-5 sm:p-6 shadow-xl shadow-emerald-900/15 border border-emerald-500/30">
           <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl pointer-events-none" />
@@ -1125,6 +1195,73 @@ export default function StaffPortalPage() {
             </div>
           )}
         </section>
+
+        {/* TEAM SHOWCASE SECTION ON MAIN PAGE */}
+        <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-slate-900 via-sky-950 to-slate-900 text-white p-5 sm:p-7 shadow-xl border border-sky-800/40 space-y-6">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-slate-800 pb-4">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[11px] font-bold">
+                  فريق العمل بفرع سوهاج
+                </span>
+                <span className="text-xs text-slate-400 hidden sm:inline">• لوحة الشرف المؤسسية</span>
+              </div>
+              <h3 className="text-lg sm:text-xl font-extrabold text-white">
+                قيادات التحول الرقمي وأطقم العمل والمستشفيات
+              </h3>
+              <p className="text-xs text-slate-300">
+                فريق متكامل يقود ميكنة وتطوير الخدمات الطبية والإدارية لخدمة منتفعي محافظة سوهاج
+              </p>
+            </div>
+
+            <Link
+              href="/team"
+              className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white text-xs sm:text-sm font-bold shadow-md shadow-sky-600/30 transition shrink-0 active:scale-95"
+            >
+              <span>عرض تبويبات المستشفيات والهيكل الكامل</span>
+              <Award className="w-4 h-4 text-amber-300" />
+            </Link>
+          </div>
+
+          {/* Quick Cards of Core Team */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-400/40 transition">
+              <span className="text-[10px] font-bold text-amber-400">مدير عام الفرع</span>
+              <h4 className="font-extrabold text-sm text-white mt-0.5">دكتور / محمد خلف عفيفي</h4>
+              <p className="text-[11px] text-slate-300 mt-1 line-clamp-1">الإشراف والرعاية العامة لمسيرة التطوير الشامل</p>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-sky-400/40 transition">
+              <span className="text-[10px] font-bold text-sky-400">مدير إدارة النظم والمعلومات</span>
+              <h4 className="font-extrabold text-sm text-white mt-0.5">مهندس / مصطفى خلف</h4>
+              <p className="text-[11px] text-slate-300 mt-1 line-clamp-1">التخطيط الاستراتيجي ومتابعة المنظومات والربط</p>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-indigo-400/40 transition">
+              <span className="text-[10px] font-bold text-indigo-400">مدير الشئون المالية والإدارية</span>
+              <h4 className="font-extrabold text-sm text-white mt-0.5">أستاذ / معتز بالله فاروق حمادي</h4>
+              <p className="text-[11px] text-slate-300 mt-1 line-clamp-1">الإشراف الإداري والمالي ودعم متطلبات الميكنة</p>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-teal-400/40 transition">
+              <span className="text-[10px] font-bold text-teal-400">رئيس قسم تكنولوجيا المعلومات</span>
+              <h4 className="font-extrabold text-sm text-white mt-0.5">مهندس / صفوت الجزيري</h4>
+              <p className="text-[11px] text-slate-300 mt-1 line-clamp-1">الإشراف الفني واستقرار السيرفرات والبنية التحتية</p>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-400/40 transition">
+              <span className="text-[10px] font-bold text-emerald-400">مطور ومهندس البوابة الرقمية</span>
+              <h4 className="font-extrabold text-sm text-white mt-0.5">مهندس / إسلام أبو اليزيد</h4>
+              <p className="text-[11px] text-slate-300 mt-1 line-clamp-1">تصميم وتطوير البوابات وتطبيقات الويب الذكية</p>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-cyan-400/40 transition">
+              <span className="text-[10px] font-bold text-cyan-400">مسؤول شبكات الإنترنت والاتصالات</span>
+              <h4 className="font-extrabold text-sm text-white mt-0.5">مهندسة / سماح القاضي</h4>
+              <p className="text-[11px] text-slate-300 mt-1 line-clamp-1">متابعة خطوط الربط وشبكات الإنترنت واستقرار الاتصال</p>
+            </div>
+          </div>
+        </section>
       </main>
 
       {/* Footer with Team Page Link */}
@@ -1140,7 +1277,14 @@ export default function StaffPortalPage() {
             className="text-sky-600 dark:text-sky-400 font-bold hover:underline inline-flex items-center gap-1"
           >
             <Award className="w-3.5 h-3.5 text-amber-500" />
-            <span>لوحة الشرف وفريق العمل والقيادات</span>
+            <span>لوحة الشرف وفريق العمل</span>
+          </Link>
+          <span>•</span>
+          <Link
+            href="/admin"
+            className="text-slate-500 hover:text-sky-600 dark:text-slate-400 dark:hover:text-sky-400 font-semibold hover:underline inline-flex items-center gap-1"
+          >
+            <span>لوحة التحكم ⚙️</span>
           </Link>
         </div>
       </footer>
