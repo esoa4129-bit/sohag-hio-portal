@@ -217,13 +217,13 @@ export default function TeamPage() {
               </div>
 
               <span className="text-xs font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider mb-1">
-                مدير عام فرع سوهاج للتأمين الصحي
+                مدير عام الفرع
               </span>
               <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white leading-snug">
                 دكتور / محمد خلف عفيفي
               </h3>
               <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed mt-2.5 max-w-md">
-                قيادة ودعم مسيرة التحول الرقمي والتطوير المؤسسي الشامل للارتقاء بجودة الرعاية والخدمات الطبية لجميع منتفعي محافظة سوهاج.
+                الإشراف والرعاية العامة لمسيرة التطوير الشامل
               </p>
             </div>
 
@@ -257,7 +257,7 @@ export default function TeamPage() {
 
                   <div>
                     <p className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">
-                      مدير إدارة النظم والمعلومات والتحول الرقمي
+                      مدير إدارة النظم والمعلومات
                     </p>
                     <h4 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-0.5">
                       مهندس / مصطفى خلف
@@ -265,7 +265,7 @@ export default function TeamPage() {
                   </div>
 
                   <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-2.5">
-                    التخطيط الاستراتيجي ومتابعة ميكنة المنظومات والربط الشبكي لكافة المستشفيات واللجان والعيادات التابعة للفرع.
+                    التخطيط الاستراتيجي ومتابعة المنظومات والربط
                   </p>
                 </div>
 
@@ -290,7 +290,7 @@ export default function TeamPage() {
 
                   <div>
                     <p className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">
-                      مدير الشئون المالية والإدارية بفرع سوهاج
+                      مدير الشئون المالية والإدارية
                     </p>
                     <h4 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-0.5">
                       أستاذ / معتز بالله فاروق حمادي
@@ -298,7 +298,7 @@ export default function TeamPage() {
                   </div>
 
                   <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-2.5">
-                    الإشراف الإداري والمالي ودعم توفير الموارد اللوجستية وتيسير متطلبات الميكنة والتحول الرقمي بالفرع.
+                    الإشراف الإداري والمالي ودعم متطلبات الميكنة
                   </p>
                 </div>
 
@@ -329,13 +329,13 @@ export default function TeamPage() {
               </div>
 
               <span className="text-xs font-bold text-teal-700 dark:text-teal-400 uppercase tracking-wider mb-1">
-                رئيس قسم تكنولوجيا المعلومات (Head of IT)
+                رئيس قسم تكنولوجيا المعلومات
               </span>
               <h4 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white leading-snug">
                 مهندس / صفوت الجزيري
               </h4>
               <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mt-2 max-w-md">
-                الإشراف الفني وإدارة استقرار السيرفرات والشبكات والدعم التقني المباشر لجميع الأطقم الطبية والإدارية بالفرع.
+                الإشراف الفني واستقرار السيرفرات والبنية التحتية
               </p>
             </div>
 
@@ -369,7 +369,7 @@ export default function TeamPage() {
 
                   <div>
                     <p className="text-[11px] font-bold text-emerald-700 dark:text-emerald-400">
-                      مطور ومهندس البوابة الرقمية (Lead Software Engineer)
+                      مطور ومهندس البوابة الرقمية
                     </p>
                     <h4 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-0.5">
                       مهندس / إسلام أبو اليزيد
@@ -377,7 +377,7 @@ export default function TeamPage() {
                   </div>
 
                   <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-2.5">
-                    تصميم وبرمجة وتطوير البوابة الموحدة وتطبيقات الـ PWA، ومحرك فحص حالة السيرفرات وتجربة المستخدم الذكية لكافة الأنظمة.
+                    تصميم وتطوير البوابات وتطبيقات الويب الذكية
                   </p>
                 </div>
 
@@ -402,7 +402,7 @@ export default function TeamPage() {
 
                   <div>
                     <p className="text-[11px] font-bold text-cyan-700 dark:text-cyan-400">
-                      مسؤول شبكات الإنترنت والاتصالات بالفرع
+                      مسؤول شبكات الإنترنت والاتصالات
                     </p>
                     <h4 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-0.5">
                       مهندسة / سماح القاضي
@@ -410,7 +410,7 @@ export default function TeamPage() {
                   </div>
 
                   <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-2.5">
-                    إدارة ومتابعة خطوط الربط وشبكات الإنترنت، وضمان استقرار الاتصال بالمنظومات والسيرفرات الوزارية والمحلية.
+                    متابعة خطوط الربط وشبكات الإنترنت واستقرار الاتصال
                   </p>
                 </div>
 
@@ -448,8 +448,8 @@ export default function TeamPage() {
             />
           </div>
 
-          {/* Hospital Navigation Tabs */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none justify-start md:justify-center">
+          {/* Hospital Navigation Deck - Responsive & No ugly scrollbars */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3">
             {FACILITIES.map((fac) => {
               const isActive = selectedFacility === fac.id;
               const count = customMembers.filter((m) => m.facility === fac.id).length;
@@ -457,19 +457,33 @@ export default function TeamPage() {
                 <button
                   key={fac.id}
                   onClick={() => setSelectedFacility(fac.id)}
-                  className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all duration-200 shrink-0 ${
+                  className={`group relative overflow-hidden flex flex-col items-center justify-between text-center p-3 sm:p-4 rounded-2xl transition-all duration-300 border ${
                     isActive
-                      ? "bg-gradient-to-r from-sky-600 to-blue-600 text-white shadow-md shadow-sky-600/25 scale-[1.02]"
-                      : "bg-white dark:bg-slate-900 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 border border-slate-200 dark:border-slate-800"
+                      ? "bg-gradient-to-br from-sky-600 via-sky-700 to-blue-800 text-white shadow-xl shadow-sky-600/30 border-sky-400 scale-[1.02] ring-2 ring-sky-400/50"
+                      : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-sky-50/70 dark:hover:bg-slate-800/80 border-slate-200/90 dark:border-slate-800 hover:border-sky-300 dark:hover:border-slate-700 shadow-sm"
                   }`}
                 >
-                  <span className="text-base">{fac.icon}</span>
-                  <span>{fac.name}</span>
-                  {count > 0 && (
-                    <span className={`text-[10px] px-1.5 py-0.5 rounded-full font-mono ${isActive ? "bg-white/20 text-white" : "bg-sky-100 dark:bg-slate-800 text-sky-700 dark:text-sky-300"}`}>
-                      {count}
+                  <div className="flex items-center justify-between w-full mb-2">
+                    <span className="text-2xl sm:text-3xl filter drop-shadow-sm">{fac.icon}</span>
+                    {count > 0 ? (
+                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-black font-mono shadow-sm ${isActive ? "bg-white/20 text-white" : "bg-sky-100 dark:bg-slate-800 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-slate-700"}`}>
+                        {count} عضو
+                      </span>
+                    ) : (
+                      <span className={`text-[9px] px-2 py-0.5 rounded-full font-bold ${isActive ? "bg-white/10 text-sky-100" : "bg-slate-100 dark:bg-slate-800 text-slate-400"}`}>
+                        متاح
+                      </span>
+                    )}
+                  </div>
+                  
+                  <div className="w-full space-y-0.5">
+                    <span className={`text-xs sm:text-sm font-black block leading-tight ${isActive ? "text-white" : "text-slate-800 dark:text-slate-100"}`}>
+                      {fac.name}
                     </span>
-                  )}
+                    <span className={`text-[10px] block line-clamp-1 opacity-75 ${isActive ? "text-sky-100" : "text-slate-400 dark:text-slate-500"}`}>
+                      {fac.desc}
+                    </span>
+                  </div>
                 </button>
               );
             })}

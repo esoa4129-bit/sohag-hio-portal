@@ -310,8 +310,8 @@ export default function HospitalsShowcase({ onOpenBooking }: HospitalsShowcasePr
       </div>
 
       {/* FILTER & SEARCH BAR FOR HOSPITALS */}
-      <div className="sticky top-16 z-20 flex flex-col sm:flex-row items-center justify-between gap-3 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl p-3.5 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-lg">
-        <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0 scrollbar-none text-xs">
+      <div className="sticky top-16 z-20 flex flex-col sm:flex-row items-center justify-between gap-3 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-lg">
+        <div className="flex items-center gap-1.5 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden w-full sm:w-auto pb-1 sm:pb-0 text-xs">
           {[
             { key: "all", label: `الكل (${SOHAG_FACILITIES.length})`, emoji: "🏥" },
             { key: "مدينة سوهاج", label: "مدينة سوهاج", emoji: "🌆" },
