@@ -109,29 +109,74 @@ export default function AdminPage() {
     loadAllData();
   }, []);
 
+  const saveAndSyncMembers = (updatedList: TeamMember[]) => {
+    setTeamMembers(updatedList);
+    try {
+      localStorage.setItem("sohag_hio_custom_team_members", JSON.stringify(updatedList));
+    } catch {}
+    // Sync to server API so mobile devices instantly get the changes
+    fetch("/api/team-members", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedList),
+    }).catch((err) => console.error("Server sync error:", err));
+  };
+
+  const handleCopyMobileSyncLink = () => {
+    try {
+      if (teamMembers.length === 0) {
+        showNotification("لا يوجد أعضاء لمزامنتهم حالياً", "error");
+        return;
+      }
+      const jsonStr = JSON.stringify(teamMembers);
+      const encoded = btoa(unescape(encodeURIComponent(jsonStr)));
+      const syncUrl = `${window.location.origin}/team?sync=${encoded}`;
+      navigator.clipboard.writeText(syncUrl);
+      showNotification("تم نسخ رابط المزامنة للموبايل! افتحه من أي هاتف لمزامنة الأسماء فوراً");
+    } catch {
+      showNotification("فشل نسخ الرابط", "error");
+    }
+  };
+
   const loadAllData = () => {
     try {
       // 1. Team Members (custom facility members only, no dummy placeholders)
       const savedMembers = localStorage.getItem("sohag_hio_custom_team_members");
+      let localClean: TeamMember[] = [];
       if (savedMembers) {
         try {
           const parsed = JSON.parse(savedMembers);
           if (Array.isArray(parsed)) {
-            const clean = parsed.filter(
-              (m: TeamMember) =>
-                !m.id.startsWith("dummy-") &&
-                !["hilal-1","hilal-2","hilal-3","hilal-4","hilal-5","tahta-1","tahta-2","girga-1","girga-2","akhmim-1","balyana-1","centers-1","centers-2","core-1","core-2","core-3","core-4","core-5","core-6"].includes(m.id)
-            );
-            setTeamMembers(clean);
-          } else {
-            setTeamMembers([]);
+            localClean = parsed.filter((m: TeamMember) => !m.id.startsWith("dummy-"));
+            setTeamMembers(localClean);
           }
-        } catch (e) {
+        } catch {
           setTeamMembers([]);
         }
-      } else {
-        setTeamMembers([]);
       }
+
+      // Fetch latest from server API (ensures sync between devices)
+      fetch("/api/team-members", { cache: "no-store" })
+        .then((res) => res.json())
+        .then((serverData) => {
+          if (Array.isArray(serverData)) {
+            const cleanServer = serverData.filter((m: TeamMember) => !m.id.startsWith("dummy-"));
+            if (cleanServer.length >= localClean.length && cleanServer.length > 0) {
+              setTeamMembers(cleanServer);
+              try {
+                localStorage.setItem("sohag_hio_custom_team_members", JSON.stringify(cleanServer));
+              } catch {}
+            } else if (localClean.length > cleanServer.length) {
+              // Local has more (e.g. added on PC previously), push to server
+              fetch("/api/team-members", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(localClean),
+              }).catch(() => {});
+            }
+          }
+        })
+        .catch(() => {});
 
       // 2. News
       const savedNews = localStorage.getItem("sohag_hio_news");
@@ -257,8 +302,7 @@ export default function AdminPage() {
       showNotification("تمت إضافة العضو الجديد بنجاح");
     }
 
-    setTeamMembers(updatedList);
-    localStorage.setItem("sohag_hio_custom_team_members", JSON.stringify(updatedList));
+    saveAndSyncMembers(updatedList);
 
     // Reset Form
     setMemberForm({
@@ -278,8 +322,7 @@ export default function AdminPage() {
   const handleDeleteMember = (id: string) => {
     if (!confirm("هل أنت متأكد من حذف هذا العضو؟")) return;
     const updated = teamMembers.filter((m) => m.id !== id);
-    setTeamMembers(updated);
-    localStorage.setItem("sohag_hio_custom_team_members", JSON.stringify(updated));
+    saveAndSyncMembers(updated);
     showNotification("تم حذف العضو");
   };
 
@@ -455,9 +498,8 @@ export default function AdminPage() {
     reader.onload = (event) => {
       try {
         const parsed = JSON.parse(event.target?.result as string);
-        if (parsed.teamMembers) {
-          localStorage.setItem("sohag_hio_custom_team_members", JSON.stringify(parsed.teamMembers));
-          setTeamMembers(parsed.teamMembers);
+        if (parsed.teamMembers && Array.isArray(parsed.teamMembers)) {
+          saveAndSyncMembers(parsed.teamMembers);
         }
         if (parsed.newsList) {
           localStorage.setItem("sohag_hio_news", JSON.stringify(parsed.newsList));
@@ -943,13 +985,22 @@ export default function AdminPage() {
             {/* List of Custom Added Members */}
             <div className="p-5 sm:p-7 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-slate-100 dark:border-slate-800 pb-3">
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   <h4 className="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white flex items-center gap-2">
                     <span>قائمة أعضاء فريق العمل والأطقم</span>
                     <span className="px-2.5 py-0.5 rounded-full bg-sky-100 dark:bg-sky-950 text-sky-700 dark:text-sky-300 text-xs font-bold">
                       {teamMembers.length}
                     </span>
                   </h4>
+
+                  <button
+                    type="button"
+                    onClick={handleCopyMobileSyncLink}
+                    title="مزامنة مع الموبايل فورا"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-black shadow-sm transition active:scale-95"
+                  >
+                    <span>📲 نسخ رابط مزامنة الموبايل</span>
+                  </button>
                 </div>
 
                 {/* Filter by facility */}

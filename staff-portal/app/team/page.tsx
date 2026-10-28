@@ -45,19 +45,59 @@ export default function TeamPage() {
 
     const loadCustomMembers = () => {
       try {
+        // 1. Check if sync payload passed in URL (e.g. from QR or direct sync link)
+        if (typeof window !== "undefined") {
+          const params = new URLSearchParams(window.location.search);
+          const syncData = params.get("sync");
+          if (syncData) {
+            try {
+              const decoded = JSON.parse(decodeURIComponent(escape(atob(syncData))));
+              if (Array.isArray(decoded)) {
+                setCustomMembers(decoded);
+                localStorage.setItem("sohag_hio_custom_team_members", JSON.stringify(decoded));
+                // Also sync to server API
+                fetch("/api/team-members", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify(decoded),
+                }).catch(() => {});
+                return;
+              }
+            } catch (err) {
+              console.error("Sync data parse error:", err);
+            }
+          }
+        }
+
+        // 2. Load from localStorage (instant cache)
         const saved = localStorage.getItem("sohag_hio_custom_team_members");
         if (saved) {
           const parsed = JSON.parse(saved);
           if (Array.isArray(parsed)) {
-            // Filter out any dummy placeholder IDs if they exist
-            const clean = parsed.filter(
-              (m: TeamMember) =>
-                !m.id.startsWith("dummy-") &&
-                !["hilal-1","hilal-2","hilal-3","hilal-4","hilal-5","tahta-1","tahta-2","girga-1","girga-2","akhmim-1","balyana-1","centers-1","centers-2","core-1","core-2","core-3","core-4","core-5","core-6"].includes(m.id)
-            );
+            const clean = parsed.filter((m: TeamMember) => !m.id.startsWith("dummy-"));
             setCustomMembers(clean);
           }
         }
+
+        // 3. Always fetch latest from server API (ensures mobile gets PC data)
+        fetch("/api/team-members", { cache: "no-store" })
+          .then((res) => res.json())
+          .then((serverData) => {
+            if (Array.isArray(serverData) && serverData.length > 0) {
+              const cleanServer = serverData.filter((m: TeamMember) => !m.id.startsWith("dummy-"));
+              setCustomMembers((prev) => {
+                // If local had members, keep whichever has more or merge
+                if (cleanServer.length >= prev.length) {
+                  try {
+                    localStorage.setItem("sohag_hio_custom_team_members", JSON.stringify(cleanServer));
+                  } catch {}
+                  return cleanServer;
+                }
+                return prev;
+              });
+            }
+          })
+          .catch(() => {});
       } catch (e) {
         console.error("Failed to load custom team members:", e);
       }
