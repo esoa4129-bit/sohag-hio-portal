@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
+import { INITIAL_FACILITY_LEADERSHIP } from "../../team/facilities";
 
 // Global in-memory cache to persist across warm serverless invocations
 declare global {
@@ -51,7 +52,7 @@ function readStoredMembers(): any[] {
     }
   } catch {}
 
-  return [];
+  return INITIAL_FACILITY_LEADERSHIP;
 }
 
 function writeStoredMembers(members: any[]) {

@@ -27,7 +27,7 @@ import {
   X,
   FileText
 } from "lucide-react";
-import { FACILITIES, TeamMember, HierarchyLevel, DEFAULT_TEAM_MEMBERS, BRANCH_CORE_LEADERSHIP } from "../team/facilities";
+import { FACILITIES, TeamMember, HierarchyLevel, DEFAULT_TEAM_MEMBERS, BRANCH_CORE_LEADERSHIP, INITIAL_FACILITY_LEADERSHIP } from "../team/facilities";
 import { SystemItem, NewsItem } from "../page";
 
 // Strong official admin password
@@ -47,7 +47,7 @@ export default function AdminPage() {
   const [statusMsg, setStatusMsg] = useState<{ text: string; type: "success" | "error" } | null>(null);
 
   // ==================== 1. TEAM MANAGEMENT STATE ====================
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const [teamMembers, setTeamMembers] = useState<TeamMember[]>(INITIAL_FACILITY_LEADERSHIP);
   const [editingMember, setEditingMember] = useState<TeamMember | null>(null);
   const [selectedFacilityFilter, setSelectedFacilityFilter] = useState<string>("all");
   const [memberForm, setMemberForm] = useState<{
@@ -140,19 +140,35 @@ export default function AdminPage() {
 
   const loadAllData = () => {
     try {
+      const mergeWithDefaults = (list: TeamMember[]): TeamMember[] => {
+        const map = new Map<string, TeamMember>();
+        for (const m of INITIAL_FACILITY_LEADERSHIP) {
+          map.set(m.id, m);
+        }
+        for (const m of list) {
+          map.set(m.id, m);
+        }
+        return Array.from(map.values());
+      };
+
       // 1. Team Members (custom facility members only, no dummy placeholders)
       const savedMembers = localStorage.getItem("sohag_hio_custom_team_members");
-      let localClean: TeamMember[] = [];
+      let localClean: TeamMember[] = INITIAL_FACILITY_LEADERSHIP;
       if (savedMembers) {
         try {
           const parsed = JSON.parse(savedMembers);
-          if (Array.isArray(parsed)) {
-            localClean = parsed.filter((m: TeamMember) => !m.id.startsWith("dummy-"));
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            const clean = parsed.filter((m: TeamMember) => !m.id.startsWith("dummy-"));
+            localClean = mergeWithDefaults(clean);
             setTeamMembers(localClean);
+          } else {
+            setTeamMembers(INITIAL_FACILITY_LEADERSHIP);
           }
         } catch {
-          setTeamMembers([]);
+          setTeamMembers(INITIAL_FACILITY_LEADERSHIP);
         }
+      } else {
+        setTeamMembers(INITIAL_FACILITY_LEADERSHIP);
       }
 
       // Fetch latest from server API (ensures sync between devices)
@@ -161,10 +177,11 @@ export default function AdminPage() {
         .then((serverData) => {
           if (Array.isArray(serverData)) {
             const cleanServer = serverData.filter((m: TeamMember) => !m.id.startsWith("dummy-"));
-            if (cleanServer.length >= localClean.length && cleanServer.length > 0) {
-              setTeamMembers(cleanServer);
+            const mergedServer = mergeWithDefaults(cleanServer);
+            if (mergedServer.length >= localClean.length && mergedServer.length > 0) {
+              setTeamMembers(mergedServer);
               try {
-                localStorage.setItem("sohag_hio_custom_team_members", JSON.stringify(cleanServer));
+                localStorage.setItem("sohag_hio_custom_team_members", JSON.stringify(mergedServer));
               } catch {}
             } else if (localClean.length > cleanServer.length) {
               // Local has more (e.g. added on PC previously), push to server

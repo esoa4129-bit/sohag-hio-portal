@@ -23,24 +23,40 @@ import {
   ChevronDown,
   Search,
   User,
+  Stethoscope,
   Phone,
-  Crown
+  Crown,
+  ExternalLink,
+  MapPin,
+  Globe,
+  Briefcase
 } from "lucide-react";
-import { FACILITIES, TeamMember, BRANCH_CORE_LEADERSHIP } from "./facilities";
+import { FACILITIES, TeamMember, BRANCH_CORE_LEADERSHIP, INITIAL_FACILITY_LEADERSHIP } from "./facilities";
 
 export default function TeamPage() {
   const [darkMode, setDarkMode] = useState(false);
   const [copied, setCopied] = useState(false);
   const [selectedFacility, setSelectedFacility] = useState<string>("hilal");
   const [searchQuery, setSearchQuery] = useState("");
-  const [customMembers, setCustomMembers] = useState<TeamMember[]>([]);
+  const [customMembers, setCustomMembers] = useState<TeamMember[]>(INITIAL_FACILITY_LEADERSHIP);
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem("hio_booking_theme");
+    const savedTheme = localStorage.getItem("sohag_hio_staff_theme");
     if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
       setDarkMode(true);
       document.documentElement.classList.add("dark");
     }
+
+    const mergeWithDefaults = (list: TeamMember[]): TeamMember[] => {
+      const map = new Map<string, TeamMember>();
+      for (const m of INITIAL_FACILITY_LEADERSHIP) {
+        map.set(m.id, m);
+      }
+      for (const m of list) {
+        map.set(m.id, m);
+      }
+      return Array.from(map.values());
+    };
 
     const loadCustomMembers = () => {
       try {
@@ -52,13 +68,14 @@ export default function TeamPage() {
             try {
               const decoded = JSON.parse(decodeURIComponent(escape(atob(syncData))));
               if (Array.isArray(decoded)) {
-                setCustomMembers(decoded);
-                localStorage.setItem("sohag_hio_custom_team_members", JSON.stringify(decoded));
+                const merged = mergeWithDefaults(decoded);
+                setCustomMembers(merged);
+                localStorage.setItem("sohag_hio_custom_team_members", JSON.stringify(merged));
                 // Also sync to server API
                 fetch("/api/team-members", {
                   method: "POST",
                   headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify(decoded),
+                  body: JSON.stringify(merged),
                 }).catch(() => {});
                 return;
               }
@@ -74,7 +91,8 @@ export default function TeamPage() {
           const parsed = JSON.parse(saved);
           if (Array.isArray(parsed)) {
             const clean = parsed.filter((m: TeamMember) => !m.id.startsWith("dummy-"));
-            setCustomMembers(clean);
+            const merged = mergeWithDefaults(clean);
+            setCustomMembers(merged);
           }
         }
 
@@ -84,12 +102,13 @@ export default function TeamPage() {
           .then((serverData) => {
             if (Array.isArray(serverData) && serverData.length > 0) {
               const cleanServer = serverData.filter((m: TeamMember) => !m.id.startsWith("dummy-"));
+              const mergedServer = mergeWithDefaults(cleanServer);
               setCustomMembers((prev) => {
-                if (cleanServer.length >= prev.length) {
+                if (mergedServer.length >= prev.length) {
                   try {
-                    localStorage.setItem("sohag_hio_custom_team_members", JSON.stringify(cleanServer));
+                    localStorage.setItem("sohag_hio_custom_team_members", JSON.stringify(mergedServer));
                   } catch {}
-                  return cleanServer;
+                  return mergedServer;
                 }
                 return prev;
               });
@@ -113,11 +132,11 @@ export default function TeamPage() {
   const toggleDarkMode = () => {
     if (darkMode) {
       document.documentElement.classList.remove("dark");
-      localStorage.setItem("hio_booking_theme", "light");
+      localStorage.setItem("sohag_hio_staff_theme", "light");
       setDarkMode(false);
     } else {
       document.documentElement.classList.add("dark");
-      localStorage.setItem("hio_booking_theme", "dark");
+      localStorage.setItem("sohag_hio_staff_theme", "dark");
       setDarkMode(true);
     }
   };
@@ -354,27 +373,112 @@ export default function TeamPage() {
             </div>
           </div>
 
-          {/* LEVEL 3: رئيس قسم تكنولوجيا المعلومات (صفوت الجزيري) */}
+          {/* LEVEL 3: صفوت الجزيري ورئاسة تكنولوجيا المعلومات والشئون الإدارية والبوابة الإلكترونية */}
           <div className="flex flex-col items-center">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-600 dark:text-teal-400 text-[11px] font-bold mb-3 shadow-sm">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-teal-500/10 border border-teal-500/30 text-teal-600 dark:text-teal-400 text-[11px] font-bold mb-4 shadow-sm">
               <ShieldCheck className="w-3.5 h-3.5 text-teal-500" />
-              المستوى الثالث • رئاسة تكنولوجيا المعلومات والبنية التحتية
+              المستوى الثالث • رئاسة تكنولوجيا المعلومات والشئون الإدارية والبوابة الإلكترونية
             </div>
 
-            <div className="w-full max-w-xl relative overflow-hidden rounded-3xl bg-white dark:bg-slate-900 border-2 border-teal-300 dark:border-teal-800/70 p-6 sm:p-7 shadow-lg shadow-teal-500/5 hover:border-teal-500 transition-all duration-300 text-center flex flex-col items-center">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-tr from-teal-500 to-emerald-600 text-white flex items-center justify-center shadow-md mb-2.5">
-                <ShieldCheck className="w-6 h-6" />
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 w-full">
+              {/* Card 3A (على يمين صفوت): مهندس محمد عبد الحميد */}
+              <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-slate-900 border-2 border-sky-300 dark:border-sky-800/70 p-5 sm:p-6 shadow-lg shadow-sky-500/5 hover:border-sky-500 transition-all duration-300 flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg text-[11px] font-bold bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300">
+                      <Globe className="w-3.5 h-3.5 text-sky-600" />
+                      البوابة الإلكترونية
+                    </span>
+                    <div className="w-10 h-10 rounded-xl bg-sky-100 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 flex items-center justify-center">
+                      <Globe className="w-5 h-5" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+                      مسئول البوابة الإلكترونية
+                    </p>
+                    <h4 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-0.5">
+                      مهندس / محمد عبد الحميد
+                    </h4>
+                  </div>
+
+                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-2.5">
+                    متابعة وتشغيل وتحديث منصة البوابة الإلكترونية لفرع سوهاج
+                  </p>
+                </div>
+
+                <div className="mt-3 pt-2 flex items-center gap-1.5 text-[11px] font-semibold text-sky-600 dark:text-sky-400">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>إدارة المحتوى والتحول الرقمي</span>
+                </div>
               </div>
 
-              <span className="text-xs font-bold text-teal-700 dark:text-teal-400 uppercase tracking-wider mb-1">
-                رئيس قسم تكنولوجيا المعلومات
-              </span>
-              <h4 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white leading-snug">
-                مهندس / صفوت الجزيري
-              </h4>
-              <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mt-2 max-w-md">
-                الإشراف الفني واستقرار السيرفرات والبنية التحتية
-              </p>
+              {/* Card 3B (في الوسط): مهندس صفوت الجزيري */}
+              <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-slate-900 border-2 border-teal-400 dark:border-teal-700 p-5 sm:p-6 shadow-xl shadow-teal-500/10 hover:border-teal-500 transition-all duration-300 flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg text-[11px] font-bold bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300">
+                      <ShieldCheck className="w-3.5 h-3.5 text-teal-600" />
+                      تكنولوجيا المعلومات
+                    </span>
+                    <div className="w-10 h-10 rounded-xl bg-teal-100 dark:bg-teal-950/60 text-teal-700 dark:text-teal-300 flex items-center justify-center">
+                      <ShieldCheck className="w-5 h-5" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+                      رئيس قسم تكنولوجيا المعلومات
+                    </p>
+                    <h4 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-0.5">
+                      مهندس / صفوت الجزيري
+                    </h4>
+                  </div>
+
+                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-2.5">
+                    الإشراف الفني واستقرار السيرفرات والبنية التحتية
+                  </p>
+                </div>
+
+                <div className="mt-3 pt-2 flex items-center gap-1.5 text-[11px] font-semibold text-teal-600 dark:text-teal-400">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>استقرار السيرفرات والشبكات المركزية</span>
+                </div>
+              </div>
+
+              {/* Card 3C (على شمال صفوت): أستاذ محمد فوزي */}
+              <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-slate-900 border-2 border-indigo-300 dark:border-indigo-800/70 p-5 sm:p-6 shadow-lg shadow-indigo-500/5 hover:border-indigo-500 transition-all duration-300 flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg text-[11px] font-bold bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300">
+                      <Briefcase className="w-3.5 h-3.5 text-indigo-600" />
+                      الشئون الإدارية
+                    </span>
+                    <div className="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center">
+                      <Briefcase className="w-5 h-5" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <p className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">
+                      رئيس الشئون الإدارية
+                    </p>
+                    <h4 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-0.5">
+                      أستاذ / محمد فوزي
+                    </h4>
+                  </div>
+
+                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-2.5">
+                    التنظيم الإداري والخدمات المعاونة برئاسة الفرع
+                  </p>
+                </div>
+
+                <div className="mt-3 pt-2 flex items-center gap-1.5 text-[11px] font-semibold text-indigo-600 dark:text-indigo-400">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>التنسيق والمساندة الإدارية الشاملة</span>
+                </div>
+              </div>
             </div>
 
             {/* Tree Connector Line */}
@@ -528,7 +632,7 @@ export default function TeamPage() {
           </div>
 
           {/* Active Facility Header Banner */}
-          <div className="p-4 sm:p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between gap-3">
+          <div className="p-4 sm:p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between gap-3 flex-wrap">
             <div className="flex items-center gap-3">
               <span className="text-3xl">{currentFacilityInfo.icon}</span>
               <div>
@@ -541,10 +645,26 @@ export default function TeamPage() {
               </div>
             </div>
 
-            <div className="text-left shrink-0">
-              <span className="px-3 py-1 rounded-xl bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800 text-xs font-bold font-mono">
-                {activeFacilityMembers.length} عضو
-              </span>
+            <div className="flex items-center gap-2">
+              {currentFacilityInfo.mapUrl && (
+                <a
+                  href={currentFacilityInfo.mapUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3 py-1.5 rounded-xl bg-sky-50 dark:bg-sky-950/60 hover:bg-sky-100 dark:hover:bg-sky-900 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800 text-xs font-bold transition flex items-center gap-1.5 shadow-sm"
+                  title="فتح الموقع على الخريطة GPS"
+                >
+                  <MapPin className="w-3.5 h-3.5 text-sky-600" />
+                  <span>فتح اللوكيشن 📍</span>
+                  <ExternalLink className="w-3 h-3 opacity-60" />
+                </a>
+              )}
+
+              <div className="text-left shrink-0">
+                <span className="px-3 py-1 rounded-xl bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800 text-xs font-bold font-mono">
+                  {activeFacilityMembers.length} عضو
+                </span>
+              </div>
             </div>
           </div>
 

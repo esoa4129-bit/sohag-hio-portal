@@ -44,6 +44,7 @@ export interface HospitalFacility {
   iconText: string;
   heroEmoji: string;
   heroPattern: string;
+  mapUrl: string;
 }
 
 export const SOHAG_FACILITIES: HospitalFacility[] = [
@@ -79,64 +80,8 @@ export const SOHAG_FACILITIES: HospitalFacility[] = [
     badgeColor: "bg-sky-500/20 text-sky-700 dark:text-sky-300 border-sky-500/30",
     iconText: "🏥",
     heroEmoji: "🏥",
-    heroPattern: "from-sky-700 via-blue-800 to-indigo-950"
-  },
-  {
-    id: "akhmim",
-    name: "مجمع عيادات أخميم للتأمين الصحي",
-    type: "مجمع عيادات تخصصية خارجية",
-    city: "أخميم (شرق سوهاج)",
-    address: "مدينة أخميم - بجوار المدرسة الإعدادية",
-    phone: "093-4712233",
-    emergency: false,
-    workingHours: "يومياً من 8:00 ص حتى 3:00 م",
-    description: "يقدم الخدمات التأمينية العلاجية لمنتفعي مدينة أخميم والمناطق المحيطة عبر عيادات متخصصة ولجان طبية لفحص الطلاب واللجان العامة.",
-    specialties: [
-      "عيادات العظام والروماتيزم والمفاصل",
-      "عيادات الباطنة والجهاز الهضمي والقلب",
-      "عيادات الأسنان وجراحة الفم واللثة",
-      "الفحص الطبي الشامل للموظفين الجدد واللياقة الطبية",
-      "صيدلية العلاج الشهري لأصحاب المعاشات"
-    ],
-    keyFeatures: [
-      "المقر الرئيسي للجان الطلاب بالقطاع الأوسط",
-      "معامل متطورة لتحاليل الدم والأنيميا",
-      "قاعات انتظار مكيفة ومجهزة لكبار السن"
-    ],
-    accentGradient: "from-amber-600 via-orange-700 to-slate-950",
-    badgeColor: "bg-amber-500/20 text-amber-700 dark:text-amber-300 border-amber-500/30",
-    iconText: "🩺",
-    heroEmoji: "🩺",
-    heroPattern: "from-amber-700 via-orange-800 to-slate-950"
-  },
-  {
-    id: "balyana",
-    name: "مجمع عيادات البلينا للتأمين الصحي",
-    type: "مجمع عيادات خارجية وتغطية تأمينية",
-    city: "البلينا (أقصى جنوب سوهاج)",
-    address: "مدينة البلينا - شارع الجمهورية - أمام المحكمة",
-    phone: "093-4809988",
-    emergency: false,
-    workingHours: "يومياً من 8:00 ص حتى 3:00 م",
-    description: "يقدم الخدمات الطبية لمنتفعي أقصى جنوب المحافظة، ويشمل عيادات تخصصية متطورة تخدم العمال، الموظفين، أصحاب المعاشات، وطلبة المدارس لتجنيبهم مشقة السفر لعاصمة المحافظة.",
-    specialties: [
-      "عيادات الباطنة العامة وأمراض الكبد والسكر",
-      "عيادات جراحة العظام والعمود الفقري",
-      "عيادات الأطفال وحديثي الولادة",
-      "عيادات المسالك البولية والتناسلية",
-      "لجان اعتماد الإجازات والتقارير الطبية",
-      "صيدلية صرف الأدوية المزمنة للمنتفعين"
-    ],
-    keyFeatures: [
-      "توفير الرعاية للمنتفعين بأقصى جنوب المحافظة",
-      "خدمة سريعة ومميكنة لصرف العلاج الدوري",
-      "تنسيق مباشر مع مستشفى الهلال للحالات الجراحية"
-    ],
-    accentGradient: "from-teal-600 via-emerald-800 to-slate-950",
-    badgeColor: "bg-teal-500/20 text-teal-700 dark:text-teal-300 border-teal-500/30",
-    iconText: "🏥",
-    heroEmoji: "🏥",
-    heroPattern: "from-teal-700 via-emerald-800 to-slate-950"
+    heroPattern: "from-sky-700 via-blue-800 to-indigo-950",
+    mapUrl: "https://maps.google.com/?q=مستشفى+الهلال+للتأمين+الصحي+سوهاج"
   },
   {
     id: "ramadan10",
@@ -165,18 +110,19 @@ export const SOHAG_FACILITIES: HospitalFacility[] = [
     badgeColor: "bg-rose-500/20 text-rose-700 dark:text-rose-300 border-rose-500/30",
     iconText: "🏥",
     heroEmoji: "🏥",
-    heroPattern: "from-rose-700 via-pink-800 to-slate-950"
+    heroPattern: "from-rose-700 via-pink-800 to-slate-950",
+    mapUrl: "https://maps.google.com/?q=مجمع+العاشر+من+رمضان+للتأمين+الصحي+سوهاج"
   },
   {
     id: "specialized",
-    name: "مستشفى التخصصية للتأمين الصحي",
-    type: "مستشفى تخصصي واللجنة الفرعية",
+    name: "عيادات التخصصية للتأمين الصحي",
+    type: "عيادات تخصصية واللجنة الفرعية",
     city: "مدينة سوهاج",
-    address: "سوهاج - المنطقة الطبية - مستشفى التخصصية",
+    address: "سوهاج - المنطقة الطبية - عيادات التخصصية",
     phone: "093-2356789",
     emergency: false,
     workingHours: "يومياً من 8:00 ص حتى 3:00 م",
-    description: "مستشفى تخصصية تابعة لفرع سوهاج للتأمين الصحي تضم اللجنة الفرعية والخدمات الطبية التخصصية المتقدمة، وتقدم رعاية طبية متميزة للمنتفعين.",
+    description: "عيادات تخصصية تابعة لفرع سوهاج للتأمين الصحي تضم اللجنة الفرعية والخدمات الطبية التخصصية المتقدمة، وتقدم رعاية طبية متميزة للمنتفعين.",
     specialties: [
       "اللجنة الفرعية للتأمين الصحي",
       "العيادات التخصصية المتقدمة",
@@ -194,7 +140,96 @@ export const SOHAG_FACILITIES: HospitalFacility[] = [
     badgeColor: "bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 border-cyan-500/30",
     iconText: "🏥",
     heroEmoji: "🏥",
-    heroPattern: "from-cyan-700 via-teal-800 to-slate-950"
+    heroPattern: "from-cyan-700 via-teal-800 to-slate-950",
+    mapUrl: "https://maps.google.com/?q=عيادات+التخصصية+للتأمين+الصحي+سوهاج"
+  },
+  {
+    id: "sohag-region",
+    name: "منطقة سوهاج للتأمين الصحي",
+    type: "إدارة منطقة سوهاج والمتابعة التأمينية",
+    city: "مدينة سوهاج",
+    address: "سوهاج - مجمع الإدارات التأمينية - منطقة سوهاج",
+    phone: "093-2315544",
+    emergency: false,
+    workingHours: "يومياً من 8:00 ص حتى 3:00 م",
+    description: "الإدارة الإقليمية لمنطقة سوهاج للتأمين الصحي، تشرف على متابعة العيادات والوحدات التأمينية وخدمات المنتفعين والموظفين واللجان الطبية بالمنطقة.",
+    specialties: [
+      "إدارة ومتابعة الوحدات التأمينية بسوهاج",
+      "الشئون الطبية والعلاجية للمنطقة",
+      "الشئون المالية والإدارية لمنطقة سوهاج",
+      "خدمة المواطنين وشكاوى المنتفعين",
+      "لجان الاعتماد والتسجيل التأميني"
+    ],
+    keyFeatures: [
+      "الإشراف الميداني على وحدات التأمين بالمنطقة",
+      "تيسير معاملات المنتفعين والشركات والهيئات",
+      "تنسيق مستمر مع رئاسة الفرع والمستشفيات"
+    ],
+    accentGradient: "from-blue-600 via-indigo-800 to-slate-950",
+    badgeColor: "bg-blue-500/20 text-blue-700 dark:text-blue-300 border-blue-500/30",
+    iconText: "🏢",
+    heroEmoji: "🏢",
+    heroPattern: "from-blue-700 via-indigo-800 to-slate-950",
+    mapUrl: "https://maps.google.com/?q=منطقة+سوهاج+للتأمين+الصحي"
+  },
+  {
+    id: "akhmim",
+    name: "مجمع عيادات أخميم للتأمين الصحي",
+    type: "مجمع عيادات تخصصية خارجية",
+    city: "أخميم (شرق سوهاج)",
+    address: "مدينة أخميم - بجوار المدرسة الإعدادية",
+    phone: "093-4712233",
+    emergency: false,
+    workingHours: "يومياً من 8:00 ص حتى 3:00 م",
+    description: "يقدم الخدمات التأمينية العلاجية لمنتفعي مدينة أخميم والمناطق المحيطة عبر عيادات متخصصة ولجان طبية لفحص الطلاب واللجان العامة.",
+    specialties: [
+      "عيادات العظام والروماتيزم والمفاصل",
+      "عيادات الباطنة والجهاز الهضمي والقلب",
+      "عيادات الأسنان وجراحة الفم واللثة",
+      "الفحص الطبي الشامل للموظفين الجدد واللياقة الطبية",
+      "صيدلية العلاج الشهري لأصحاب المعاشات"
+    ],
+    keyFeatures: [
+      "المقر الرئيسي للجان الطلاب بالقطاع الأوسط",
+      "معامل متطورة لتحاليل الدم والأنيميا",
+      "قاعات انتظار مكيفة ومجهزة لكبار السن"
+    ],
+    accentGradient: "from-amber-600 via-orange-700 to-slate-950",
+    badgeColor: "bg-amber-500/20 text-amber-700 dark:text-amber-300 border-amber-500/30",
+    iconText: "🩺",
+    heroEmoji: "🩺",
+    heroPattern: "from-amber-700 via-orange-800 to-slate-950",
+    mapUrl: "https://maps.google.com/?q=مجمع+عيادات+أخميم+للتأمين+الصحي"
+  },
+  {
+    id: "balyana",
+    name: "مجمع عيادات البلينا للتأمين الصحي",
+    type: "مجمع عيادات خارجية وتغطية تأمينية",
+    city: "البلينا (أقصى جنوب سوهاج)",
+    address: "مدينة البلينا - شارع الجمهورية - أمام المحكمة",
+    phone: "093-4809988",
+    emergency: false,
+    workingHours: "يومياً من 8:00 ص حتى 3:00 م",
+    description: "يقدم الخدمات الطبية لمنتفعي أقصى جنوب المحافظة، ويشمل عيادات تخصصية متطورة تخدم العمال، الموظفين، أصحاب المعاشات، وطلبة المدارس لتجنيبهم مشقة السفر لعاصمة المحافظة.",
+    specialties: [
+      "عيادات الباطنة العامة وأمراض الكبد والسكر",
+      "عيادات جراحة العظام والعمود الفقري",
+      "عيادات الأطفال وحديثي الولادة",
+      "عيادات المسالك البولية والتناسلية",
+      "لجان اعتماد الإجازات والتقارير الطبية",
+      "صيدلية صرف الأدوية المزمنة للمنتفعين"
+    ],
+    keyFeatures: [
+      "توفير الرعاية للمنتفعين بأقصى جنوب المحافظة",
+      "خدمة سريعة ومميكنة لصرف العلاج الدوري",
+      "تنسيق مباشر مع مستشفى الهلال للحالات الجراحية"
+    ],
+    accentGradient: "from-teal-600 via-emerald-800 to-slate-950",
+    badgeColor: "bg-teal-500/20 text-teal-700 dark:text-teal-300 border-teal-500/30",
+    iconText: "🏥",
+    heroEmoji: "🏥",
+    heroPattern: "from-teal-700 via-emerald-800 to-slate-950",
+    mapUrl: "https://maps.google.com/?q=عيادات+البلينا+للتأمين+الصحي"
   },
   {
     id: "wafa",
@@ -223,7 +258,8 @@ export const SOHAG_FACILITIES: HospitalFacility[] = [
     badgeColor: "bg-purple-500/20 text-purple-700 dark:text-purple-300 border-purple-500/30",
     iconText: "⭐",
     heroEmoji: "⭐",
-    heroPattern: "from-purple-700 via-indigo-800 to-slate-950"
+    heroPattern: "from-purple-700 via-indigo-800 to-slate-950",
+    mapUrl: "https://maps.google.com/?q=عيادات+الوفاء+للتأمين+الصحي+شارع+سيتي+سوهاج"
   }
 ];
 
@@ -462,12 +498,26 @@ export default function HospitalsShowcase({ onOpenBooking }: HospitalsShowcasePr
 
                 {/* QUICK INFO GRID */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                  <div className="flex items-start gap-2.5 p-3 rounded-xl bg-sky-50/70 dark:bg-sky-950/30 border border-sky-100 dark:border-sky-900/50">
-                    <MapPin className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0 mt-0.5" />
-                    <div>
-                      <span className="text-[10px] font-bold text-sky-700 dark:text-sky-400 uppercase tracking-wider">العنوان</span>
-                      <p className="text-[11px] text-slate-600 dark:text-slate-300 mt-0.5">{facility.address}</p>
+                  <div className="flex items-start justify-between gap-2 p-3 rounded-xl bg-sky-50/70 dark:bg-sky-950/30 border border-sky-100 dark:border-sky-900/50">
+                    <div className="flex items-start gap-2.5 min-w-0">
+                      <MapPin className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0 mt-0.5" />
+                      <div>
+                        <span className="text-[10px] font-bold text-sky-700 dark:text-sky-400 uppercase tracking-wider">العنوان</span>
+                        <p className="text-[11px] text-slate-600 dark:text-slate-300 mt-0.5">{facility.address}</p>
+                      </div>
                     </div>
+                    {facility.mapUrl && (
+                      <a
+                        href={facility.mapUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="shrink-0 px-2 py-1 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-[10px] font-bold flex items-center gap-1 transition shadow-sm"
+                        title="فتح الموقع على الخريطة GPS"
+                      >
+                        <span>الخريطة 📍</span>
+                        <ExternalLink className="w-2.5 h-2.5" />
+                      </a>
+                    )}
                   </div>
                   
                   <div className="flex items-start gap-2.5 p-3 rounded-xl bg-emerald-50/70 dark:bg-emerald-950/30 border border-emerald-100 dark:border-emerald-900/50">
@@ -694,6 +744,19 @@ export default function HospitalsShowcase({ onOpenBooking }: HospitalsShowcasePr
                   <Stethoscope className="w-4 h-4" />
                   <span>حجز موعد كشف بهذه المنشأة</span>
                 </button>
+
+                {activeModalFacility.mapUrl && (
+                  <a
+                    href={activeModalFacility.mapUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-5 py-3.5 rounded-xl bg-sky-50 hover:bg-sky-100 dark:bg-sky-950/70 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800 font-bold text-xs sm:text-sm transition flex items-center gap-2"
+                  >
+                    <MapPin className="w-4 h-4 text-sky-600" />
+                    <span>الموقع على الخريطة 📍</span>
+                    <ExternalLink className="w-3.5 h-3.5 opacity-60" />
+                  </a>
+                )}
 
                 <Link
                   href="/team"
