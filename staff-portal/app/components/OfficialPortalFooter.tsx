@@ -102,6 +102,15 @@ export default function OfficialPortalFooter() {
                   <span>دليل المنظومات الطبية واللجان المتخصصة</span>
                 </a>
               </li>
+              <li>
+                <Link
+                  href="/privacy"
+                  className="hover:text-sky-600 dark:hover:text-sky-400 transition flex items-center gap-1.5 group text-slate-600 dark:text-slate-300 font-medium"
+                >
+                  <ShieldCheck className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
+                  <span>سياسة الخصوصية وحماية الرقم القومي</span>
+                </Link>
+              </li>
             </ul>
           </div>
 
@@ -201,10 +210,12 @@ export default function OfficialPortalFooter() {
               إشراف ورعاية: <strong className="text-slate-900 dark:text-white">دكتور / محمد خلف عفيفي</strong> - مدير عام فرع سوهاج
             </span>
           </div>
-          <div className="flex items-center gap-3 text-[11px]">
-            <span>مواعيد العمل الرسمية: السبت إلى الخميس (8:00 ص - 2:00 م)</span>
+          <div className="flex items-center gap-3 text-[11px] flex-wrap">
+            <span>مواعيد العمل: الفترة الصباحية (8:00 ص - 2:00 م)</span>
             <span>•</span>
-            <span className="text-emerald-600 dark:text-emerald-400 font-semibold">أقسام الطوارئ تعمل 24 ساعة يومياً</span>
+            <span>الفترة المسائية (4:00 م - 8:00 م)</span>
+            <span>•</span>
+            <span className="text-emerald-600 dark:text-emerald-400 font-semibold">أقسام الطوارئ 24/7</span>
           </div>
         </div>
 

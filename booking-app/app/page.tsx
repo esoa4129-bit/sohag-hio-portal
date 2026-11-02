@@ -571,7 +571,7 @@ export default function BookingPage() {
             className="group inline-flex items-center gap-3 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-teal-600 to-emerald-700 hover:from-teal-500 hover:to-emerald-600 text-white font-extrabold text-sm shadow-xl shadow-teal-900/20 transition transform hover:-translate-y-0.5 active:translate-y-0"
           >
             <CalendarDays className="w-5 h-5 text-teal-200 group-hover:animate-bounce" />
-            <span>📋 عرض جداول ومواعيد تشغيل العيادات بالأيام</span>
+            <span>عرض جداول ومواعيد تشغيل العيادات بالأيام</span>
           </a>
         </div>
 
@@ -685,8 +685,9 @@ export default function BookingPage() {
 
             <div className="space-y-4 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
               <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800 space-y-2">
-                <p className="font-bold text-slate-800 dark:text-slate-100">
-                  📱 لهواتف الآيفون (Safari):
+                <p className="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
+                  <Smartphone className="w-4 h-4 text-emerald-600" />
+                  <span>لهواتف الآيفون (Safari):</span>
                 </p>
                 <ol className="space-y-1 list-decimal list-inside text-[11px] sm:text-xs">
                   <li>اضغط على زر <strong>المشاركة (Share)</strong> أسفل المتصفح.</li>
@@ -696,8 +697,9 @@ export default function BookingPage() {
               </div>
 
               <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800 space-y-2">
-                <p className="font-bold text-slate-800 dark:text-slate-100">
-                  🤖 لهواتف الأندرويد (Chrome):
+                <p className="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
+                  <Smartphone className="w-4 h-4 text-emerald-600" />
+                  <span>لهواتف الأندرويد (Chrome):</span>
                 </p>
                 <ol className="space-y-1 list-decimal list-inside text-[11px] sm:text-xs">
                   <li>اضغط على القائمة <strong>(ثلاث نقاط ⋮)</strong> أعلى المتصفح.</li>

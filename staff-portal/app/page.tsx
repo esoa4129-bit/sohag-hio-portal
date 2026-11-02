@@ -1637,8 +1637,9 @@ export default function StaffPortalPage() {
 
             <div className="space-y-4 text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed">
               <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800 space-y-2">
-                <p className="font-bold text-slate-800 dark:text-slate-100">
-                  💻 على جهاز الكمبيوتر (Chrome / Edge):
+                <p className="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
+                  <Server className="w-4 h-4 text-sky-500" />
+                  <span>على أجهزة الكمبيوتر (Chrome / Edge):</span>
                 </p>
                 <p className="text-[11px] sm:text-xs">
                   اضغط على أيقونة التثبيت <strong>(⊕ أو Install App)</strong> الموجودة في شريط عنوان المتصفح بالأعلى، أو من قائمة خيارات المتصفح (⋮).
@@ -1646,8 +1647,9 @@ export default function StaffPortalPage() {
               </div>
 
               <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800 space-y-2">
-                <p className="font-bold text-slate-800 dark:text-slate-100">
-                  📱 على هواتف الآيفون (iOS Safari):
+                <p className="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
+                  <Smartphone className="w-4 h-4 text-sky-500" />
+                  <span>على هواتف الآيفون (iOS Safari):</span>
                 </p>
                 <ol className="space-y-1 list-decimal list-inside text-[11px] sm:text-xs">
                   <li>اضغط على زر المشاركة (Share) أسفل المتصفح.</li>
@@ -1657,8 +1659,9 @@ export default function StaffPortalPage() {
               </div>
 
               <div className="p-3 rounded-2xl bg-slate-50 dark:bg-slate-800 space-y-2">
-                <p className="font-bold text-slate-800 dark:text-slate-100">
-                  🤖 على هواتف الأندرويد (Android Chrome):
+                <p className="font-bold text-slate-800 dark:text-slate-100 flex items-center gap-1.5">
+                  <Smartphone className="w-4 h-4 text-sky-500" />
+                  <span>على هواتف الأندرويد (Android Chrome):</span>
                 </p>
                 <ol className="space-y-1 list-decimal list-inside text-[11px] sm:text-xs">
                   <li>اضغط على القائمة (ثلاث نقاط ⋮) بالأعلى.</li>

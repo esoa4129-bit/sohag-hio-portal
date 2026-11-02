@@ -570,8 +570,9 @@ export default function TeamPage() {
         {/* ═══════════════════════════════════════════════════════════════════════ */}
         <section className="space-y-6 pt-4">
           <div className="text-center space-y-1">
-            <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white">
-              🏥 أطقم عمل مستشفيات ومراكز التأمين الصحي بسوهاج
+            <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center justify-center gap-2">
+              <Building2 className="w-5 h-5 text-sky-600 dark:text-sky-400" />
+              <span>أطقم عمل مستشفيات ومراكز التأمين الصحي بسوهاج</span>
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400">
               اختر المستشفى أو المركز لعرض فريق العمل والأطباء المضافين بكل منشأة
@@ -655,7 +656,7 @@ export default function TeamPage() {
                   title="فتح الموقع على الخريطة GPS"
                 >
                   <MapPin className="w-3.5 h-3.5 text-sky-600" />
-                  <span>فتح اللوكيشن 📍</span>
+                  <span>الموقع على الخريطة</span>
                   <ExternalLink className="w-3 h-3 opacity-60" />
                 </a>
               )}

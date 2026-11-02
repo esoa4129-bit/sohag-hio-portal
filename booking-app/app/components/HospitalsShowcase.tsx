@@ -22,7 +22,9 @@ import {
   Ambulance,
   Star,
   ChevronDown,
-  Eye
+  Eye,
+  PhoneCall,
+  Building
 } from "lucide-react";
 
 export interface HospitalFacility {
@@ -35,6 +37,7 @@ export interface HospitalFacility {
   emergency: boolean;
   emergencyHours?: string;
   workingHours: string;
+  hasBooking?: boolean;
   bedsCount?: string;
   description: string;
   specialties: string[];
@@ -127,7 +130,8 @@ export const SOHAG_FACILITIES: HospitalFacility[] = [
     phone: "093-2324567 / 093-2328901",
     emergency: true,
     emergencyHours: "24 ساعة طوال أيام الأسبوع",
-    workingHours: "العيادات: 8:00 ص - 8:00 م | الطوارئ: 24 ساعة",
+    workingHours: "العيادات: 8:00 ص - 2:00 م | الاستقبال والطوارئ: 24 ساعة",
+    hasBooking: true,
     bedsCount: "240 سريراً + 28 عناية مركزة + 12 حضانة",
     description: "الصرح الطبي والجراحي الأكبر التابع لفرع سوهاج للتأمين الصحي، يقدم العمليات الجراحية الكبرى والدقيقة، الرعايات المركزة، مناظير الجهاز الهضمي، وحدة القسطرة، وقسم الطوارئ والاستقبال المجهز على مدار الساعة.",
     specialties: [
@@ -148,8 +152,8 @@ export const SOHAG_FACILITIES: HospitalFacility[] = [
     ],
     accentGradient: "from-red-600 via-rose-800 to-slate-950",
     badgeColor: "bg-red-500/20 text-red-700 dark:text-red-300 border-red-500/30",
-    iconText: "🌙",
-    heroEmoji: "🌙",
+    iconText: "",
+    heroEmoji: "",
     heroPattern: "from-rose-800 via-red-900 to-slate-950",
     mapUrl: "https://maps.google.com/?q=مستشفى+الهلال+للتأمين+الصحي+سوهاج"
   },
@@ -161,7 +165,8 @@ export const SOHAG_FACILITIES: HospitalFacility[] = [
     address: "سوهاج - مجمع العاشر من رمضان - بجوار مديرية الصحة",
     phone: "093-2345678",
     emergency: false,
-    workingHours: "يومياً من 8:00 ص حتى 3:00 م",
+    workingHours: "الفترة الصباحية: 8:00 ص - 2:00 م | الفترة المسائية: 4:00 م - 8:00 م",
+    hasBooking: true,
     description: "يضم اللجنة العامة لسوهاج والعيادات التخصصية الخارجية، ويقدم خدمات الكشف الطبي واللجان العامة لمنتفعي التأمين الصحي بالمحافظة، بالإضافة إلى خدمات الصيدلة والمعامل.",
     specialties: [
       "اللجنة العامة سوهاج للتأمين الصحي",
@@ -178,8 +183,8 @@ export const SOHAG_FACILITIES: HospitalFacility[] = [
     ],
     accentGradient: "from-rose-600 via-pink-800 to-slate-950",
     badgeColor: "bg-rose-500/20 text-rose-700 dark:text-rose-300 border-rose-500/30",
-    iconText: "🏥",
-    heroEmoji: "🏥",
+    iconText: "",
+    heroEmoji: "",
     heroPattern: "from-rose-700 via-pink-800 to-slate-950",
     mapUrl: "https://maps.google.com/?q=مجمع+العاشر+من+رمضان+للتأمين+الصحي+سوهاج"
   },
@@ -191,7 +196,8 @@ export const SOHAG_FACILITIES: HospitalFacility[] = [
     address: "سوهاج - المنطقة الطبية - عيادات التخصصية",
     phone: "093-2356789",
     emergency: false,
-    workingHours: "يومياً من 8:00 ص حتى 3:00 م",
+    workingHours: "الفترة الصباحية: 8:00 ص - 2:00 م | الفترة المسائية: 4:00 م - 8:00 م",
+    hasBooking: true,
     description: "عيادات تخصصية تابعة لفرع سوهاج للتأمين الصحي تضم اللجنة الفرعية والخدمات الطبية التخصصية المتقدمة، وتقدم رعاية طبية متميزة للمنتفعين.",
     specialties: [
       "اللجنة الفرعية للتأمين الصحي",
@@ -208,8 +214,8 @@ export const SOHAG_FACILITIES: HospitalFacility[] = [
     ],
     accentGradient: "from-cyan-600 via-teal-800 to-slate-950",
     badgeColor: "bg-cyan-500/20 text-cyan-700 dark:text-cyan-300 border-cyan-500/30",
-    iconText: "🏥",
-    heroEmoji: "🏥",
+    iconText: "",
+    heroEmoji: "",
     heroPattern: "from-cyan-700 via-teal-800 to-slate-950",
     mapUrl: "https://maps.google.com/?q=عيادات+التخصصية+للتأمين+الصحي+سوهاج"
   },
@@ -221,7 +227,8 @@ export const SOHAG_FACILITIES: HospitalFacility[] = [
     address: "سوهاج - مجمع الإدارات التأمينية - منطقة سوهاج",
     phone: "093-2315544",
     emergency: false,
-    workingHours: "يومياً من 8:00 ص حتى 3:00 م",
+    workingHours: "السبت إلى الخميس: 8:00 ص - 2:00 م (الجمعة عطلة رسمية)",
+    hasBooking: false,
     description: "الإدارة الإقليمية لمنطقة سوهاج للتأمين الصحي، تشرف على متابعة العيادات والوحدات التأمينية وخدمات المنتفعين والموظفين واللجان الطبية بالمنطقة.",
     specialties: [
       "إدارة ومتابعة الوحدات التأمينية بسوهاج",
@@ -237,8 +244,8 @@ export const SOHAG_FACILITIES: HospitalFacility[] = [
     ],
     accentGradient: "from-blue-600 via-indigo-800 to-slate-950",
     badgeColor: "bg-blue-500/20 text-blue-700 dark:text-blue-300 border-blue-500/30",
-    iconText: "🏢",
-    heroEmoji: "🏢",
+    iconText: "",
+    heroEmoji: "",
     heroPattern: "from-blue-700 via-indigo-800 to-slate-950",
     mapUrl: "https://maps.google.com/?q=منطقة+سوهاج+للتأمين+الصحي"
   },
@@ -250,7 +257,8 @@ export const SOHAG_FACILITIES: HospitalFacility[] = [
     address: "مدينة أخميم - بجوار المدرسة الإعدادية",
     phone: "093-4712233",
     emergency: false,
-    workingHours: "يومياً من 8:00 ص حتى 3:00 م",
+    workingHours: "الفترة الصباحية: 8:00 ص - 2:00 م | الفترة المسائية: 4:00 م - 8:00 م",
+    hasBooking: true,
     description: "يقدم الخدمات التأمينية العلاجية لمنتفعي مدينة أخميم والمناطق المحيطة عبر عيادات متخصصة ولجان طبية لفحص الطلاب واللجان العامة.",
     specialties: [
       "عيادات العظام والروماتيزم والمفاصل",
@@ -266,8 +274,8 @@ export const SOHAG_FACILITIES: HospitalFacility[] = [
     ],
     accentGradient: "from-teal-600 via-cyan-800 to-slate-950",
     badgeColor: "bg-teal-500/20 text-teal-700 dark:text-teal-300 border-teal-500/30",
-    iconText: "🩺",
-    heroEmoji: "🩺",
+    iconText: "",
+    heroEmoji: "",
     heroPattern: "from-teal-800 via-cyan-900 to-slate-950",
     mapUrl: "https://maps.google.com/?q=مجمع+عيادات+أخميم+للتأمين+الصحي"
   },
@@ -279,7 +287,8 @@ export const SOHAG_FACILITIES: HospitalFacility[] = [
     address: "مدينة البلينا - شارع الجمهورية - أمام المحكمة",
     phone: "093-4809988",
     emergency: false,
-    workingHours: "يومياً من 8:00 ص حتى 3:00 م",
+    workingHours: "الفترة الصباحية: 8:00 ص - 2:00 م | الفترة المسائية: 4:00 م - 8:00 م",
+    hasBooking: true,
     description: "يقدم الخدمات الطبية لمنتفعي أقصى جنوب المحافظة، ويشمل عيادات تخصصية متطورة تخدم العمال، الموظفين، أصحاب المعاشات، وطلبة المدارس لتجنيبهم مشقة السفر لعاصمة المحافظة.",
     specialties: [
       "عيادات الباطنة العامة وأمراض الكبد والسكر",
@@ -296,8 +305,8 @@ export const SOHAG_FACILITIES: HospitalFacility[] = [
     ],
     accentGradient: "from-teal-600 via-emerald-800 to-slate-950",
     badgeColor: "bg-teal-500/20 text-teal-700 dark:text-teal-300 border-teal-500/30",
-    iconText: "🏥",
-    heroEmoji: "🏥",
+    iconText: "",
+    heroEmoji: "",
     heroPattern: "from-teal-700 via-emerald-800 to-slate-950",
     mapUrl: "https://maps.google.com/?q=عيادات+البلينا+للتأمين+الصحي"
   },
@@ -309,7 +318,8 @@ export const SOHAG_FACILITIES: HospitalFacility[] = [
     address: "سوهاج - شارع سيتي الرئيسي - مجمع التأمين الصحي",
     phone: "093-2311122",
     emergency: false,
-    workingHours: "يومياً من 8:00 ص حتى 3:00 م",
+    workingHours: "الفترة الصباحية: 8:00 ص - 2:00 م | الفترة المسائية: 4:00 م - 8:00 م",
+    hasBooking: true,
     description: "المقر الإقليمي للجان الطبية التخصصية والعليا بمحافظة سوهاج، يضم لجان هرمون النمو للأطفال، لجان الأورام والبروتوكولات البيولوجية، لجان أمراض الدم واللجان النفسية.",
     specialties: [
       "لجنة هرمون النمو (Growth Hormone) للأطفال",
@@ -326,8 +336,8 @@ export const SOHAG_FACILITIES: HospitalFacility[] = [
     ],
     accentGradient: "from-purple-600 via-indigo-800 to-slate-950",
     badgeColor: "bg-purple-500/20 text-purple-700 dark:text-purple-300 border-purple-500/30",
-    iconText: "⭐",
-    heroEmoji: "⭐",
+    iconText: "",
+    heroEmoji: "",
     heroPattern: "from-purple-700 via-indigo-800 to-slate-950",
     mapUrl: "https://maps.google.com/?q=عيادات+الوفاء+للتأمين+الصحي+شارع+سيتي+سوهاج"
   }
@@ -404,8 +414,8 @@ export default function HospitalsShowcase({ onOpenBooking }: HospitalsShowcasePr
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6">
             <div className="relative overflow-hidden p-4 sm:p-5 rounded-2xl bg-white/[0.07] border border-white/[0.12] backdrop-blur-sm hover:bg-white/[0.12] transition group">
               <div className="absolute top-0 right-0 w-20 h-20 bg-amber-500/10 rounded-full blur-2xl pointer-events-none" />
-              <span className="text-2xl sm:text-4xl font-black text-amber-400 font-mono block">6+</span>
-              <p className="text-[11px] sm:text-xs text-slate-300 mt-1 font-bold">مستشفيات ومجمعات كبرى</p>
+              <span className="text-2xl sm:text-4xl font-black text-amber-400 font-mono block">7</span>
+              <p className="text-[11px] sm:text-xs text-slate-300 mt-1 font-bold">صروح طبية ومراكز كبرى</p>
               <Building2 className="w-5 h-5 text-amber-400/30 absolute bottom-3 left-3 group-hover:text-amber-400/60 transition" />
             </div>
 
@@ -462,11 +472,11 @@ export default function HospitalsShowcase({ onOpenBooking }: HospitalsShowcasePr
       </div>
 
       {/* ══════════════════════════════════════════════════════════════════════════ */}
-      {/* SECTION TITLE: OUR HOSPITALS                                             */}
-      {/* ══════════════════════════════════════════════════════════════════════════ */}
+      {/* SECTION TITLE: OUR HOSPITALS */}
       <div className="text-center space-y-2 pt-2">
-        <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white">
-          🏥 مستشفيات ومراكز فرع سوهاج
+        <h3 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white flex items-center justify-center gap-2">
+          <Building2 className="w-7 h-7 text-sky-600 dark:text-sky-400" />
+          <span>مستشفيات ومراكز فرع سوهاج</span>
         </h3>
         <p className="text-sm text-slate-500 dark:text-slate-400 max-w-2xl mx-auto">
           اكتشف المنشآت الطبية والمستشفيات التابعة لفرع سوهاج للتأمين الصحي عبر محافظة سوهاج
@@ -477,24 +487,27 @@ export default function HospitalsShowcase({ onOpenBooking }: HospitalsShowcasePr
       <div className="sticky top-16 z-20 flex flex-col sm:flex-row items-center justify-between gap-3 bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl p-3 sm:p-4 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-lg">
         <div className="flex items-center gap-1.5 overflow-x-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden w-full sm:w-auto pb-1 sm:pb-0 text-xs">
           {[
-            { key: "all", label: `الكل (${SOHAG_FACILITIES.length})`, emoji: "🏥" },
-            { key: "مدينة سوهاج", label: "مدينة سوهاج", emoji: "🌆" },
-            { key: "أخميم", label: "أخميم", emoji: "🏘️" },
-            { key: "البلينا", label: "البلينا", emoji: "🏘️" }
-          ].map((city) => (
-            <button
-              key={city.key}
-              onClick={() => setSelectedCity(city.key)}
-              className={`px-3.5 py-2 rounded-xl font-bold whitespace-nowrap transition flex items-center gap-1.5 ${
-                selectedCity === city.key
-                  ? "bg-gradient-to-r from-sky-600 to-blue-700 text-white shadow-md shadow-sky-600/20"
-                  : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
-              }`}
-            >
-              <span>{city.emoji}</span>
-              <span>{city.label}</span>
-            </button>
-          ))}
+            { key: "all", label: `الكل (${SOHAG_FACILITIES.length})`, icon: Building2 },
+            { key: "مدينة سوهاج", label: "مدينة سوهاج", icon: Building },
+            { key: "أخميم", label: "أخميم", icon: MapPin },
+            { key: "البلينا", label: "البلينا", icon: MapPin }
+          ].map((city) => {
+            const Icon = city.icon;
+            return (
+              <button
+                key={city.key}
+                onClick={() => setSelectedCity(city.key)}
+                className={`px-3.5 py-2 rounded-xl font-bold whitespace-nowrap transition flex items-center gap-1.5 ${
+                  selectedCity === city.key
+                    ? "bg-gradient-to-r from-sky-600 to-blue-700 text-white shadow-md shadow-sky-600/20"
+                    : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
+                }`}
+              >
+                <Icon className="w-3.5 h-3.5" />
+                <span>{city.label}</span>
+              </button>
+            );
+          })}
         </div>
 
         <div className="relative w-full sm:w-64">
@@ -542,8 +555,9 @@ export default function HospitalsShowcase({ onOpenBooking }: HospitalsShowcasePr
                       <span>طوارئ 24/7</span>
                     </span>
                   )}
-                  <span className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white text-[11px] font-bold shadow-sm border border-white/20">
-                    📍 {facility.city}
+                  <span className="px-3 py-1.5 rounded-full bg-white/20 backdrop-blur-md text-white text-[11px] font-bold shadow-sm border border-white/20 flex items-center gap-1">
+                    <MapPin className="w-3 h-3 text-white" />
+                    <span>{facility.city}</span>
                   </span>
                 </div>
 
@@ -583,7 +597,8 @@ export default function HospitalsShowcase({ onOpenBooking }: HospitalsShowcasePr
                         className="shrink-0 px-2 py-1 rounded-lg bg-sky-600 hover:bg-sky-700 text-white text-[10px] font-bold flex items-center gap-1 transition shadow-sm"
                         title="فتح الموقع على الخريطة GPS"
                       >
-                        <span>الخريطة 📍</span>
+                        <MapPin className="w-3 h-3" />
+                        <span>الخريطة</span>
                         <ExternalLink className="w-2.5 h-2.5" />
                       </a>
                     )}
@@ -671,13 +686,23 @@ export default function HospitalsShowcase({ onOpenBooking }: HospitalsShowcasePr
                     <span>عرض كل التفاصيل</span>
                   </button>
 
-                  <button
-                    onClick={onOpenBooking}
-                    className="flex-1 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20 transition"
-                  >
-                    <Stethoscope className="w-4 h-4" />
-                    <span>حجز موعد</span>
-                  </button>
+                  {facility.hasBooking !== false ? (
+                    <button
+                      onClick={onOpenBooking}
+                      className="flex-1 py-3 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20 transition"
+                    >
+                      <Stethoscope className="w-4 h-4" />
+                      <span>حجز موعد</span>
+                    </button>
+                  ) : (
+                    <a
+                      href={`tel:${facility.phone.split(" / ")[0].replace(/[^0-9]/g, "")}`}
+                      className="flex-1 py-3 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-xs flex items-center justify-center gap-2 shadow-md shadow-blue-600/20 transition"
+                    >
+                      <PhoneCall className="w-4 h-4" />
+                      <span>اتصال بالإدارة</span>
+                    </a>
+                  )}
                 </div>
               </div>
             </div>
@@ -804,16 +829,26 @@ export default function HospitalsShowcase({ onOpenBooking }: HospitalsShowcasePr
 
               {/* Modal Bottom Actions */}
               <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-3 flex-wrap">
-                <button
-                  onClick={() => {
-                    setActiveModalFacility(null);
-                    onOpenBooking();
-                  }}
-                  className="flex-1 px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition"
-                >
-                  <Stethoscope className="w-4 h-4" />
-                  <span>حجز موعد كشف بهذه المنشأة</span>
-                </button>
+                {activeModalFacility.hasBooking !== false ? (
+                  <button
+                    onClick={() => {
+                      setActiveModalFacility(null);
+                      onOpenBooking();
+                    }}
+                    className="flex-1 px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/20 transition"
+                  >
+                    <Stethoscope className="w-4 h-4" />
+                    <span>حجز موعد كشف بهذه المنشأة</span>
+                  </button>
+                ) : (
+                  <a
+                    href={`tel:${activeModalFacility.phone.split(" / ")[0].replace(/[^0-9]/g, "")}`}
+                    className="flex-1 px-6 py-3.5 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-600/20 transition"
+                  >
+                    <PhoneCall className="w-4 h-4" />
+                    <span>اتصال هاتفي بالإدارة ({activeModalFacility.phone})</span>
+                  </a>
+                )}
 
                 {activeModalFacility.mapUrl && (
                   <a
@@ -823,7 +858,7 @@ export default function HospitalsShowcase({ onOpenBooking }: HospitalsShowcasePr
                     className="px-5 py-3.5 rounded-xl bg-sky-50 hover:bg-sky-100 dark:bg-sky-950/70 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800 font-bold text-xs sm:text-sm transition flex items-center gap-2"
                   >
                     <MapPin className="w-4 h-4 text-sky-600" />
-                    <span>الموقع على الخريطة 📍</span>
+                    <span>الموقع على الخريطة</span>
                     <ExternalLink className="w-3.5 h-3.5 opacity-60" />
                   </a>
                 )}
