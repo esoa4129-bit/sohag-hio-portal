@@ -47,93 +47,71 @@ export interface HospitalFacility {
   mapUrl: string;
 }
 
-// 🌟 شعار الهلال الطبي المتوهج والراقي (الهيئة العامة للتأمين الصحي)
-function MedicalHilalEmblem({ isHilal = false, size = "md" }: { isHilal?: boolean; size?: "sm" | "md" | "lg" }) {
+// 🩺 شعار الهلال الطبي الرسمي (الهلال الأحمر الطبي للتأمين الصحي بسوهاج)
+function MedicalHilalEmblem({ size = "md" }: { isHilal?: boolean; size?: "sm" | "md" | "lg" }) {
   const dim = size === "lg" ? "w-28 h-28 sm:w-36 sm:h-36" : size === "sm" ? "w-16 h-16" : "w-24 h-24 sm:w-28 sm:h-28";
   return (
-    <div className="relative flex items-center justify-center select-none pointer-events-none group-hover:scale-110 transition-transform duration-700">
-      {/* هالة إضاءة خلفية ناعمة */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-red-600/30 via-amber-500/20 to-sky-400/20 rounded-full blur-2xl scale-125" />
+    <div className="relative flex items-center justify-center select-none pointer-events-none group-hover:scale-105 transition-transform duration-500">
+      {/* هالة حمراء طبية نقية بدون أي ألوان صفراء */}
+      <div className="absolute inset-0 bg-red-600/25 rounded-full blur-2xl scale-110" />
 
       <svg
         viewBox="0 0 140 140"
-        className={`${dim} drop-shadow-[0_0_25px_rgba(239,68,68,0.55)]`}
+        className={`${dim} drop-shadow-[0_8px_25px_rgba(220,38,38,0.45)]`}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          {/* تدرج الهلال الأحمر الملكي */}
-          <linearGradient id="hilalRedGlow" x1="15%" y1="10%" x2="90%" y2="90%">
-            <stop offset="0%" stopColor="#fca5a5" />
+          {/* تدرج الهلال الأحمر الطبي الاحترافي */}
+          <linearGradient id="pureMedicalRed" x1="15%" y1="10%" x2="90%" y2="90%">
+            <stop offset="0%" stopColor="#ff4d4d" />
             <stop offset="25%" stopColor="#ef4444" />
             <stop offset="70%" stopColor="#dc2626" />
             <stop offset="100%" stopColor="#991b1b" />
           </linearGradient>
 
-          {/* لمعة ذهبية على حواف الهلال */}
-          <linearGradient id="hilalGoldSheen" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#fef08a" stopOpacity="0.95" />
-            <stop offset="50%" stopColor="#f59e0b" stopOpacity="0.8" />
-            <stop offset="100%" stopColor="#d97706" stopOpacity="0.4" />
+          {/* خط التجسيم الداخلي النقي باللون الأبيض فقط */}
+          <linearGradient id="pureMedicalSheen" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.55" />
+            <stop offset="50%" stopColor="#ffffff" stopOpacity="0.08" />
+            <stop offset="100%" stopColor="#ffffff" stopOpacity="0" />
           </linearGradient>
 
-          {/* خط التجسيم الداخلي ثلاثي الأبعاد */}
-          <linearGradient id="hilalInnerBevel" x1="0%" y1="0%" x2="0%" y2="100%">
-            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.75" />
-            <stop offset="60%" stopColor="#ffffff" stopOpacity="0" />
+          {/* إطار تحديد ناعم يعطي فخامة طبية */}
+          <linearGradient id="pureMedicalRim" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.45" />
+            <stop offset="60%" stopColor="#fca5a5" stopOpacity="0.25" />
+            <stop offset="100%" stopColor="#7f1d1d" stopOpacity="0.5" />
           </linearGradient>
 
-          <filter id="crescentGlow" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="3.5" result="blur" />
-            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          <filter id="pureRedGlow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="4" stdDeviation="5" floodColor="#7f1d1d" floodOpacity="0.4" />
           </filter>
         </defs>
 
-        {/* حلقة إشعاعية دائرية خفيفة */}
-        <circle cx="70" cy="70" r="54" stroke="url(#hilalGoldSheen)" strokeWidth="1.2" strokeDasharray="4 4" opacity="0.35" />
+        {/* جسم الهلال الطبي المنحوت بعناية والمتوسط في الكادر */}
+        <g transform="translate(3, 0)">
+          {/* الهلال الأحمر الطبي الأساسي */}
+          <path
+            d="M72 16C42.1766 16 18 40.1766 18 70C18 99.8234 42.1766 124 72 124C87.625 124 101.69 117.37 111.45 106.8C84.8 106.8 63.2 85.2 63.2 58.55C63.2 40.4 73.2 24.58 87.8 17.5C82.8 16.5 77.5 16 72 16Z"
+            fill="url(#pureMedicalRed)"
+            filter="url(#pureRedGlow)"
+          />
 
-        {/* جسم الهلال الطبي المنحوت بعناية فائقة */}
-        <path
-          d="M72 16C42.1766 16 18 40.1766 18 70C18 99.8234 42.1766 124 72 124C87.625 124 101.69 117.37 111.45 106.8C84.8 106.8 63.2 85.2 63.2 58.55C63.2 40.4 73.2 24.58 87.8 17.5C82.8 16.5 77.5 16 72 16Z"
-          fill="url(#hilalRedGlow)"
-          filter="url(#crescentGlow)"
-        />
+          {/* خط تحديد مجسم خفيف بدون أي أصفر */}
+          <path
+            d="M72 16C42.1766 16 18 40.1766 18 70C18 99.8234 42.1766 124 72 124C87.625 124 101.69 117.37 111.45 106.8C84.8 106.8 63.2 85.2 63.2 58.55C63.2 40.4 73.2 24.58 87.8 17.5C82.8 16.5 77.5 16 72 16Z"
+            stroke="url(#pureMedicalRim)"
+            strokeWidth="1.2"
+            fill="none"
+          />
 
-        {/* بريق ذهبي على محيط الهلال الخارجي */}
-        <path
-          d="M72 18C43.28 18 20 41.28 20 70C20 98.72 43.28 122 72 122C85.5 122 97.8 116.8 107 108C82 106 61.5 85 61.5 59C61.5 41 71.5 25.5 86 19C81.5 18.3 76.8 18 72 18Z"
-          stroke="url(#hilalGoldSheen)"
-          strokeWidth="1.5"
-          fill="none"
-          opacity="0.85"
-        />
-
-        {/* لمعة زجاجية داخلية عاكسة */}
-        <path
-          d="M68 24C45 24 26 43 26 66C26 89 45 108 68 108C79 108 89 104 96 97C77 94 62 78 62 59C62 42 72 28 85 25C79.8 24.3 74 24 68 24Z"
-          fill="url(#hilalInnerBevel)"
-          opacity="0.32"
-        />
-
-        {/* قلب الهلال: صليب طبي مضيء أو نجوم متلألئة */}
-        {isHilal ? (
-          <g transform="translate(79, 52)">
-            <circle cx="15" cy="15" r="16" fill="#ef4444" opacity="0.3" filter="blur(6px)" />
-            <rect x="11.5" y="1" width="7" height="28" rx="3.5" fill="#ffffff" filter="drop-shadow(0 0 8px rgba(255,255,255,0.95))" />
-            <rect x="1" y="11.5" width="28" height="7" rx="3.5" fill="#ffffff" filter="drop-shadow(0 0 8px rgba(255,255,255,0.95))" />
-            <circle cx="15" cy="15" r="3.5" fill="#fbbf24" />
-          </g>
-        ) : (
-          <g transform="translate(81, 54)">
-            <path
-              d="M14 0L17.5 9.5L27 13L17.5 16.5L14 26L10.5 16.5L1 13L10.5 9.5L14 0Z"
-              fill="#fbbf24"
-              filter="drop-shadow(0 0 10px rgba(251,191,36,0.95))"
-            />
-            <circle cx="2" cy="4" r="1.5" fill="#ffffff" opacity="0.8" />
-            <circle cx="26" cy="22" r="1.5" fill="#ffffff" opacity="0.8" />
-          </g>
-        )}
+          {/* لمعة زجاجية داخلية عاكسة */}
+          <path
+            d="M68 24C45 24 26 43 26 66C26 89 45 108 68 108C79 108 89 104 96 97C77 94 62 78 62 59C62 42 72 28 85 25C79.8 24.3 74 24 68 24Z"
+            fill="url(#pureMedicalSheen)"
+          />
+        </g>
       </svg>
     </div>
   );
@@ -286,11 +264,11 @@ export const SOHAG_FACILITIES: HospitalFacility[] = [
       "معامل متطورة لتحاليل الدم والأنيميا",
       "قاعات انتظار مكيفة ومجهزة لكبار السن"
     ],
-    accentGradient: "from-amber-600 via-orange-700 to-slate-950",
-    badgeColor: "bg-amber-500/20 text-amber-700 dark:text-amber-300 border-amber-500/30",
+    accentGradient: "from-teal-600 via-cyan-800 to-slate-950",
+    badgeColor: "bg-teal-500/20 text-teal-700 dark:text-teal-300 border-teal-500/30",
     iconText: "🩺",
     heroEmoji: "🩺",
-    heroPattern: "from-amber-700 via-orange-800 to-slate-950",
+    heroPattern: "from-teal-800 via-cyan-900 to-slate-950",
     mapUrl: "https://maps.google.com/?q=مجمع+عيادات+أخميم+للتأمين+الصحي"
   },
   {
