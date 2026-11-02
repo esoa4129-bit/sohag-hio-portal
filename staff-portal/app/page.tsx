@@ -40,6 +40,7 @@ import {
   Calendar
 } from "lucide-react";
 import HospitalsShowcase from "./components/HospitalsShowcase";
+import OfficialPortalFooter from "./components/OfficialPortalFooter";
 
 // Types
 export type ConnectionType = "HTTPS" | "HTTP" | "HTTPS_IP" | "HTTP_IP" | "PORT";
@@ -1321,7 +1322,7 @@ export default function StaffPortalPage() {
           </div>
 
           {/* Quick Cards of Core Team */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-400/40 transition">
               <span className="text-[10px] font-bold text-amber-400">مدير عام الفرع</span>
               <h4 className="font-extrabold text-sm text-white mt-0.5">دكتور / محمد خلف عفيفي</h4>
@@ -1340,6 +1341,12 @@ export default function StaffPortalPage() {
               <p className="text-[11px] text-slate-300 mt-1 line-clamp-1">الإشراف الإداري والمالي ودعم متطلبات الميكنة</p>
             </div>
 
+            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-blue-400/40 transition">
+              <span className="text-[10px] font-bold text-blue-400">مسؤول البوابة الإلكترونية</span>
+              <h4 className="font-extrabold text-sm text-white mt-0.5">أستاذ / محمد عبد الحميد</h4>
+              <p className="text-[11px] text-slate-300 mt-1 line-clamp-1">إدارة المحتوى وتنسيق البوابة الرقمية للفرع</p>
+            </div>
+
             <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-teal-400/40 transition">
               <span className="text-[10px] font-bold text-teal-400">رئيس قسم تكنولوجيا المعلومات</span>
               <h4 className="font-extrabold text-sm text-white mt-0.5">مهندس / صفوت الجزيري</h4>
@@ -1347,7 +1354,13 @@ export default function StaffPortalPage() {
             </div>
 
             <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-400/40 transition">
-              <span className="text-[10px] font-bold text-emerald-400">مطور ومهندس البوابة الرقمية</span>
+              <span className="text-[10px] font-bold text-emerald-400">رئيس الشئون الإدارية</span>
+              <h4 className="font-extrabold text-sm text-white mt-0.5">أستاذ / محمد فوزي</h4>
+              <p className="text-[11px] text-slate-300 mt-1 line-clamp-1">التنسيق الإداري والمتابعة الميدانية لمنظومات العمل</p>
+            </div>
+
+            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-purple-400/40 transition">
+              <span className="text-[10px] font-bold text-purple-400">مطور ومهندس البوابة الرقمية</span>
               <h4 className="font-extrabold text-sm text-white mt-0.5">مهندس / إسلام أبو اليزيد</h4>
               <p className="text-[11px] text-slate-300 mt-1 line-clamp-1">تصميم وتطوير البوابات وتطبيقات الويب الذكية</p>
             </div>
@@ -1361,23 +1374,8 @@ export default function StaffPortalPage() {
         </section>
       </main>
 
-      {/* Footer with Team Page Link */}
-      <footer className="mt-8 sm:mt-12 border-t border-slate-200 dark:border-slate-800 bg-white/60 dark:bg-slate-900/60 py-5 text-center text-xs text-slate-500 dark:text-slate-400 space-y-2">
-        <p className="font-semibold text-slate-700 dark:text-slate-300">
-          الهيئة العامة للتأمين الصحي - فرع سوهاج
-        </p>
-        <div className="flex items-center justify-center gap-3 text-[11px]">
-          <span>صحتك أمانة بين إيدينا</span>
-          <span>•</span>
-          <Link
-            href="/team"
-            className="text-sky-600 dark:text-sky-400 font-bold hover:underline inline-flex items-center gap-1"
-          >
-            <Award className="w-3.5 h-3.5 text-amber-500" />
-            <span>لوحة الشرف وفريق العمل</span>
-          </Link>
-        </div>
-      </footer>
+      {/* Comprehensive Official Portal Footer */}
+      <OfficialPortalFooter />
 
       {/* MODAL 1: Security Alert / SSL Self-Signed Guide */}
       {securityModalSystem && (

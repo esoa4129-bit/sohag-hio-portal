@@ -118,7 +118,7 @@ export const BRANCH_CORE_LEADERSHIP: TeamMember[] = [
   },
   {
     id: "core-abdelhamid",
-    name: "مهندس / محمد عبد الحميد",
+    name: "أستاذ / محمد عبد الحميد",
     role: "مسئول البوابة الإلكترونية",
     facility: "hq",
     hierarchyLevel: "head",

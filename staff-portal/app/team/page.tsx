@@ -381,7 +381,7 @@ export default function TeamPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 w-full">
-              {/* Card 3A (على يمين صفوت): مهندس محمد عبد الحميد */}
+              {/* Card 3A (على يمين صفوت): أستاذ محمد عبد الحميد */}
               <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-slate-900 border-2 border-sky-300 dark:border-sky-800/70 p-5 sm:p-6 shadow-lg shadow-sky-500/5 hover:border-sky-500 transition-all duration-300 flex flex-col justify-between">
                 <div className="space-y-3">
                   <div className="flex items-center justify-between">
@@ -399,7 +399,7 @@ export default function TeamPage() {
                       مسئول البوابة الإلكترونية
                     </p>
                     <h4 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white mt-0.5">
-                      مهندس / محمد عبد الحميد
+                      أستاذ / محمد عبد الحميد
                     </h4>
                   </div>
 

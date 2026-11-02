@@ -617,15 +617,10 @@ export default function BookingPortalPage() {
           <div className="flex items-center gap-2 w-full sm:w-auto">
             <a
               href="tel:106"
-              className="flex-1 sm:flex-none text-center px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm transition min-h-[44px] flex items-center justify-center"
+              className="flex-1 sm:flex-none text-center px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm transition min-h-[44px] flex items-center justify-center gap-2 shadow-sm"
             >
-              اتصل برقم 106
-            </a>
-            <a
-              href="tel:15335"
-              className="flex-1 sm:flex-none text-center px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs sm:text-sm transition min-h-[44px] flex items-center justify-center"
-            >
-              أو 15335
+              <PhoneCall className="w-4 h-4" />
+              <span>اتصل بالخط الساخن 106</span>
             </a>
           </div>
         </div>

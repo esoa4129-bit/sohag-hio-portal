@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import ClinicSchedules from "./components/ClinicSchedules";
 import HospitalsShowcase from "./components/HospitalsShowcase";
+import OfficialPortalFooter from "./components/OfficialPortalFooter";
 
 const BOOKING_URL = "https://reserv.hiocdis.org/hioClinicReservation.aspx";
 const SOFREG_URL = "https://196.219.219.184/sofreg/registerdata.aspx";
@@ -309,7 +310,7 @@ export default function BookingPage() {
       {/* Main Content */}
       <main className="max-w-4xl mx-auto px-3 sm:px-4 py-5 sm:py-8 md:py-10 w-full flex-grow space-y-6 sm:space-y-8">
         {/* Hero Card */}
-        <div className="relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-emerald-700 via-teal-700 to-emerald-900 text-white p-5 sm:p-7 md:p-10 shadow-xl shadow-emerald-900/15">
+        <div id="booking-section" className="scroll-mt-20 relative overflow-hidden rounded-2xl sm:rounded-3xl bg-gradient-to-br from-emerald-700 via-teal-700 to-emerald-900 text-white p-5 sm:p-7 md:p-10 shadow-xl shadow-emerald-900/15">
           <div className="absolute top-0 left-0 w-64 h-64 bg-white/5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
           <div className="absolute bottom-0 right-0 w-64 h-64 bg-teal-400/10 rounded-full blur-2xl translate-x-1/3 translate-y-1/3 pointer-events-none" />
 
@@ -626,15 +627,10 @@ export default function BookingPage() {
           <div className="flex items-center gap-2 w-full sm:w-auto">
             <a
               href="tel:106"
-              className="flex-1 sm:flex-none text-center px-4 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm transition min-h-[44px] flex items-center justify-center"
+              className="flex-1 sm:flex-none text-center px-5 py-2.5 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs sm:text-sm transition min-h-[44px] flex items-center justify-center gap-2 shadow-sm"
             >
-              اتصل برقم 106
-            </a>
-            <a
-              href="tel:15335"
-              className="flex-1 sm:flex-none text-center px-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-200 font-bold text-xs sm:text-sm transition min-h-[44px] flex items-center justify-center"
-            >
-              أو 15335
+              <PhoneCall className="w-4 h-4" />
+              <span>اتصل بالخط الساخن 106</span>
             </a>
           </div>
         </div>
@@ -721,23 +717,8 @@ export default function BookingPage() {
         </div>
       )}
 
-      {/* Footer with Team Page Link */}
-      <footer className="mt-8 border-t border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/50 py-5 text-center text-xs text-slate-500 dark:text-slate-400 space-y-2">
-        <p className="font-semibold text-slate-700 dark:text-slate-300">
-          الهيئة العامة للتأمين الصحي - فرع سوهاج
-        </p>
-        <div className="flex items-center justify-center gap-3 text-[11px]">
-          <span>صحتك أمانة بين إيدينا</span>
-          <span>•</span>
-          <Link
-            href="/team"
-            className="text-emerald-600 dark:text-emerald-400 font-bold hover:underline inline-flex items-center gap-1"
-          >
-            <Award className="w-3.5 h-3.5" />
-            <span>لوحة الشرف وفريق العمل</span>
-          </Link>
-        </div>
-      </footer>
+      {/* Comprehensive Official Portal Footer */}
+      <OfficialPortalFooter />
     </div>
   );
 }
