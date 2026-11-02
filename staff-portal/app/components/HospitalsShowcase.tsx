@@ -47,6 +47,98 @@ export interface HospitalFacility {
   mapUrl: string;
 }
 
+// 🌟 شعار الهلال الطبي المتوهج والراقي (الهيئة العامة للتأمين الصحي)
+function MedicalHilalEmblem({ isHilal = false, size = "md" }: { isHilal?: boolean; size?: "sm" | "md" | "lg" }) {
+  const dim = size === "lg" ? "w-28 h-28 sm:w-36 sm:h-36" : size === "sm" ? "w-16 h-16" : "w-24 h-24 sm:w-28 sm:h-28";
+  return (
+    <div className="relative flex items-center justify-center select-none pointer-events-none group-hover:scale-110 transition-transform duration-700">
+      {/* هالة إضاءة خلفية ناعمة */}
+      <div className="absolute inset-0 bg-gradient-to-tr from-red-600/30 via-amber-500/20 to-sky-400/20 rounded-full blur-2xl scale-125" />
+
+      <svg
+        viewBox="0 0 140 140"
+        className={`${dim} drop-shadow-[0_0_25px_rgba(239,68,68,0.55)]`}
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <defs>
+          {/* تدرج الهلال الأحمر الملكي */}
+          <linearGradient id="hilalRedGlow" x1="15%" y1="10%" x2="90%" y2="90%">
+            <stop offset="0%" stopColor="#fca5a5" />
+            <stop offset="25%" stopColor="#ef4444" />
+            <stop offset="70%" stopColor="#dc2626" />
+            <stop offset="100%" stopColor="#991b1b" />
+          </linearGradient>
+
+          {/* لمعة ذهبية على حواف الهلال */}
+          <linearGradient id="hilalGoldSheen" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#fef08a" stopOpacity="0.95" />
+            <stop offset="50%" stopColor="#f59e0b" stopOpacity="0.8" />
+            <stop offset="100%" stopColor="#d97706" stopOpacity="0.4" />
+          </linearGradient>
+
+          {/* خط التجسيم الداخلي ثلاثي الأبعاد */}
+          <linearGradient id="hilalInnerBevel" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#ffffff" stopOpacity="0.75" />
+            <stop offset="60%" stopColor="#ffffff" stopOpacity="0" />
+          </linearGradient>
+
+          <filter id="crescentGlow" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="3.5" result="blur" />
+            <feComposite in="SourceGraphic" in2="blur" operator="over" />
+          </filter>
+        </defs>
+
+        {/* حلقة إشعاعية دائرية خفيفة */}
+        <circle cx="70" cy="70" r="54" stroke="url(#hilalGoldSheen)" strokeWidth="1.2" strokeDasharray="4 4" opacity="0.35" />
+
+        {/* جسم الهلال الطبي المنحوت بعناية فائقة */}
+        <path
+          d="M72 16C42.1766 16 18 40.1766 18 70C18 99.8234 42.1766 124 72 124C87.625 124 101.69 117.37 111.45 106.8C84.8 106.8 63.2 85.2 63.2 58.55C63.2 40.4 73.2 24.58 87.8 17.5C82.8 16.5 77.5 16 72 16Z"
+          fill="url(#hilalRedGlow)"
+          filter="url(#crescentGlow)"
+        />
+
+        {/* بريق ذهبي على محيط الهلال الخارجي */}
+        <path
+          d="M72 18C43.28 18 20 41.28 20 70C20 98.72 43.28 122 72 122C85.5 122 97.8 116.8 107 108C82 106 61.5 85 61.5 59C61.5 41 71.5 25.5 86 19C81.5 18.3 76.8 18 72 18Z"
+          stroke="url(#hilalGoldSheen)"
+          strokeWidth="1.5"
+          fill="none"
+          opacity="0.85"
+        />
+
+        {/* لمعة زجاجية داخلية عاكسة */}
+        <path
+          d="M68 24C45 24 26 43 26 66C26 89 45 108 68 108C79 108 89 104 96 97C77 94 62 78 62 59C62 42 72 28 85 25C79.8 24.3 74 24 68 24Z"
+          fill="url(#hilalInnerBevel)"
+          opacity="0.32"
+        />
+
+        {/* قلب الهلال: صليب طبي مضيء أو نجوم متلألئة */}
+        {isHilal ? (
+          <g transform="translate(79, 52)">
+            <circle cx="15" cy="15" r="16" fill="#ef4444" opacity="0.3" filter="blur(6px)" />
+            <rect x="11.5" y="1" width="7" height="28" rx="3.5" fill="#ffffff" filter="drop-shadow(0 0 8px rgba(255,255,255,0.95))" />
+            <rect x="1" y="11.5" width="28" height="7" rx="3.5" fill="#ffffff" filter="drop-shadow(0 0 8px rgba(255,255,255,0.95))" />
+            <circle cx="15" cy="15" r="3.5" fill="#fbbf24" />
+          </g>
+        ) : (
+          <g transform="translate(81, 54)">
+            <path
+              d="M14 0L17.5 9.5L27 13L17.5 16.5L14 26L10.5 16.5L1 13L10.5 9.5L14 0Z"
+              fill="#fbbf24"
+              filter="drop-shadow(0 0 10px rgba(251,191,36,0.95))"
+            />
+            <circle cx="2" cy="4" r="1.5" fill="#ffffff" opacity="0.8" />
+            <circle cx="26" cy="22" r="1.5" fill="#ffffff" opacity="0.8" />
+          </g>
+        )}
+      </svg>
+    </div>
+  );
+}
+
 export const SOHAG_FACILITIES: HospitalFacility[] = [
   {
     id: "hilal",
@@ -76,11 +168,11 @@ export const SOHAG_FACILITIES: HospitalFacility[] = [
       "غرف عمليات كبرى بنظام الكبسولة المعقمة",
       "وحدة قسطرة قلب متطورة"
     ],
-    accentGradient: "from-sky-600 via-blue-800 to-slate-950",
-    badgeColor: "bg-sky-500/20 text-sky-700 dark:text-sky-300 border-sky-500/30",
-    iconText: "🏥",
-    heroEmoji: "🏥",
-    heroPattern: "from-sky-700 via-blue-800 to-indigo-950",
+    accentGradient: "from-red-600 via-rose-800 to-slate-950",
+    badgeColor: "bg-red-500/20 text-red-700 dark:text-red-300 border-red-500/30",
+    iconText: "🌙",
+    heroEmoji: "🌙",
+    heroPattern: "from-rose-800 via-red-900 to-slate-950",
     mapUrl: "https://maps.google.com/?q=مستشفى+الهلال+للتأمين+الصحي+سوهاج"
   },
   {
@@ -450,20 +542,19 @@ export default function HospitalsShowcase({ onOpenBooking }: HospitalsShowcasePr
               key={facility.id}
               className="group relative overflow-hidden rounded-[1.5rem] bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 shadow-sm hover:shadow-2xl transition-all duration-500 flex flex-col"
             >
-              {/* HOSPITAL HERO IMAGE AREA - Gradient with architectural pattern */}
-              <div className={`relative h-48 sm:h-56 bg-gradient-to-br ${facility.heroPattern} overflow-hidden`}>
-                {/* Architectural pattern overlay */}
-                <div className="absolute inset-0 opacity-[0.06] pointer-events-none" style={{
-                  backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cg fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath opacity='.5' d='M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
-                }} />
-                
-                {/* Floating hospital emoji */}
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-7xl sm:text-8xl opacity-20 group-hover:opacity-30 group-hover:scale-110 transition-all duration-500 select-none">
-                  {facility.heroEmoji}
+              {/* HOSPITAL HERO IMAGE AREA - Medical Hilal Theme */}
+              <div className={`relative h-48 sm:h-56 bg-gradient-to-br ${facility.heroPattern} overflow-hidden flex items-center justify-center`}>
+                {/* Ambient dynamic lighting */}
+                <div className="absolute -top-10 -right-10 w-44 h-44 bg-white/10 rounded-full blur-2xl pointer-events-none" />
+                <div className="absolute -bottom-8 -left-8 w-44 h-44 bg-red-500/25 rounded-full blur-3xl pointer-events-none" />
+
+                {/* Beautiful Medical Hilal Crescent Emblem */}
+                <div className="relative z-0 my-auto">
+                  <MedicalHilalEmblem isHilal={facility.id === "hilal"} />
                 </div>
 
-                {/* Bottom gradient fade */}
-                <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-black/60 to-transparent" />
+                {/* Bottom gradient fade for text legibility */}
+                <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10" />
 
                 {/* TOP BADGES */}
                 <div className="absolute top-4 right-4 flex items-center gap-2">
@@ -634,13 +725,14 @@ export default function HospitalsShowcase({ onOpenBooking }: HospitalsShowcasePr
       {activeModalFacility && (
         <div className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-4" onClick={() => setActiveModalFacility(null)}>
           <div className="bg-white dark:bg-slate-900 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-slate-200 dark:border-slate-800 shadow-2xl" onClick={(e) => e.stopPropagation()}>
-            {/* Modal Hero */}
-            <div className={`relative h-40 sm:h-48 bg-gradient-to-br ${activeModalFacility.heroPattern} overflow-hidden`}>
-              <div className="absolute inset-0 opacity-10 pointer-events-none" style={{
-                backgroundImage: "url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E\")",
-              }} />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-7xl opacity-20 select-none">{activeModalFacility.heroEmoji}</div>
-              <div className="absolute bottom-0 inset-x-0 h-20 bg-gradient-to-t from-black/60 to-transparent" />
+            {/* Modal Hero - Medical Hilal Theme */}
+            <div className={`relative h-44 sm:h-52 bg-gradient-to-br ${activeModalFacility.heroPattern} overflow-hidden flex items-center justify-center`}>
+              <div className="absolute -top-10 -right-10 w-44 h-44 bg-white/10 rounded-full blur-2xl pointer-events-none" />
+              <div className="absolute -bottom-8 -left-8 w-44 h-44 bg-red-500/25 rounded-full blur-3xl pointer-events-none" />
+              <div className="relative z-0 my-auto">
+                <MedicalHilalEmblem isHilal={activeModalFacility.id === "hilal"} size="lg" />
+              </div>
+              <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10" />
               
               <button
                 onClick={() => setActiveModalFacility(null)}

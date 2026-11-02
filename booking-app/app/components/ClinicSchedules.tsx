@@ -27,7 +27,7 @@ import {
 export interface ScheduleItem {
   id: string;
   title: string;
-  category: "10th" | "wafa" | "tahta" | "specialized";
+  category: "10th" | "wafa" | "specialized";
   categoryName: string;
   shift: string;
   shiftType: "morning" | "evening" | "both";
@@ -124,33 +124,6 @@ const SCHEDULES: ScheduleItem[] = [
     ],
     days: ["السبت", "الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس"],
     badgeColor: "bg-teal-100 text-teal-800 dark:bg-teal-950/60 dark:text-teal-300 border-teal-300/40"
-  },
-  {
-    id: "tahta-clinic",
-    title: "عيادة طهطا الشاملة - الفترة الصباحية والمسائية",
-    category: "tahta",
-    categoryName: "عيادة طهطا الشاملة",
-    shift: "صباحي ومسائي",
-    shiftType: "both",
-    workingDays: "من السبت إلى الخميس",
-    hours: "الصباحي: 8:00 ص - 2:00 م | المسائي: 4:00 م - 8:00 م",
-    location: "طهطا - عيادة طهطا الشاملة للتأمين الصحي (شمال سوهاج)",
-    imageSrc: "/schedules/tahta-clinic.jpg",
-    description: "جدول مواعيد عيادة طهطا لخدمة أهالي مركز ومدينة طهطا والمراكز المجاورة بالفترتين.",
-    specialties: [
-      "باطنة عامة",
-      "أطفال",
-      "جراحة عامة",
-      "عظام",
-      "نساء وتوليد",
-      "مسالك بولية",
-      "رمد",
-      "أسنان",
-      "لجان طبية",
-      "رسم قلب وتحاليل"
-    ],
-    days: ["السبت", "الأحد", "الإثنين", "الثلاثاء", "الأربعاء", "الخميس"],
-    badgeColor: "bg-sky-100 text-sky-800 dark:bg-sky-950/60 dark:text-sky-300 border-sky-300/40"
   },
   {
     id: "specialized-committees",
@@ -324,16 +297,6 @@ export default function ClinicSchedules() {
             }`}
           >
             عيادة الوفاء الشاملة
-          </button>
-          <button
-            onClick={() => setSelectedCategory("tahta")}
-            className={`px-3 sm:px-4 py-2 rounded-xl font-bold whitespace-nowrap transition shrink-0 ${
-              selectedCategory === "tahta"
-                ? "bg-emerald-600 text-white shadow-sm shadow-emerald-600/30"
-                : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
-            }`}
-          >
-            عيادة طهطا الشاملة
           </button>
           <button
             onClick={() => setSelectedCategory("specialized")}
