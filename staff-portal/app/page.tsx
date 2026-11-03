@@ -51,7 +51,7 @@ export interface SystemItem {
   id: string;
   name: string;
   url: string;
-  category: "committees" | "specialties" | "admin_stock" | "beneficiary_internal" | "communication" | "custom";
+  category: "hospital_apps" | "committees" | "specialties" | "admin_stock" | "beneficiary_internal" | "communication" | "custom";
   description: string;
   connectionType: ConnectionType;
   editable?: boolean;
@@ -73,9 +73,67 @@ interface BeforeInstallPromptEvent extends Event {
   userChoice: Promise<{ outcome: "accepted" | "dismissed" }>;
 }
 
-// 23 Official Systems
+// 30 Official Systems
 const INITIAL_SYSTEMS: SystemItem[] = [
-  // القسم الأول: اللجان الطبية والمجالس المتخصصة
+  // القسم الأول: تطبيقات المستشفى (دخول وخروج، التسجيل الطبي، الاستقبال والطوارئ)
+  {
+    id: "hospital-adt",
+    name: "تطبيقات المستشفى - دخول و خروج (ADT)",
+    url: "https://hio76.hiocdis.org/hospital/adt",
+    category: "hospital_apps",
+    description: "منظومة تسجيل وتتبع حركة دخول وخروج المرضى بالأقسام الداخلية",
+    connectionType: "HTTPS",
+  },
+  {
+    id: "hospital-mr",
+    name: "تطبيقات المستشفى - التسجيل الطبى والعمليات (MR)",
+    url: "https://hio76.hiocdis.org/hospital/MR",
+    category: "hospital_apps",
+    description: "منظومة التسجيل الطبي والعمليات الجراحية والتقارير الطبية للمرضى",
+    connectionType: "HTTPS",
+  },
+  {
+    id: "hospital-emer",
+    name: "تطبيقات المستشفى - الطوارئ والاستقبال (EMER)",
+    url: "https://hio76.hiocdis.org/hospital/EMER",
+    category: "hospital_apps",
+    description: "منظومة تسجيل وإدارة حالات الطوارئ والاستقبال على مدار 24 ساعة",
+    connectionType: "HTTPS",
+  },
+
+  // القسم الثاني: اللجان الطبية والمجالس المتخصصة
+  {
+    id: "cancer-hio",
+    name: "منظومة لجان الأورام (Cancer HIO)",
+    url: "https://hio76.hiocdis.org/cancerhio",
+    category: "committees",
+    description: "بوابة لجان وقرارات علاج الأورام بالتأمين الصحي",
+    connectionType: "HTTPS",
+  },
+  {
+    id: "cancer-liver",
+    name: "منظومة لجان أورام الكبد (Liver Cancer)",
+    url: "https://hio76.hiocdis.org/cancerhio/loginliver.aspx",
+    category: "committees",
+    description: "تسجيل واعتماد بروتوكولات ولجان أورام الكبد التخصصية",
+    connectionType: "HTTPS",
+  },
+  {
+    id: "growth-hormone-hio76",
+    name: "منظومة لجان هرمون النمو (Growth Hormone)",
+    url: "https://hio76.hiocdis.org/GrowthHormone/",
+    category: "committees",
+    description: "بوابة لجان وبروتوكولات صرف هرمون النمو المركزية",
+    connectionType: "HTTPS",
+  },
+  {
+    id: "hematopathology",
+    name: "منظومة لجان أمراض الدم (Hematopathology)",
+    url: "https://hio76.hiocdis.org/Hematopathology/login.aspx",
+    category: "committees",
+    description: "تسجيل ومتابعة لجان وبروتوكولات علاج أمراض الدم",
+    connectionType: "HTTPS",
+  },
   {
     id: "psycho",
     name: "منظومة اللجان النفسية (Psycho)",
@@ -266,6 +324,7 @@ const INITIAL_SYSTEMS: SystemItem[] = [
 
 const CATEGORIES = [
   { id: "all", label: "جميع المنظومات", icon: Layers },
+  { id: "hospital_apps", label: "تطبيقات المستشفى", icon: Building2 },
   { id: "committees", label: "اللجان والمجالس الطبية", icon: ClipboardList },
   { id: "specialties", label: "التخصصات والمبادرات", icon: Activity },
   { id: "admin_stock", label: "المخازن والمالية والإدارة", icon: Package },
@@ -1343,7 +1402,7 @@ export default function StaffPortalPage() {
 
             <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-blue-400/40 transition">
               <span className="text-[10px] font-bold text-blue-400">مسؤول البوابة الإلكترونية</span>
-              <h4 className="font-extrabold text-sm text-white mt-0.5">أستاذ / محمد عبد الحميد</h4>
+              <h4 className="font-extrabold text-sm text-white mt-0.5">مهندس / محمد عبد الحميد</h4>
               <p className="text-[11px] text-slate-300 mt-1 line-clamp-1">إدارة المحتوى وتنسيق البوابة الرقمية للفرع</p>
             </div>
 
