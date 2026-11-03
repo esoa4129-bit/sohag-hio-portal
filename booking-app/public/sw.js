@@ -1,8 +1,9 @@
-// Service Worker with Aggressive Cache-First Strategy for Zero Vercel Bandwidth
-const CACHE_NAME = "hio-booking-v7";
+// Service Worker with Versioned Cache Strategy & Offline Schedules
+const CACHE_NAME = "hio-booking-v8-schedules";
 const PRECACHE_ASSETS = [
   "/",
   "/team",
+  "/privacy",
   "/manifest.json",
   "/manifest-booking.json",
   "/favicon.ico",
@@ -13,7 +14,6 @@ const PRECACHE_ASSETS = [
   "/schedules/10th-ramadan-morning.jpg",
   "/schedules/10th-ramadan-evening.jpg",
   "/schedules/wafa-clinic.jpg",
-  "/schedules/tahta-clinic.jpg",
   "/schedules/specialized-clinics-committees.jpg"
 ];
 

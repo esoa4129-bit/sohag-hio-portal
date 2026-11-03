@@ -1,0 +1,6 @@
+# Robots.txt for Sohag Health Insurance Booking Portal
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://sohag-hio-portal.vercel.app/sitemap.xml
