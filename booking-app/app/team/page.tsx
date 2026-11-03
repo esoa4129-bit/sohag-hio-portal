@@ -528,7 +528,7 @@ export default function TeamPage() {
                       <Code2 className="w-3.5 h-3.5 text-emerald-600" />
                       هندسة وتطوير البرمجيات
                     </span>
-                    <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-emerald-400 shadow-xl shrink-0 bg-emerald-100 dark:bg-emerald-950">
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl overflow-hidden border-2 border-emerald-400 shadow-lg shrink-0 bg-emerald-100 dark:bg-emerald-950">
                       <img
                         src="/team/eslam-aboelyazid.jpg"
                         alt="مهندس / إسلام أبو اليزيد"
@@ -565,8 +565,8 @@ export default function TeamPage() {
                       <Wifi className="w-3.5 h-3.5 text-cyan-600" />
                       إدارة الإنترنت والشبكات
                     </span>
-                    <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-cyan-100 dark:bg-cyan-950/60 border-2 border-cyan-400/80 text-cyan-700 dark:text-cyan-300 flex items-center justify-center shadow-lg shrink-0">
-                      <Wifi className="w-10 h-10" />
+                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-cyan-100 dark:bg-cyan-950/60 border-2 border-cyan-400/80 text-cyan-700 dark:text-cyan-300 flex items-center justify-center shadow-lg shrink-0">
+                      <Wifi className="w-8 h-8" />
                     </div>
                   </div>
 
