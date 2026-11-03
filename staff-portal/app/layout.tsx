@@ -46,6 +46,12 @@ export default function RootLayout({
             __html: `window.addEventListener('beforeinstallprompt',function(e){e.preventDefault();window.__pwaInstallPrompt=e;if(window.__onPwaPromptReady){window.__onPwaPromptReady(e);}});`,
           }}
         />
+        {/* Completely remove and block Vercel Toolbar & Feedback widget */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){function k(){var els=document.querySelectorAll('vercel-live-feedback,[data-vercel-toolbar],iframe[src*="vercel.live"],#vercel-live-feedback,vercel-toolbar');els.forEach(function(e){e.remove();});}k();window.addEventListener('DOMContentLoaded',k);window.addEventListener('load',k);if(typeof MutationObserver!=='undefined'){new MutationObserver(k).observe(document.documentElement,{childList:true,subtree:true});}})();`,
+          }}
+        />
       </head>
       <body className="antialiased bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 min-h-screen selection:bg-sky-500 selection:text-white">
         {children}

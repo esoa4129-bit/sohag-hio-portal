@@ -24,3 +24,21 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(148, 163, 184, 0.5);
 }
+
+/* Completely eliminate Vercel Toolbar & Feedback floating elements */
+vercel-live-feedback,
+[data-vercel-toolbar],
+#vercel-live-feedback,
+vercel-toolbar,
+iframe[src*="vercel.live"],
+div[class*="vercel-toolbar"] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+}

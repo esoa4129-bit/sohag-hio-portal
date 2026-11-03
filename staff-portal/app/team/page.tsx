@@ -277,7 +277,7 @@ export default function TeamPage() {
                 <img
                   src="/team/mohamed-khalaf-afifi.jpg"
                   alt="دكتور / محمد خلف عفيفي"
-                  className="w-full h-full object-cover object-top"
+                  className="w-full h-full object-cover object-center"
                 />
               </div>
 
@@ -319,7 +319,7 @@ export default function TeamPage() {
                       <img
                         src="/team/mostafa-khalaf.jpg"
                         alt="مهندس / مصطفى خلف"
-                        className="w-full h-full object-cover object-top"
+                        className="w-full h-full object-cover object-center"
                       />
                     </div>
                   </div>
@@ -356,7 +356,7 @@ export default function TeamPage() {
                       <img
                         src="/team/moataz-hammadi.jpg"
                         alt="أستاذ / معتز بالله فاروق حمادي"
-                        className="w-full h-full object-cover object-top"
+                        className="w-full h-full object-cover object-center"
                       />
                     </div>
                   </div>
@@ -409,7 +409,7 @@ export default function TeamPage() {
                       <img
                         src="/team/mohamed-abdelhamid.jpg"
                         alt="مهندس / محمد عبد الحميد"
-                        className="w-full h-full object-cover object-top"
+                        className="w-full h-full object-cover object-center"
                       />
                     </div>
                   </div>
@@ -479,7 +479,7 @@ export default function TeamPage() {
                       <img
                         src="/team/mohamed-fawzy.jpg"
                         alt="أستاذ / محمد فوزي"
-                        className="w-full h-full object-cover object-top"
+                        className="w-full h-full object-cover object-center"
                       />
                     </div>
                   </div>
@@ -532,7 +532,7 @@ export default function TeamPage() {
                       <img
                         src="/team/eslam-aboelyazid.jpg"
                         alt="مهندس / إسلام أبو اليزيد"
-                        className="w-full h-full object-cover object-top"
+                        className="w-full h-full object-cover object-center"
                       />
                     </div>
                   </div>
@@ -675,7 +675,7 @@ export default function TeamPage() {
                       <img
                         src="/team/ashraf-elgendy.jpg"
                         alt="أستاذ / أشرف الجندي"
-                        className="w-full h-full object-cover object-top"
+                        className="w-full h-full object-cover object-center"
                       />
                     </div>
                   </div>
@@ -706,7 +706,7 @@ export default function TeamPage() {
                       <img
                         src="/team/sherif-mehrezi.jpg"
                         alt="أستاذ / شريف محرزي"
-                        className="w-full h-full object-cover object-top"
+                        className="w-full h-full object-cover object-center"
                       />
                     </div>
                   </div>
@@ -936,7 +936,7 @@ export default function TeamPage() {
                             </span>
                             <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden bg-sky-100 dark:bg-sky-950 border-2 border-sky-400 shadow-xl shrink-0 flex items-center justify-center">
                               {member.photoUrl ? (
-                                <img src={member.photoUrl} alt={member.name} className="w-full h-full object-cover object-top" />
+                                <img src={member.photoUrl} alt={member.name} className="w-full h-full object-cover object-center" />
                               ) : (
                                 <ShieldCheck className="w-10 h-10 text-sky-600" />
                               )}

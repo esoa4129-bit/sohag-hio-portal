@@ -1394,7 +1394,7 @@ export default function StaffPortalPage() {
             {/* 1. دكتور محمد خلف عفيفي */}
             <div className="p-4 rounded-2xl bg-white/5 border border-amber-400/30 hover:border-amber-400/60 transition flex items-center gap-3.5 shadow-lg">
               <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-amber-400 shadow-xl shrink-0 bg-white/10">
-                <img src="/team/mohamed-khalaf-afifi.jpg" alt="دكتور محمد خلف عفيفي" className="w-full h-full object-cover object-top" />
+                <img src="/team/mohamed-khalaf-afifi.jpg" alt="دكتور محمد خلف عفيفي" className="w-full h-full object-cover object-center" />
               </div>
               <div className="min-w-0">
                 <span className="text-[10px] font-black px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">مدير عام الفرع</span>
@@ -1406,7 +1406,7 @@ export default function StaffPortalPage() {
             {/* 2. مهندس مصطفى خلف */}
             <div className="p-4 rounded-2xl bg-white/5 border border-sky-400/30 hover:border-sky-400/60 transition flex items-center gap-3.5 shadow-lg">
               <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-sky-400 shadow-xl shrink-0 bg-white/10">
-                <img src="/team/mostafa-khalaf.jpg" alt="مهندس مصطفى خلف" className="w-full h-full object-cover object-top" />
+                <img src="/team/mostafa-khalaf.jpg" alt="مهندس مصطفى خلف" className="w-full h-full object-cover object-center" />
               </div>
               <div className="min-w-0">
                 <span className="text-[10px] font-black px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">مدير النظم والمعلومات</span>
@@ -1418,7 +1418,7 @@ export default function StaffPortalPage() {
             {/* 3. أستاذ معتز بالله فاروق حمادي */}
             <div className="p-4 rounded-2xl bg-white/5 border border-indigo-400/30 hover:border-indigo-400/60 transition flex items-center gap-3.5 shadow-lg">
               <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-indigo-400 shadow-xl shrink-0 bg-white/10">
-                <img src="/team/moataz-hammadi.jpg" alt="أستاذ معتز بالله فاروق حمادي" className="w-full h-full object-cover object-top" />
+                <img src="/team/moataz-hammadi.jpg" alt="أستاذ معتز بالله فاروق حمادي" className="w-full h-full object-cover object-center" />
               </div>
               <div className="min-w-0">
                 <span className="text-[10px] font-black px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">الشئون المالية والإدارية</span>
@@ -1430,7 +1430,7 @@ export default function StaffPortalPage() {
             {/* 4. مهندس محمد عبد الحميد */}
             <div className="p-4 rounded-2xl bg-white/5 border border-blue-400/30 hover:border-blue-400/60 transition flex items-center gap-3.5 shadow-lg">
               <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-blue-400 shadow-xl shrink-0 bg-white/10">
-                <img src="/team/mohamed-abdelhamid.jpg" alt="مهندس محمد عبد الحميد" className="w-full h-full object-cover object-top" />
+                <img src="/team/mohamed-abdelhamid.jpg" alt="مهندس محمد عبد الحميد" className="w-full h-full object-cover object-center" />
               </div>
               <div className="min-w-0">
                 <span className="text-[10px] font-black px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 border border-blue-500/30">البوابة الإلكترونية</span>
@@ -1442,7 +1442,7 @@ export default function StaffPortalPage() {
             {/* 5. أستاذ أشرف الجندي (مستشفى الهلال) */}
             <div className="p-4 rounded-2xl bg-white/5 border border-amber-400/40 hover:border-amber-400 transition flex items-center gap-3.5 shadow-lg">
               <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-amber-400 shadow-xl shrink-0 bg-white/10">
-                <img src="/team/ashraf-elgendy.jpg" alt="أستاذ أشرف الجندي" className="w-full h-full object-cover object-top" />
+                <img src="/team/ashraf-elgendy.jpg" alt="أستاذ أشرف الجندي" className="w-full h-full object-cover object-center" />
               </div>
               <div className="min-w-0">
                 <span className="text-[10px] font-black px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">مستشفى الهلال • مالي وإداري</span>
@@ -1454,7 +1454,7 @@ export default function StaffPortalPage() {
             {/* 6. أستاذ شريف محرزي (مستشفى الهلال) */}
             <div className="p-4 rounded-2xl bg-white/5 border border-sky-400/40 hover:border-sky-400 transition flex items-center gap-3.5 shadow-lg">
               <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-sky-400 shadow-xl shrink-0 bg-white/10">
-                <img src="/team/sherif-mehrezi.jpg" alt="أستاذ شريف محرزي" className="w-full h-full object-cover object-top" />
+                <img src="/team/sherif-mehrezi.jpg" alt="أستاذ شريف محرزي" className="w-full h-full object-cover object-center" />
               </div>
               <div className="min-w-0">
                 <span className="text-[10px] font-black px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 border border-sky-500/30">مستشفى الهلال • شئون المرضى</span>
@@ -1478,7 +1478,7 @@ export default function StaffPortalPage() {
             {/* 8. أستاذ محمد فوزي */}
             <div className="p-4 rounded-2xl bg-white/5 border border-emerald-400/30 hover:border-emerald-400/60 transition flex items-center gap-3.5 shadow-lg">
               <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-emerald-400 shadow-xl shrink-0 bg-white/10">
-                <img src="/team/mohamed-fawzy.jpg" alt="أستاذ محمد فوزي" className="w-full h-full object-cover object-top" />
+                <img src="/team/mohamed-fawzy.jpg" alt="أستاذ محمد فوزي" className="w-full h-full object-cover object-center" />
               </div>
               <div className="min-w-0">
                 <span className="text-[10px] font-black px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">الشئون الإدارية</span>
@@ -1490,7 +1490,7 @@ export default function StaffPortalPage() {
             {/* 9. مهندس إسلام أبو اليزيد */}
             <div className="p-4 rounded-2xl bg-white/5 border border-purple-400/30 hover:border-purple-400/60 transition flex items-center gap-3.5 shadow-lg">
               <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-purple-400 shadow-xl shrink-0 bg-white/10">
-                <img src="/team/eslam-aboelyazid.jpg" alt="مهندس إسلام أبو اليزيد" className="w-full h-full object-cover object-top" />
+                <img src="/team/eslam-aboelyazid.jpg" alt="مهندس إسلام أبو اليزيد" className="w-full h-full object-cover object-center" />
               </div>
               <div className="min-w-0">
                 <span className="text-[10px] font-black px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">هندسة البرمجيات</span>

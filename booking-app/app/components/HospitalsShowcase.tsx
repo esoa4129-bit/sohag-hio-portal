@@ -825,7 +825,7 @@ export default function HospitalsShowcase({ onOpenBooking }: HospitalsShowcasePr
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                     <div className="flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-slate-900 border-2 border-amber-300/80 dark:border-amber-700/70 shadow-md">
                       <div className="w-20 h-20 rounded-xl overflow-hidden bg-amber-100 dark:bg-amber-950 border-2 border-amber-400 shrink-0 shadow-md">
-                        <img src="/team/ashraf-elgendy.jpg" alt="أستاذ أشرف الجندي" className="w-full h-full object-cover object-top" />
+                        <img src="/team/ashraf-elgendy.jpg" alt="أستاذ أشرف الجندي" className="w-full h-full object-cover object-center" />
                       </div>
                       <div className="min-w-0">
                         <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">مدير مالي وإداري</span>
@@ -836,7 +836,7 @@ export default function HospitalsShowcase({ onOpenBooking }: HospitalsShowcasePr
 
                     <div className="flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-slate-900 border-2 border-sky-300/80 dark:border-sky-700/70 shadow-md">
                       <div className="w-20 h-20 rounded-xl overflow-hidden bg-sky-100 dark:bg-sky-950 border-2 border-sky-400 shrink-0 shadow-md">
-                        <img src="/team/sherif-mehrezi.jpg" alt="أستاذ شريف محرزي" className="w-full h-full object-cover object-top" />
+                        <img src="/team/sherif-mehrezi.jpg" alt="أستاذ شريف محرزي" className="w-full h-full object-cover object-center" />
                       </div>
                       <div className="min-w-0">
                         <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300">شئون المرضى</span>
