@@ -1,5 +1,5 @@
-// Service Worker with Versioned Cache Strategy & Offline Schedules
-const CACHE_NAME = "hio-booking-v8-schedules";
+// Service Worker with Versioned Cache Strategy & Realtime Refresh
+const CACHE_NAME = "hio-live-v11-instant";
 const PRECACHE_ASSETS = [
   "/",
   "/team",
@@ -16,6 +16,17 @@ const PRECACHE_ASSETS = [
   "/schedules/wafa-clinic.jpg",
   "/schedules/specialized-clinics-committees.jpg"
 ];
+
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
+  if (event.data && event.data.type === "CLEAR_ALL_CACHES") {
+    caches.keys().then((keys) => {
+      return Promise.all(keys.map((k) => caches.delete(k)));
+    });
+  }
+});
 
 self.addEventListener("install", (event) => {
   event.waitUntil(

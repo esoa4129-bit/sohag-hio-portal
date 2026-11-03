@@ -32,7 +32,8 @@ import {
   HeartPulse,
   Home,
   ShieldCheck,
-  Type
+  Type,
+  RefreshCw
 } from "lucide-react";
 import SchedulesExplorer from "./components/SchedulesExplorer";
 import HospitalsShowcase from "./components/HospitalsShowcase";
@@ -109,8 +110,23 @@ export default function BookingPage() {
   }, []);
 
   useEffect(() => {
+    // Automatic Cache-Buster for mobile clients
+    const CURRENT_VERSION = "hio-live-v11-instant";
+    const lastVersion = localStorage.getItem("hio_app_build_version");
+    if (lastVersion !== CURRENT_VERSION) {
+      if ("caches" in window) {
+        caches.keys().then((keys) => keys.forEach((k) => caches.delete(k)));
+      }
+      localStorage.setItem("hio_app_build_version", CURRENT_VERSION);
+    }
+
     if ("serviceWorker" in navigator) {
-      navigator.serviceWorker.register("/sw.js").catch(() => {});
+      navigator.serviceWorker
+        .register("/sw.js", { updateViaCache: "none" })
+        .then((reg) => {
+          reg.update();
+        })
+        .catch(() => {});
     }
 
     if (
@@ -225,6 +241,31 @@ export default function BookingPage() {
 
   const handleOpenSofreg = () => {
     window.open(SOFREG_URL, "_blank");
+  };
+
+  const handleForceClearCache = async () => {
+    try {
+      if (typeof window !== "undefined") {
+        if ("caches" in window) {
+          const keys = await caches.keys();
+          await Promise.all(keys.map((k) => caches.delete(k)));
+        }
+        if ("serviceWorker" in navigator) {
+          const regs = await navigator.serviceWorker.getRegistrations();
+          for (const reg of regs) {
+            reg.update();
+            reg.active?.postMessage({ type: "CLEAR_ALL_CACHES" });
+          }
+        }
+        sessionStorage.clear();
+        localStorage.removeItem("hio_booking_health_cache");
+        localStorage.removeItem("hio_booking_health_time");
+        localStorage.removeItem("hio_app_build_version");
+        window.location.reload();
+      }
+    } catch {
+      window.location.reload();
+    }
   };
 
   const handleCopyLink = () => {
@@ -347,6 +388,17 @@ export default function BookingPage() {
               aria-label="تبديل الوضع"
             >
               {darkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-600" />}
+            </button>
+
+            {/* Realtime Cache Refresh Button */}
+            <button
+              onClick={handleForceClearCache}
+              className="p-2 sm:px-2.5 sm:py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/60 dark:hover:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-xs font-bold transition flex items-center gap-1 active:scale-95"
+              title="تحديث البيانات فورياً ومسح الكاش"
+              aria-label="تحديث الكاش"
+            >
+              <RefreshCw className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+              <span className="hidden sm:inline">تحديث</span>
             </button>
 
             {/* Team Honor Board Link */}

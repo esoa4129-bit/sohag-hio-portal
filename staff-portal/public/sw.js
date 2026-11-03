@@ -1,5 +1,5 @@
-// Service Worker with Aggressive Cache-First Strategy for Zero Vercel Bandwidth
-const CACHE_NAME = "hio-staff-v7";
+// Service Worker with Aggressive Cache Strategy & Realtime Refresh
+const CACHE_NAME = "hio-staff-v11-instant";
 const PRECACHE_ASSETS = [
   "/",
   "/booking",
@@ -17,6 +17,17 @@ const PRECACHE_ASSETS = [
   "/schedules/tahta-clinic.jpg",
   "/schedules/specialized-clinics-committees.jpg"
 ];
+
+self.addEventListener("message", (event) => {
+  if (event.data && event.data.type === "SKIP_WAITING") {
+    self.skipWaiting();
+  }
+  if (event.data && event.data.type === "CLEAR_ALL_CACHES") {
+    caches.keys().then((keys) => {
+      return Promise.all(keys.map((k) => caches.delete(k)));
+    });
+  }
+});
 
 self.addEventListener("install", (event) => {
   event.waitUntil(

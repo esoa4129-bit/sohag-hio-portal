@@ -36,16 +36,44 @@ const nextConfig = {
         ],
       },
       {
-        // Service Worker: Short cache to allow instant updates while avoiding excessive calls
+        // Service Worker: NEVER cache so mobile gets instant updates on every visit
         source: "/sw.js",
         headers: [
           {
             key: "Cache-Control",
-            value: "public, max-age=3600, must-revalidate",
+            value: "no-cache, no-store, must-revalidate",
           },
           {
             key: "Service-Worker-Allowed",
             value: "/",
+          },
+        ],
+      },
+      {
+        // HTML Pages: Revalidate immediately on network so mobile users get latest changes instantly
+        source: "/",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=0, must-revalidate",
+          },
+        ],
+      },
+      {
+        source: "/team",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=0, must-revalidate",
+          },
+        ],
+      },
+      {
+        source: "/booking",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "public, max-age=0, must-revalidate",
           },
         ],
       },
