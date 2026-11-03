@@ -655,55 +655,6 @@ export default function BookingPage() {
       </main>
 
       {/* ═══════════════════════════════════════════════════════════════════════ */}
-      {/* MOBILE STICKY BOTTOM NAVIGATION BAR (Visible on mobile only)          */}
-      {/* ═══════════════════════════════════════════════════════════════════════ */}
-      <nav
-        className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-lg border-t border-slate-200 dark:border-slate-800 px-3 py-2 flex items-center justify-around shadow-2xl"
-        aria-label="شريط التنقل السريع على الهاتف"
-      >
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="flex flex-col items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-emerald-600 transition"
-        >
-          <Home className="w-4 h-4" />
-          <span className="text-[10px] font-bold">الرئيسية</span>
-        </button>
-
-        <a
-          href="#schedules-explorer-section"
-          className="flex flex-col items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-emerald-600 transition"
-        >
-          <CalendarDays className="w-4 h-4" />
-          <span className="text-[10px] font-bold">الجداول</span>
-        </a>
-
-        {/* Center Booking Highlight Button */}
-        <button
-          onClick={handleOpenBooking}
-          className="-mt-5 px-3.5 py-2.5 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-600 text-white font-extrabold text-[11px] shadow-lg shadow-emerald-600/30 flex flex-col items-center gap-0.5 active:scale-95"
-        >
-          <CalendarCheck className="w-4 h-4" />
-          <span>احجز الآن</span>
-        </button>
-
-        <a
-          href="#hospitals-section"
-          className="flex flex-col items-center gap-1 text-slate-600 dark:text-slate-400 hover:text-emerald-600 transition"
-        >
-          <Building2 className="w-4 h-4" />
-          <span className="text-[10px] font-bold">المستشفيات</span>
-        </a>
-
-        <a
-          href="tel:106"
-          className="flex flex-col items-center gap-1 text-emerald-600 dark:text-emerald-400 font-bold"
-        >
-          <PhoneCall className="w-4 h-4" />
-          <span className="text-[10px]">106</span>
-        </a>
-      </nav>
-
-      {/* ═══════════════════════════════════════════════════════════════════════ */}
       {/* IOS / PWA GUIDE MODAL                                                   */}
       {/* ═══════════════════════════════════════════════════════════════════════ */}
       {showIosGuide && (

@@ -624,36 +624,6 @@ export default function BookingPortalPage() {
             </a>
           </div>
         </div>
-
-        {/* Mobile Sticky Floating Install Prompt */}
-        {!isStandalone && !dismissFloating && (
-          <div className="fixed bottom-3 inset-x-3 z-30 md:hidden bg-slate-900/95 backdrop-blur-md text-white p-3 rounded-2xl border border-emerald-500/40 shadow-2xl flex items-center justify-between gap-2.5 animate-in slide-in-from-bottom-5">
-            <div className="flex items-center gap-2.5 min-w-0">
-              <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-white p-0.5 shrink-0 border border-emerald-400">
-                <Image src="/logo.png?v=3" alt="شعار سوهاج" width={40} height={40} className="object-contain" />
-              </div>
-              <div className="min-w-0">
-                <p className="font-bold text-xs truncate">تطبيق حجز عيادات سوهاج</p>
-                <p className="text-[10px] text-emerald-400 truncate">تثبيت فوري على الشاشة الرئيسية</p>
-              </div>
-            </div>
-            <div className="flex items-center gap-1.5 shrink-0">
-              <button
-                onClick={handleInstallClick}
-                className="px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs transition"
-              >
-                تثبيت
-              </button>
-              <button
-                onClick={() => setDismissFloating(true)}
-                className="p-1 rounded-lg text-slate-400 hover:text-white"
-                title="إغلاق"
-              >
-                <X className="w-4 h-4" />
-              </button>
-            </div>
-          </div>
-        )}
       </main>
 
       {/* Installation Guide Modal */}

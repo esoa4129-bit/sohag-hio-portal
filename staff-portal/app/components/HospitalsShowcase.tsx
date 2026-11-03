@@ -24,7 +24,8 @@ import {
   ChevronDown,
   Eye,
   PhoneCall,
-  Building
+  Building,
+  Award
 } from "lucide-react";
 
 export interface HospitalFacility {
@@ -813,6 +814,61 @@ export default function HospitalsShowcase({ onOpenBooking }: HospitalsShowcasePr
                   ))}
                 </div>
               </div>
+
+              {/* Leadership showcase for Hilal Hospital */}
+              {activeModalFacility.id === "hilal" && (
+                <div className="space-y-3 p-4 rounded-2xl bg-red-50/50 dark:bg-red-950/20 border border-red-200/60 dark:border-red-900/40">
+                  <h4 className="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+                    <Users className="w-4 h-4 text-red-600" />
+                    <span>قيادات مستشفى الهلال للتأمين الصحي بسوهاج:</span>
+                  </h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                    <div className="flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-slate-900 border-2 border-amber-300/80 dark:border-amber-700/70 shadow-md">
+                      <div className="w-20 h-20 rounded-xl overflow-hidden bg-amber-100 dark:bg-amber-950 border-2 border-amber-400 shrink-0 shadow-md">
+                        <img src="/team/ashraf-elgendy.jpg" alt="أستاذ أشرف الجندي" className="w-full h-full object-cover object-top" />
+                      </div>
+                      <div className="min-w-0">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">مدير مالي وإداري</span>
+                        <h5 className="font-extrabold text-sm text-slate-900 dark:text-white mt-1">أستاذ / أشرف الجندي</h5>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5">الشئون المالية والإدارية بمستشفى الهلال</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-slate-900 border-2 border-sky-300/80 dark:border-sky-700/70 shadow-md">
+                      <div className="w-20 h-20 rounded-xl overflow-hidden bg-sky-100 dark:bg-sky-950 border-2 border-sky-400 shrink-0 shadow-md">
+                        <img src="/team/sherif-mehrezi.jpg" alt="أستاذ شريف محرزي" className="w-full h-full object-cover object-top" />
+                      </div>
+                      <div className="min-w-0">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300">شئون المرضى</span>
+                        <h5 className="font-extrabold text-sm text-slate-900 dark:text-white mt-1">أستاذ / شريف محرزي</h5>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5">إدارة شئون المرضى ورعاية المنتفعين</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-slate-900 border-2 border-red-300/80 dark:border-red-900/70 shadow-md">
+                      <div className="w-20 h-20 rounded-xl bg-red-100 dark:bg-red-950/60 border-2 border-red-400 text-red-700 dark:text-red-300 flex items-center justify-center shrink-0 shadow-md">
+                        <Building className="w-10 h-10" />
+                      </div>
+                      <div className="min-w-0">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-red-100 dark:bg-red-950 text-red-800 dark:text-red-300">مدير المستشفى</span>
+                        <h5 className="font-extrabold text-sm text-slate-900 dark:text-white mt-1">دكتور / محمد خالد</h5>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5">الإشراف الطبي العام على المستشفى</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-slate-900 border-2 border-rose-300/80 dark:border-rose-900/70 shadow-md">
+                      <div className="w-20 h-20 rounded-xl bg-rose-100 dark:bg-rose-950/60 border-2 border-rose-400 text-rose-700 dark:text-rose-300 flex items-center justify-center shrink-0 shadow-md">
+                        <Award className="w-10 h-10" />
+                      </div>
+                      <div className="min-w-0">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300">الشئون العلاجية</span>
+                        <h5 className="font-extrabold text-sm text-slate-900 dark:text-white mt-1">دكتور / أحمد حسني</h5>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5">متابعة الخدمات السريرية والبروتوكولات</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
 
               {/* Key Features */}
               <div className="space-y-2">
