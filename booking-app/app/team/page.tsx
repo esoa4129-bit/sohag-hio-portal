@@ -269,8 +269,12 @@ export default function TeamPage() {
             </div>
 
             <div className="w-full max-w-xl relative overflow-hidden rounded-3xl bg-gradient-to-br from-white via-amber-50/40 to-amber-100/30 dark:from-slate-900 dark:via-slate-800 dark:to-amber-950/20 border-2 border-amber-400/80 dark:border-amber-600/70 p-6 sm:p-7 shadow-xl shadow-amber-500/10 text-center flex flex-col items-center hover:scale-[1.01] transition-all duration-300">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-600 text-white flex items-center justify-center shadow-lg shadow-amber-500/25 mb-3">
-                <Building2 className="w-8 h-8" />
+              <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl overflow-hidden border-2 border-amber-400/90 shadow-xl shadow-amber-500/20 mb-3 relative flex items-center justify-center bg-slate-100 dark:bg-slate-800">
+                <img
+                  src="/team/mohamed-khalaf-afifi.jpg"
+                  alt="دكتور / محمد خلف عفيفي"
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
 
               <span className="text-xs font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider mb-1">
@@ -307,8 +311,12 @@ export default function TeamPage() {
                       <Cpu className="w-3.5 h-3.5 text-sky-600" />
                       إدارة النظم والمعلومات
                     </span>
-                    <div className="w-10 h-10 rounded-xl bg-sky-100 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 flex items-center justify-center">
-                      <Cpu className="w-5 h-5" />
+                    <div className="w-12 h-12 rounded-2xl overflow-hidden border border-sky-400/50 shadow-md shrink-0 bg-sky-100 dark:bg-sky-950">
+                      <img
+                        src="/team/mostafa-khalaf.jpg"
+                        alt="مهندس / مصطفى خلف"
+                        className="w-full h-full object-cover object-top"
+                      />
                     </div>
                   </div>
 
@@ -340,8 +348,12 @@ export default function TeamPage() {
                       <Coins className="w-3.5 h-3.5 text-indigo-600" />
                       الشئون المالية والإدارية
                     </span>
-                    <div className="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center">
-                      <Coins className="w-5 h-5" />
+                    <div className="w-12 h-12 rounded-2xl overflow-hidden border border-indigo-400/50 shadow-md shrink-0 bg-indigo-100 dark:bg-indigo-950">
+                      <img
+                        src="/team/moataz-hammadi.jpg"
+                        alt="أستاذ / معتز بالله فاروق حمادي"
+                        className="w-full h-full object-cover object-top"
+                      />
                     </div>
                   </div>
 
@@ -389,8 +401,12 @@ export default function TeamPage() {
                       <Globe className="w-3.5 h-3.5 text-sky-600" />
                       البوابة الإلكترونية
                     </span>
-                    <div className="w-10 h-10 rounded-xl bg-sky-100 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 flex items-center justify-center">
-                      <Globe className="w-5 h-5" />
+                    <div className="w-12 h-12 rounded-2xl overflow-hidden border border-sky-400/50 shadow-md shrink-0 bg-sky-100 dark:bg-sky-950">
+                      <img
+                        src="/team/mohamed-abdelhamid.jpg"
+                        alt="مهندس / محمد عبد الحميد"
+                        className="w-full h-full object-cover object-top"
+                      />
                     </div>
                   </div>
 
@@ -455,8 +471,12 @@ export default function TeamPage() {
                       <Briefcase className="w-3.5 h-3.5 text-indigo-600" />
                       الشئون الإدارية
                     </span>
-                    <div className="w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 flex items-center justify-center">
-                      <Briefcase className="w-5 h-5" />
+                    <div className="w-12 h-12 rounded-2xl overflow-hidden border border-indigo-400/50 shadow-md shrink-0 bg-indigo-100 dark:bg-indigo-950">
+                      <img
+                        src="/team/mohamed-fawzy.jpg"
+                        alt="أستاذ / محمد فوزي"
+                        className="w-full h-full object-cover object-top"
+                      />
                     </div>
                   </div>
 
@@ -504,8 +524,12 @@ export default function TeamPage() {
                       <Code2 className="w-3.5 h-3.5 text-emerald-600" />
                       هندسة وتطوير البرمجيات
                     </span>
-                    <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950/60 text-emerald-700 dark:text-emerald-300 flex items-center justify-center">
-                      <Code2 className="w-5 h-5" />
+                    <div className="w-12 h-12 rounded-2xl overflow-hidden border border-emerald-400/50 shadow-md shrink-0 bg-emerald-100 dark:bg-emerald-950">
+                      <img
+                        src="/team/eslam-aboelyazid.jpg"
+                        alt="مهندس / إسلام أبو اليزيد"
+                        className="w-full h-full object-cover object-top"
+                      />
                     </div>
                   </div>
 

@@ -92,6 +92,7 @@ export const BRANCH_CORE_LEADERSHIP: TeamMember[] = [
     department: "القيادة العامة للفرع",
     bio: "الإشراف والرعاية العامة لمسيرة التطوير الشامل",
     badge: "المستوى القيادي الأول",
+    photoUrl: "/team/mohamed-khalaf-afifi.jpg",
     order: 1
   },
   {
@@ -103,6 +104,7 @@ export const BRANCH_CORE_LEADERSHIP: TeamMember[] = [
     department: "إدارة النظم والمعلومات",
     bio: "التخطيط الاستراتيجي ومتابعة المنظومات والربط",
     badge: "الإدارة التنفيذية",
+    photoUrl: "/team/mostafa-khalaf.jpg",
     order: 2
   },
   {
@@ -114,6 +116,7 @@ export const BRANCH_CORE_LEADERSHIP: TeamMember[] = [
     department: "الشئون المالية والإدارية",
     bio: "الإشراف الإداري والمالي ودعم متطلبات الميكنة",
     badge: "الإدارة المالية والإدارية",
+    photoUrl: "/team/moataz-hammadi.jpg",
     order: 3
   },
   {
@@ -125,6 +128,7 @@ export const BRANCH_CORE_LEADERSHIP: TeamMember[] = [
     department: "إدارة النظم والمعلومات والبوابة الرقمية",
     bio: "متابعة وتشغيل وتحديث منصة البوابة الإلكترونية لفرع سوهاج",
     badge: "البوابة الإلكترونية",
+    photoUrl: "/team/mohamed-abdelhamid.jpg",
     order: 4
   },
   {
@@ -147,6 +151,7 @@ export const BRANCH_CORE_LEADERSHIP: TeamMember[] = [
     department: "الشئون الإدارية برئاسة الفرع",
     bio: "التنظيم الإداري والخدمات المعاونة ودعم مسيرة العمل بالفرع",
     badge: "الشئون الإدارية",
+    photoUrl: "/team/mohamed-fawzy.jpg",
     order: 6
   },
   {
@@ -158,6 +163,7 @@ export const BRANCH_CORE_LEADERSHIP: TeamMember[] = [
     department: "هندسة وتطوير البرمجيات",
     bio: "تصميم وتطوير البوابات وتطبيقات الويب الذكية",
     badge: "هندسة البرمجيات",
+    photoUrl: "/team/eslam-aboelyazid.jpg",
     order: 7
   },
   {
@@ -207,6 +213,7 @@ export const INITIAL_FACILITY_LEADERSHIP: TeamMember[] = [
     department: "الشئون المالية والإدارية بمستشفى الهلال",
     bio: "التنظيم الإداري وتوفير الموارد والمستلزمات لدعم المنظومة الصحية",
     badge: "مدير مالي وإداري",
+    photoUrl: "/team/ashraf-elgendy.jpg",
     order: 3
   },
   {
@@ -218,6 +225,7 @@ export const INITIAL_FACILITY_LEADERSHIP: TeamMember[] = [
     department: "إدارة شئون المرضى وخدمة العملاء",
     bio: "تسهيل إجراءات دخول وخروج المرضى وتذليل كافة العقبات للمنتفعين",
     badge: "شئون المرضى",
+    photoUrl: "/team/sherif-mehrezi.jpg",
     order: 4
   },
 

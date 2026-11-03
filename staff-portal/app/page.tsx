@@ -1391,52 +1391,92 @@ export default function StaffPortalPage() {
 
           {/* Quick Cards of Core Team */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-400/40 transition">
-              <span className="text-[10px] font-bold text-amber-400">مدير عام الفرع</span>
-              <h4 className="font-extrabold text-sm text-white mt-0.5">دكتور / محمد خلف عفيفي</h4>
-              <p className="text-[11px] text-slate-300 mt-1 line-clamp-1">الإشراف والرعاية العامة لمسيرة التطوير الشامل</p>
+            <div className="p-3 rounded-2xl bg-white/5 border border-white/10 hover:border-amber-400/40 transition flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl overflow-hidden border border-amber-400/60 shadow-md shrink-0 bg-white/10">
+                <img src="/team/mohamed-khalaf-afifi.jpg" alt="دكتور محمد خلف عفيفي" className="w-full h-full object-cover object-top" />
+              </div>
+              <div className="min-w-0">
+                <span className="text-[10px] font-bold text-amber-400">مدير عام الفرع</span>
+                <h4 className="font-extrabold text-sm text-white mt-0.5 truncate">دكتور / محمد خلف عفيفي</h4>
+                <p className="text-[11px] text-slate-300 mt-0.5 line-clamp-1">الإشراف والرعاية العامة لمسيرة التطوير الشامل</p>
+              </div>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-sky-400/40 transition">
-              <span className="text-[10px] font-bold text-sky-400">مدير إدارة النظم والمعلومات</span>
-              <h4 className="font-extrabold text-sm text-white mt-0.5">مهندس / مصطفى خلف</h4>
-              <p className="text-[11px] text-slate-300 mt-1 line-clamp-1">التخطيط الاستراتيجي ومتابعة المنظومات والربط</p>
+            <div className="p-3 rounded-2xl bg-white/5 border border-white/10 hover:border-sky-400/40 transition flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl overflow-hidden border border-sky-400/60 shadow-md shrink-0 bg-white/10">
+                <img src="/team/mostafa-khalaf.jpg" alt="مهندس مصطفى خلف" className="w-full h-full object-cover object-top" />
+              </div>
+              <div className="min-w-0">
+                <span className="text-[10px] font-bold text-sky-400">مدير إدارة النظم والمعلومات</span>
+                <h4 className="font-extrabold text-sm text-white mt-0.5 truncate">مهندس / مصطفى خلف</h4>
+                <p className="text-[11px] text-slate-300 mt-0.5 line-clamp-1">التخطيط الاستراتيجي ومتابعة المنظومات والربط</p>
+              </div>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-indigo-400/40 transition">
-              <span className="text-[10px] font-bold text-indigo-400">مدير الشئون المالية والإدارية</span>
-              <h4 className="font-extrabold text-sm text-white mt-0.5">أستاذ / معتز بالله فاروق حمادي</h4>
-              <p className="text-[11px] text-slate-300 mt-1 line-clamp-1">الإشراف الإداري والمالي ودعم متطلبات الميكنة</p>
+            <div className="p-3 rounded-2xl bg-white/5 border border-white/10 hover:border-indigo-400/40 transition flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl overflow-hidden border border-indigo-400/60 shadow-md shrink-0 bg-white/10">
+                <img src="/team/moataz-hammadi.jpg" alt="أستاذ معتز بالله فاروق حمادي" className="w-full h-full object-cover object-top" />
+              </div>
+              <div className="min-w-0">
+                <span className="text-[10px] font-bold text-indigo-400">مدير الشئون المالية والإدارية</span>
+                <h4 className="font-extrabold text-sm text-white mt-0.5 truncate">أستاذ / معتز بالله فاروق حمادي</h4>
+                <p className="text-[11px] text-slate-300 mt-0.5 line-clamp-1">الإشراف الإداري والمالي ودعم متطلبات الميكنة</p>
+              </div>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-blue-400/40 transition">
-              <span className="text-[10px] font-bold text-blue-400">مسؤول البوابة الإلكترونية</span>
-              <h4 className="font-extrabold text-sm text-white mt-0.5">مهندس / محمد عبد الحميد</h4>
-              <p className="text-[11px] text-slate-300 mt-1 line-clamp-1">إدارة المحتوى وتنسيق البوابة الرقمية للفرع</p>
+            <div className="p-3 rounded-2xl bg-white/5 border border-white/10 hover:border-blue-400/40 transition flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl overflow-hidden border border-blue-400/60 shadow-md shrink-0 bg-white/10">
+                <img src="/team/mohamed-abdelhamid.jpg" alt="مهندس محمد عبد الحميد" className="w-full h-full object-cover object-top" />
+              </div>
+              <div className="min-w-0">
+                <span className="text-[10px] font-bold text-blue-400">مسؤول البوابة الإلكترونية</span>
+                <h4 className="font-extrabold text-sm text-white mt-0.5 truncate">مهندس / محمد عبد الحميد</h4>
+                <p className="text-[11px] text-slate-300 mt-0.5 line-clamp-1">إدارة المحتوى وتنسيق البوابة الرقمية للفرع</p>
+              </div>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-teal-400/40 transition">
-              <span className="text-[10px] font-bold text-teal-400">رئيس قسم تكنولوجيا المعلومات</span>
-              <h4 className="font-extrabold text-sm text-white mt-0.5">مهندس / صفوت الجزيري</h4>
-              <p className="text-[11px] text-slate-300 mt-1 line-clamp-1">الإشراف الفني واستقرار السيرفرات والبنية التحتية</p>
+            <div className="p-3 rounded-2xl bg-white/5 border border-white/10 hover:border-teal-400/40 transition flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-teal-500/20 border border-teal-400/40 flex items-center justify-center text-teal-300 font-black text-sm shrink-0">
+                م.ص
+              </div>
+              <div className="min-w-0">
+                <span className="text-[10px] font-bold text-teal-400">رئيس قسم تكنولوجيا المعلومات</span>
+                <h4 className="font-extrabold text-sm text-white mt-0.5 truncate">مهندس / صفوت الجزيري</h4>
+                <p className="text-[11px] text-slate-300 mt-0.5 line-clamp-1">الإشراف الفني واستقرار السيرفرات والبنية التحتية</p>
+              </div>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-400/40 transition">
-              <span className="text-[10px] font-bold text-emerald-400">رئيس الشئون الإدارية</span>
-              <h4 className="font-extrabold text-sm text-white mt-0.5">أستاذ / محمد فوزي</h4>
-              <p className="text-[11px] text-slate-300 mt-1 line-clamp-1">التنسيق الإداري والمتابعة الميدانية لمنظومات العمل</p>
+            <div className="p-3 rounded-2xl bg-white/5 border border-white/10 hover:border-emerald-400/40 transition flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl overflow-hidden border border-emerald-400/60 shadow-md shrink-0 bg-white/10">
+                <img src="/team/mohamed-fawzy.jpg" alt="أستاذ محمد فوزي" className="w-full h-full object-cover object-top" />
+              </div>
+              <div className="min-w-0">
+                <span className="text-[10px] font-bold text-emerald-400">رئيس الشئون الإدارية</span>
+                <h4 className="font-extrabold text-sm text-white mt-0.5 truncate">أستاذ / محمد فوزي</h4>
+                <p className="text-[11px] text-slate-300 mt-0.5 line-clamp-1">التنسيق الإداري والمتابعة الميدانية لمنظومات العمل</p>
+              </div>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-purple-400/40 transition">
-              <span className="text-[10px] font-bold text-purple-400">مطور ومهندس البوابة الرقمية</span>
-              <h4 className="font-extrabold text-sm text-white mt-0.5">مهندس / إسلام أبو اليزيد</h4>
-              <p className="text-[11px] text-slate-300 mt-1 line-clamp-1">تصميم وتطوير البوابات وتطبيقات الويب الذكية</p>
+            <div className="p-3 rounded-2xl bg-white/5 border border-white/10 hover:border-purple-400/40 transition flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl overflow-hidden border border-purple-400/60 shadow-md shrink-0 bg-white/10">
+                <img src="/team/eslam-aboelyazid.jpg" alt="مهندس إسلام أبو اليزيد" className="w-full h-full object-cover object-top" />
+              </div>
+              <div className="min-w-0">
+                <span className="text-[10px] font-bold text-purple-400">مطور ومهندس البوابة الرقمية</span>
+                <h4 className="font-extrabold text-sm text-white mt-0.5 truncate">مهندس / إسلام أبو اليزيد</h4>
+                <p className="text-[11px] text-slate-300 mt-0.5 line-clamp-1">تصميم وتطوير البوابات وتطبيقات الويب الذكية</p>
+              </div>
             </div>
 
-            <div className="p-3.5 rounded-2xl bg-white/5 border border-white/10 hover:border-cyan-400/40 transition">
-              <span className="text-[10px] font-bold text-cyan-400">مسؤول شبكات الإنترنت والاتصالات</span>
-              <h4 className="font-extrabold text-sm text-white mt-0.5">مهندسة / سماح القاضي</h4>
-              <p className="text-[11px] text-slate-300 mt-1 line-clamp-1">متابعة خطوط الربط وشبكات الإنترنت واستقرار الاتصال</p>
+            <div className="p-3 rounded-2xl bg-white/5 border border-white/10 hover:border-cyan-400/40 transition flex items-center gap-3">
+              <div className="w-12 h-12 rounded-xl bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center text-cyan-300 font-black text-sm shrink-0">
+                م.س
+              </div>
+              <div className="min-w-0">
+                <span className="text-[10px] font-bold text-cyan-400">مسؤول شبكات الإنترنت والاتصالات</span>
+                <h4 className="font-extrabold text-sm text-white mt-0.5 truncate">مهندسة / سماح القاضي</h4>
+                <p className="text-[11px] text-slate-300 mt-0.5 line-clamp-1">متابعة خطوط الربط وشبكات الإنترنت واستقرار الاتصال</p>
+              </div>
             </div>
           </div>
         </section>
