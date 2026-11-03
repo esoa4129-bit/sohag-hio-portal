@@ -1006,7 +1006,7 @@ export default function StaffPortalPage() {
                 }`}
               >
                 <span>🖥️</span>
-                <span>متابعة السيرفرات والمنظومات (22)</span>
+                <span>متابعة السيرفرات والمنظومات ({systems.length})</span>
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
               </button>
             </div>
@@ -1030,7 +1030,7 @@ export default function StaffPortalPage() {
               <div className="flex items-center gap-3 overflow-x-auto scrollbar-none py-0.5">
                 <span className="text-slate-500 dark:text-slate-400 font-bold flex items-center gap-1 shrink-0">
                   <Radio className="w-3.5 h-3.5 text-sky-600" />
-                  حالة السيرفرات:
+                  حالة المنظومات والسيرفرات ({systems.length}):
                 </span>
 
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-emerald-100 dark:bg-emerald-950/60 text-emerald-800 dark:text-emerald-200 font-bold shrink-0">
@@ -1038,15 +1038,24 @@ export default function StaffPortalPage() {
                   <span>نشط: {healthStats.online}</span>
                 </span>
 
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-200 font-bold shrink-0">
-                  <span className="w-2 h-2 rounded-full bg-amber-500" />
-                  <span>شبكة داخلية: {healthStats.intranet}</span>
-                </span>
+                {healthStats.intranet > 0 && (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-amber-100 dark:bg-amber-950/60 text-amber-800 dark:text-amber-200 font-bold shrink-0">
+                    <span className="w-2 h-2 rounded-full bg-amber-500" />
+                    <span>شبكة داخلية: {healthStats.intranet}</span>
+                  </span>
+                )}
 
                 {healthStats.offline > 0 && (
                   <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-rose-100 dark:bg-rose-950/60 text-rose-800 dark:text-rose-200 font-bold shrink-0">
                     <span className="w-2 h-2 rounded-full bg-rose-500" />
                     <span>غير متاح: {healthStats.offline}</span>
+                  </span>
+                )}
+
+                {healthStats.checking > 0 && (
+                  <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md bg-sky-100 dark:bg-sky-950/60 text-sky-800 dark:text-sky-200 font-bold shrink-0">
+                    <span className="w-2 h-2 rounded-full bg-sky-500 animate-ping" />
+                    <span>جارِ الفحص: {healthStats.checking}</span>
                   </span>
                 )}
               </div>
@@ -1189,7 +1198,7 @@ export default function StaffPortalPage() {
                     منظومة الموظفين والربط الشبكي
                   </div>
                   <h3 className="text-xl sm:text-2xl font-extrabold text-white">
-                    منصة إطلاق ومتابعة السيرفرات والمنظومات الطبية (22 منظومة)
+                    منصة إطلاق ومتابعة السيرفرات والمنظومات الطبية ({systems.length} منظومة)
                   </h3>
                   <p className="text-xs sm:text-sm text-slate-300 max-w-2xl leading-relaxed">
                     متابعة حية وفورية لحالة السيرفرات الوزارية، أنظمة اللجان الطبية، صرف الأورام والسكر، حركة المخازن والشراء الموحد، مع إمكانية التشغيل السريع بالنافذة الذكية.
