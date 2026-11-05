@@ -57,7 +57,7 @@ export default function SchedulesExplorer({ onOpenBooking }: SchedulesExplorerPr
   const [lightboxImage, setLightboxImage] = useState<{ src: string; title: string } | null>(null);
   const [lightboxZoom, setLightboxZoom] = useState(1);
   const [todayName, setTodayName] = useState<DayOfWeek | null>(null);
-  const [viewMode, setViewMode] = useState<"table" | "cards">("table");
+  const [viewMode, setViewMode] = useState<"cards" | "table">("cards");
 
   // حساب اليوم الحالي بتوقيت مصر
   useEffect(() => {
@@ -398,18 +398,6 @@ export default function SchedulesExplorer({ onOpenBooking }: SchedulesExplorerPr
           <div className="flex items-center bg-slate-100 dark:bg-slate-800 p-1 rounded-xl border border-slate-200/80 dark:border-slate-700">
             <button
               type="button"
-              onClick={() => setViewMode("table")}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition ${
-                viewMode === "table"
-                  ? "bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow-xs"
-                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-              }`}
-            >
-              <Table className="w-3.5 h-3.5" />
-              <span>جدول منظم</span>
-            </button>
-            <button
-              type="button"
               onClick={() => setViewMode("cards")}
               className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition ${
                 viewMode === "cards"
@@ -419,6 +407,18 @@ export default function SchedulesExplorer({ onOpenBooking }: SchedulesExplorerPr
             >
               <LayoutGrid className="w-3.5 h-3.5" />
               <span>بطاقات</span>
+            </button>
+            <button
+              type="button"
+              onClick={() => setViewMode("table")}
+              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold transition ${
+                viewMode === "table"
+                  ? "bg-white dark:bg-slate-700 text-emerald-600 dark:text-emerald-400 shadow-xs"
+                  : "text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+              }`}
+            >
+              <Table className="w-3.5 h-3.5" />
+              <span>جدول منظم</span>
             </button>
           </div>
         </div>
