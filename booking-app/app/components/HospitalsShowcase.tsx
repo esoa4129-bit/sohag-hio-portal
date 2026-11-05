@@ -947,6 +947,39 @@ export default function HospitalsShowcase({ onOpenBooking }: HospitalsShowcasePr
                 </div>
               )}
 
+                            {/* Leadership showcase for Ramadan 10 Complex */}
+              {activeModalFacility.id === "ramadan10" && (
+                <div className="space-y-3 p-4 rounded-2xl bg-teal-50/50 dark:bg-teal-950/20 border border-teal-200/60 dark:border-teal-900/40">
+                  <h4 className="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
+                    <Users className="w-4 h-4 text-teal-600" />
+                    <span>قيادات مجمع عيادات العاشر من رمضان:</span>
+                  </h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                    <div className="flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-slate-900 border-2 border-emerald-300/80 dark:border-emerald-700/70 shadow-md">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl bg-emerald-100 dark:bg-emerald-950 border-2 border-emerald-400 shrink-0 shadow-md flex items-center justify-center text-emerald-700 dark:text-emerald-300">
+                        <Users className="w-8 h-8" />
+                      </div>
+                      <div className="min-w-0">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">مدير المجمع</span>
+                        <h5 className="font-extrabold text-sm text-slate-900 dark:text-white mt-1">دكتورة / شهرت القاضي</h5>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5">الإشراف الطبي والإداري على مجمع العاشر واللجنة العامة</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-slate-900 border-2 border-teal-300/80 dark:border-teal-700/70 shadow-md">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-teal-100 dark:bg-teal-950 border-2 border-teal-400 shrink-0 shadow-md">
+                        <img src="/team/alaa-khalaf.jpg" alt="أستاذ علاء الدين خلف" className="w-full h-full object-cover object-top" />
+                      </div>
+                      <div className="min-w-0">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300">مدير مالي وإداري</span>
+                        <h5 className="font-extrabold text-sm text-slate-900 dark:text-white mt-1">أستاذ / علاء الدين خلف</h5>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5">الشئون المالية والإدارية بمجمع عيادات العاشر</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Key Features */}
               <div className="space-y-2">
                 <h4 className="font-extrabold text-xs text-slate-500 uppercase tracking-wider">أبرز المميزات:</h4>

@@ -283,14 +283,15 @@ export const INITIAL_FACILITY_LEADERSHIP: TeamMember[] = [
   },
   {
     id: "fac-ramadan-2",
-    name: "أستاذ / علاء",
+    name: "أستاذ / علاء الدين خلف",
     role: "مدير مالي وإداري",
     facility: "ramadan10",
     hierarchyLevel: "head",
     department: "الشئون المالية والإدارية بمجمع العاشر",
     bio: "الإشراف الإداري واللوجستي ودعم الخدمات الطبية للمنتفعين",
     badge: "مدير مالي وإداري",
-    order: 2
+    order: 2,
+    photoUrl: "/team/alaa-khalaf.jpg"
   },
 
   // 4. منطقة سوهاج

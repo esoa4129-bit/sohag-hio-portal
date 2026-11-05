@@ -960,14 +960,20 @@ export default function TeamPage() {
                     <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-lg bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300">
                       الشئون المالية والإدارية
                     </span>
-                    <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-teal-100 dark:bg-teal-950/60 border-2 border-teal-400 text-teal-700 dark:text-teal-300 flex items-center justify-center shadow-lg shrink-0">
-                      <Briefcase className="w-10 h-10" />
+                    <div className="w-20 h-24 sm:w-24 sm:h-28 rounded-2xl overflow-hidden bg-teal-100 dark:bg-teal-950/60 border-2 border-teal-400 shrink-0 shadow-lg relative">
+                      <Image
+                        src="/team/alaa-khalaf.jpg"
+                        alt="أستاذ / علاء الدين خلف"
+                        width={96}
+                        height={120}
+                        className="w-full h-full object-cover object-top"
+                      />
                     </div>
                   </div>
                   <div>
                     <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">مدير مالي وإداري</p>
                     <h4 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white mt-0.5">
-                      أستاذ / علاء
+                      أستاذ / علاء الدين خلف
                     </h4>
                   </div>
                   <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-2">
