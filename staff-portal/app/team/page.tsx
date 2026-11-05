@@ -846,6 +846,88 @@ export default function TeamPage() {
               </div>
             </div>
           </div>
+
+          {/* ═══════════════════════════════════════════════════════════════════════ */}
+          {/* FEATURED: قيادات العيادات التخصصية واللجان الطبية                       */}
+          {/* ═══════════════════════════════════════════════════════════════════════ */}
+          <div className="pt-6 border-t-2 border-slate-200/80 dark:border-slate-800 space-y-5">
+            <div className="text-center space-y-1">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-teal-500/10 text-teal-700 dark:text-teal-400 border border-teal-500/30 text-xs font-black shadow-sm">
+                <Stethoscope className="w-4 h-4 text-teal-500" />
+                <span>العيادات التخصصية واللجان الطبية الفرعية</span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white pt-1">
+                قيادات العيادات التخصصية واللجان الطبية بسوهاج
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xl mx-auto">
+                إدارة العيادات التخصصية وأعمال اللجان الطبية الفرعية وخدمة المراجعين
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto w-full">
+              {/* Card 1: دكتور شريف طلعت أبوزيد */}
+              <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-slate-900 border-2 border-teal-300 dark:border-teal-900/60 p-5 shadow-lg shadow-teal-500/5 hover:border-teal-500 transition-all flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-lg bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300">
+                      مدير العيادات التخصصية
+                    </span>
+                    <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border-2 border-teal-400 shadow-xl shrink-0 bg-teal-100 dark:bg-teal-950">
+                      <img
+                        src="/team/sherif-talaat.jpg"
+                        alt="دكتور / شريف طلعت أبوزيد"
+                        className="w-full h-full object-cover object-center"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">إدارة العيادات التخصصية</p>
+                    <h4 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white mt-0.5">
+                      دكتور / شريف طلعت أبوزيد
+                    </h4>
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-2">
+                    الإشراف الطبي العام على منظومة العيادات التخصصية واللجان الطبية والخدمات العلاجية
+                  </p>
+                </div>
+                <div className="mt-3 pt-2 flex items-center gap-1.5 text-[11px] font-semibold text-teal-600 dark:text-teal-400 border-t border-slate-100 dark:border-slate-800">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>الإشراف العام على العيادات واللجان</span>
+                </div>
+              </div>
+
+              {/* Card 2: أستاذ رفعت عمار */}
+              <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-slate-900 border-2 border-amber-300 dark:border-amber-900/60 p-5 shadow-lg shadow-amber-500/5 hover:border-amber-500 transition-all flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-lg bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300">
+                      الشئون المالية والإدارية
+                    </span>
+                    <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border-2 border-amber-400 shadow-xl shrink-0 bg-amber-100 dark:bg-amber-950">
+                      <img
+                        src="/team/refaat-ammar.jpg"
+                        alt="أستاذ / رفعت عمار"
+                        className="w-full h-full object-cover object-center"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">مدير مالي وإداري</p>
+                    <h4 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white mt-0.5">
+                      أستاذ / رفعت عمار
+                    </h4>
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-2">
+                    الإشراف المالي والإداري وتوفير المستلزمات ودعم سير العمل بالعيادات التخصصية
+                  </p>
+                </div>
+                <div className="mt-3 pt-2 flex items-center gap-1.5 text-[11px] font-semibold text-amber-600 dark:text-amber-400 border-t border-slate-100 dark:border-slate-800">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>الإشراف المالي والإداري بالعيادات</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* ═══════════════════════════════════════════════════════════════════════ */}

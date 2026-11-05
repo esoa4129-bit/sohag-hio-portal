@@ -246,24 +246,26 @@ export const INITIAL_FACILITY_LEADERSHIP: TeamMember[] = [
   // 2. عيادات التخصصية
   {
     id: "fac-spec-1",
-    name: "دكتور / شريف طلعت",
+    name: "دكتور / شريف طلعت أبوزيد",
     role: "مدير العيادات التخصصية",
     facility: "specialized",
     hierarchyLevel: "top",
     department: "إدارة عيادات التخصصية واللجنة الفرعية",
     bio: "الإشراف العام على عيادات التخصصية واللجان الفرعية التابعة",
     badge: "مدير العيادات",
+    photoUrl: "/team/sherif-talaat.jpg",
     order: 1
   },
   {
     id: "fac-spec-2",
-    name: "أستاذ / رفعت",
+    name: "أستاذ / رفعت عمار",
     role: "مدير مالي وإداري",
     facility: "specialized",
     hierarchyLevel: "head",
     department: "الشئون المالية والإدارية بالعيادات التخصصية",
     bio: "الإشراف المالي والإداري ودعم سير العمل بالعيادات التخصصية",
     badge: "مدير مالي وإداري",
+    photoUrl: "/team/refaat-ammar.jpg",
     order: 2
   },
 
