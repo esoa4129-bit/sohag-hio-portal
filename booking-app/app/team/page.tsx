@@ -761,7 +761,7 @@ export default function TeamPage() {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto w-full">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 max-w-5xl mx-auto w-full">
               {/* Card 1: دكتور محمد عصمت */}
               <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-slate-900 border-2 border-blue-300 dark:border-blue-900/60 p-5 shadow-lg shadow-blue-500/5 hover:border-blue-500 transition-all flex flex-col justify-between">
                 <div className="space-y-3">
@@ -983,6 +983,39 @@ export default function TeamPage() {
                 <div className="mt-3 pt-2 flex items-center gap-1.5 text-[11px] font-semibold text-teal-600 dark:text-teal-400 border-t border-slate-100 dark:border-slate-800">
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
                   <span>الإشراف المالي والإداري بالمجمع</span>
+                </div>
+              </div>
+
+              {/* Card 3: دكتور محمد أمين */}
+              <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-slate-900 border-2 border-blue-300 dark:border-blue-900/60 p-5 shadow-lg shadow-blue-500/5 hover:border-blue-500 transition-all flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-lg bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300">
+                      اللجنة الطبية العامة
+                    </span>
+                    <div className="w-20 h-24 sm:w-24 sm:h-28 rounded-2xl overflow-hidden bg-blue-100 dark:bg-blue-950/60 border-2 border-blue-400 shrink-0 shadow-lg relative">
+                      <Image
+                        src="/team/mohamed-amin.jpg"
+                        alt="دكتور / محمد أمين"
+                        width={96}
+                        height={120}
+                        className="w-full h-full object-cover object-top"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">مدير اللجنة الطبية العامة</p>
+                    <h4 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white mt-0.5">
+                      دكتور / محمد أمين
+                    </h4>
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-2">
+                    الإشراف الطبي على أعمال وقرارات اللجنة الطبية العامة ولجان العجز بسوهاج
+                  </p>
+                </div>
+                <div className="mt-3 pt-2 flex items-center gap-1.5 text-[11px] font-semibold text-blue-600 dark:text-blue-400 border-t border-slate-100 dark:border-slate-800">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-blue-500" />
+                  <span>إدارة اللجنة الطبية العامة</span>
                 </div>
               </div>
             </div>

@@ -293,6 +293,18 @@ export const INITIAL_FACILITY_LEADERSHIP: TeamMember[] = [
     order: 2,
     photoUrl: "/team/alaa-khalaf.jpg"
   },
+  {
+    id: "fac-ramadan-3",
+    name: "دكتور / محمد أمين",
+    role: "مدير اللجنة الطبية العامة بسوهاج",
+    facility: "ramadan10",
+    hierarchyLevel: "head",
+    department: "اللجنة الطبية العامة بسوهاج (مجمع العاشر من رمضان)",
+    bio: "الإشراف الطبي على أعمال وقرارات اللجنة الطبية العامة ولجان العجز والتقارير الطبية",
+    badge: "مدير اللجنة الطبية العامة",
+    order: 3,
+    photoUrl: "/team/mohamed-amin.jpg"
+  },
 
   // 4. منطقة سوهاج
   {

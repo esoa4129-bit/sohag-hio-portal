@@ -966,6 +966,17 @@ export default function HospitalsShowcase({ onOpenBooking }: HospitalsShowcasePr
                       </div>
                     </div>
 
+                    <div className="flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-slate-900 border-2 border-blue-300/80 dark:border-blue-700/70 shadow-md">
+                      <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-blue-100 dark:bg-blue-950 border-2 border-blue-400 shrink-0 shadow-md">
+                        <img src="/team/mohamed-amin.jpg" alt="دكتور محمد أمين" className="w-full h-full object-cover object-top" />
+                      </div>
+                      <div className="min-w-0">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300">مدير اللجنة العامة</span>
+                        <h5 className="font-extrabold text-sm text-slate-900 dark:text-white mt-1">دكتور / محمد أمين</h5>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5">الإشراف على قرارات وأعمال اللجنة الطبية العامة</p>
+                      </div>
+                    </div>
+
                     <div className="flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-slate-900 border-2 border-teal-300/80 dark:border-teal-700/70 shadow-md">
                       <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-teal-100 dark:bg-teal-950 border-2 border-teal-400 shrink-0 shadow-md">
                         <img src="/team/alaa-khalaf.jpg" alt="أستاذ علاء الدين خلف" className="w-full h-full object-cover object-top" />
