@@ -36,10 +36,8 @@ import { FACILITIES, TeamMember, BRANCH_CORE_LEADERSHIP, INITIAL_FACILITY_LEADER
 export default function TeamPage() {
   const [darkMode, setDarkMode] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [selectedFacility, setSelectedFacility] = useState<string>("hilal");
-  const [searchQuery, setSearchQuery] = useState("");
   const [customMembers, setCustomMembers] = useState<TeamMember[]>(INITIAL_FACILITY_LEADERSHIP);
-
+      
   useEffect(() => {
     const savedTheme = localStorage.getItem("sohag_hio_staff_theme");
     if (savedTheme === "dark" || (!savedTheme && window.matchMedia("(prefers-color-scheme: dark)").matches)) {
@@ -158,25 +156,6 @@ export default function TeamPage() {
       setTimeout(() => setCopied(false), 2000);
     }
   };
-
-  const currentFacilityInfo = FACILITIES.find((f) => f.id === selectedFacility) || FACILITIES[1];
-
-  // Custom members for the active facility
-  const activeFacilityMembers = customMembers.filter((m) => {
-    const matchesFacility = selectedFacility === "all" ? true : m.facility === selectedFacility;
-    const matchesSearch =
-      searchQuery === ""
-        ? true
-        : m.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          m.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          (m.department && m.department.toLowerCase().includes(searchQuery.toLowerCase())) ||
-          (m.bio && m.bio.toLowerCase().includes(searchQuery.toLowerCase()));
-    return matchesFacility && matchesSearch;
-  });
-
-  const facilityTopTier = activeFacilityMembers.filter((m) => m.hierarchyLevel === "top");
-  const facilityHeadTier = activeFacilityMembers.filter((m) => m.hierarchyLevel === "head");
-  const facilityMemberTier = activeFacilityMembers.filter((m) => !m.hierarchyLevel || m.hierarchyLevel === "member");
 
   return (
     <div className="min-h-screen flex flex-col justify-between bg-gradient-to-b from-slate-50 via-sky-50/30 to-slate-100 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 text-slate-800 dark:text-slate-100 overflow-x-hidden selection:bg-sky-500 selection:text-white">
@@ -928,322 +907,83 @@ export default function TeamPage() {
               </div>
             </div>
           </div>
-        </section>
 
-        {/* ═══════════════════════════════════════════════════════════════════════ */}
-        {/* 2. HOSPITAL & CLINIC TABS (المستشفيات والمراكز التابعة)                 */}
-        {/* ═══════════════════════════════════════════════════════════════════════ */}
-        <section className="space-y-6 pt-4">
-          <div className="text-center space-y-1">
-            <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white flex items-center justify-center gap-2">
-              <Building2 className="w-5 h-5 text-sky-600 dark:text-sky-400" />
-              <span>أطقم عمل مستشفيات ومراكز التأمين الصحي بسوهاج</span>
-            </h3>
-            <p className="text-xs text-slate-500 dark:text-slate-400">
-              اختر المستشفى أو المركز لعرض فريق العمل والأطباء المضافين بكل منشأة
-            </p>
-          </div>
-
-          {/* Search box */}
-          <div className="max-w-md mx-auto relative">
-            <Search className="w-4 h-4 text-slate-400 absolute right-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
-            <input
-              type="text"
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="ابحث بالاسم، الوظيفة، أو المستشفى..."
-              className="w-full pr-10 pl-4 py-2.5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 text-xs sm:text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-sky-500 text-slate-900 dark:text-white"
-            />
-          </div>
-
-          {/* Hospital Navigation Deck - Responsive & No ugly scrollbars */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2.5 sm:gap-3">
-            {FACILITIES.map((fac) => {
-              const isActive = selectedFacility === fac.id;
-              const count = customMembers.filter((m) => m.facility === fac.id).length;
-              return (
-                <button
-                  key={fac.id}
-                  onClick={() => setSelectedFacility(fac.id)}
-                  className={`group relative overflow-hidden flex flex-col items-center justify-between text-center p-3 sm:p-4 rounded-2xl transition-all duration-300 border ${
-                    isActive
-                      ? "bg-gradient-to-br from-sky-600 via-sky-700 to-blue-800 text-white shadow-xl shadow-sky-600/30 border-sky-400 scale-[1.02] ring-2 ring-sky-400/50"
-                      : "bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-200 hover:bg-sky-50/70 dark:hover:bg-slate-800/80 border-slate-200/90 dark:border-slate-800 hover:border-sky-300 dark:hover:border-slate-700 shadow-sm"
-                  }`}
-                >
-                  <div className="flex items-center justify-between w-full mb-2">
-                    <span className="text-2xl sm:text-3xl filter drop-shadow-sm">{fac.icon}</span>
-                    {count > 0 ? (
-                      <span className={`text-[10px] px-2 py-0.5 rounded-full font-black font-mono shadow-sm ${isActive ? "bg-white/20 text-white" : "bg-sky-100 dark:bg-slate-800 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-slate-700"}`}>
-                        {count} عضو
-                      </span>
-                    ) : (
-                      <span className={`text-[9px] px-2 py-0.5 rounded-full font-bold ${isActive ? "bg-white/10 text-sky-100" : "bg-slate-100 dark:bg-slate-800 text-slate-400"}`}>
-                        متاح
-                      </span>
-                    )}
-                  </div>
-                  
-                  <div className="w-full space-y-0.5">
-                    <span className={`text-xs sm:text-sm font-black block leading-tight ${isActive ? "text-white" : "text-slate-800 dark:text-slate-100"}`}>
-                      {fac.name}
-                    </span>
-                    <span className={`text-[10px] block line-clamp-1 opacity-75 ${isActive ? "text-sky-100" : "text-slate-400 dark:text-slate-500"}`}>
-                      {fac.desc}
-                    </span>
-                  </div>
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Active Facility Header Banner */}
-          <div className="p-4 sm:p-5 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm flex items-center justify-between gap-3 flex-wrap">
-            <div className="flex items-center gap-3">
-              <span className="text-3xl">{currentFacilityInfo.icon}</span>
-              <div>
-                <h4 className="font-extrabold text-base sm:text-lg text-slate-900 dark:text-white">
-                  {currentFacilityInfo.name}
-                </h4>
-                <p className="text-xs text-slate-500 dark:text-slate-400">
-                  {currentFacilityInfo.desc}
-                </p>
+          {/* ═══════════════════════════════════════════════════════════════════════ */}
+          {/* FEATURED: قيادات مجمع عيادات العاشر من رمضان                            */}
+          {/* ═══════════════════════════════════════════════════════════════════════ */}
+          <div className="pt-6 border-t-2 border-slate-200/80 dark:border-slate-800 space-y-5">
+            <div className="text-center space-y-1">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-emerald-500/10 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30 text-xs font-black shadow-sm">
+                <Building2 className="w-4 h-4 text-emerald-500" />
+                <span>مجمع عيادات العاشر من رمضان واللجنة العامة</span>
               </div>
-            </div>
-
-            <div className="flex items-center gap-2">
-              {currentFacilityInfo.mapUrl && (
-                <a
-                  href={currentFacilityInfo.mapUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="px-3 py-1.5 rounded-xl bg-sky-50 dark:bg-sky-950/60 hover:bg-sky-100 dark:hover:bg-sky-900 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800 text-xs font-bold transition flex items-center gap-1.5 shadow-sm"
-                  title="فتح الموقع على الخريطة GPS"
-                >
-                  <MapPin className="w-3.5 h-3.5 text-sky-600" />
-                  <span>الموقع على الخريطة</span>
-                  <ExternalLink className="w-3 h-3 opacity-60" />
-                </a>
-              )}
-
-              <div className="text-left shrink-0">
-                <span className="px-3 py-1 rounded-xl bg-sky-50 dark:bg-sky-950/60 text-sky-700 dark:text-sky-300 border border-sky-200 dark:border-sky-800 text-xs font-bold font-mono">
-                  {activeFacilityMembers.length} عضو
-                </span>
-              </div>
-            </div>
-          </div>
-
-          {/* Custom Members in Hierarchical Layout */}
-          {activeFacilityMembers.length === 0 ? (
-            <div className="text-center py-12 px-4 rounded-3xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 space-y-2">
-              <div className="w-14 h-14 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center mx-auto text-2xl">
-                {currentFacilityInfo.icon}
-              </div>
-              <h5 className="font-bold text-slate-800 dark:text-slate-200 text-sm">
-                لا يوجد أعضاء مضافون حالياً في هذا القسم
-              </h5>
-              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
-                يمكن إضافة أطباء وكوادر هذه المنشأة من لوحة التحكم لتظهر في هذا التبويب فوراً.
+              <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white pt-1">
+                قيادات مجمع عيادات العاشر من رمضان
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xl mx-auto">
+                إدارة أكبر مجمعات العيادات التخصصية وأعمال اللجنة الطبية العامة بسوهاج
               </p>
             </div>
-          ) : (
-            <div className="space-y-6">
-              {/* Level 1: Top Tier of Facility */}
-              {facilityTopTier.length > 0 && (
-                <div className="flex flex-col items-center">
-                  <div className="inline-flex items-center gap-1 px-3 py-0.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-[11px] font-bold mb-3">
-                    <Crown className="w-3.5 h-3.5 text-amber-500" />
-                    <span>إدارة المنشأة • قمة الهرم</span>
-                  </div>
 
-                  <div className={`grid gap-4 w-full justify-center ${facilityTopTier.length === 1 ? "max-w-xl" : "grid-cols-1 md:grid-cols-2"}`}>
-                    {facilityTopTier.map((member) => (
-                      <div
-                        key={member.id}
-                        className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-white via-amber-50/30 to-amber-100/20 dark:from-slate-900 dark:via-slate-800 dark:to-amber-950/20 border-2 border-amber-400/70 dark:border-amber-600/60 p-5 sm:p-6 shadow-lg shadow-amber-500/5 text-center flex flex-col items-center"
-                      >
-                        <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden bg-white dark:bg-slate-800 border-2 border-amber-500 shadow-xl mb-3 relative flex items-center justify-center">
-                          {member.photoUrl ? (
-                            <img src={member.photoUrl} alt={member.name} className="w-full h-full object-cover" />
-                          ) : (
-                            <User className="w-12 h-12 text-amber-600" />
-                          )}
-                        </div>
-
-                        {member.badge && (
-                          <span className="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-amber-500 text-white mb-1">
-                            {member.badge}
-                          </span>
-                        )}
-
-                        <span className="text-[11px] font-bold text-amber-700 dark:text-amber-400 uppercase tracking-wider">
-                          {member.role}
-                        </span>
-
-                        <h4 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-0.5">
-                          {member.name}
-                        </h4>
-
-                        {member.department && (
-                          <span className="text-xs font-semibold text-slate-600 dark:text-slate-300 mt-1">
-                            {member.department}
-                          </span>
-                        )}
-
-                        {member.bio && (
-                          <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed mt-2 max-w-md">
-                            {member.bio}
-                          </p>
-                        )}
-
-                        {member.phone && (
-                          <div className="mt-2.5 pt-2 border-t border-amber-200/60 dark:border-amber-900/50 flex items-center gap-1.5 text-xs text-slate-600 font-mono" dir="ltr">
-                            <Phone className="w-3.5 h-3.5 text-amber-600" />
-                            <span>{member.phone}</span>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-
-                  {(facilityHeadTier.length > 0 || facilityMemberTier.length > 0) && (
-                    <div className="flex flex-col items-center my-3">
-                      <div className="w-0.5 h-6 bg-gradient-to-b from-amber-400 to-sky-500" />
-                      <ChevronDown className="w-4 h-4 text-sky-500 -mt-1" />
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Level 2: Head Tier of Facility */}
-              {facilityHeadTier.length > 0 && (
-                <div className="flex flex-col items-center">
-                  <div className="inline-flex items-center gap-1 px-3 py-0.5 rounded-full bg-blue-500/10 border border-blue-500/30 text-blue-600 dark:text-blue-400 text-[11px] font-bold mb-3">
-                    <ShieldCheck className="w-3.5 h-3.5 text-blue-500" />
-                    <span>رؤساء الأقسام واللجان</span>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full">
-                    {facilityHeadTier.map((member) => (
-                      <div
-                        key={member.id}
-                        className="relative overflow-hidden rounded-3xl bg-white dark:bg-slate-900 border-2 border-sky-300 dark:border-sky-800/70 p-5 shadow-sm flex flex-col justify-between"
-                      >
-                        <div className="space-y-2.5">
-                          <div className="flex items-center justify-between">
-                            <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-md bg-sky-100 dark:bg-sky-950 text-sky-800 dark:text-sky-300">
-                              {member.badge || member.department || "رئيس قسم"}
-                            </span>
-                            <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden bg-sky-100 dark:bg-sky-950 border-2 border-sky-400 shadow-xl shrink-0 flex items-center justify-center">
-                              {member.photoUrl ? (
-                                <img src={member.photoUrl} alt={member.name} className="w-full h-full object-cover object-center" />
-                              ) : (
-                                <ShieldCheck className="w-10 h-10 text-sky-600" />
-                              )}
-                            </div>
-                          </div>
-
-                          <div>
-                            <p className="text-[11px] font-semibold text-slate-500 dark:text-slate-400">{member.role}</p>
-                            <h5 className="text-base sm:text-lg font-extrabold text-slate-900 dark:text-white">{member.name}</h5>
-                            {member.department && (
-                              <p className="text-xs text-sky-600 dark:text-sky-400 font-semibold mt-0.5">{member.department}</p>
-                            )}
-                          </div>
-
-                          {member.bio && (
-                            <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-2">
-                              {member.bio}
-                            </p>
-                          )}
-                        </div>
-
-                        {member.phone && (
-                          <div className="mt-3 pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center gap-1.5 text-xs text-slate-500 font-mono" dir="ltr">
-                            <Phone className="w-3.5 h-3.5 text-sky-600" />
-                            <span>{member.phone}</span>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-
-                  {facilityMemberTier.length > 0 && (
-                    <div className="flex flex-col items-center my-3">
-                      <div className="w-0.5 h-6 bg-gradient-to-b from-blue-500 to-teal-500" />
-                      <ChevronDown className="w-4 h-4 text-teal-500 -mt-1" />
-                    </div>
-                  )}
-                </div>
-              )}
-
-              {/* Level 3: Members / Operational */}
-              {facilityMemberTier.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto w-full">
+              {/* Card 1: دكتورة شهرت القاضي */}
+              <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-slate-900 border-2 border-emerald-300 dark:border-emerald-900/60 p-5 shadow-lg shadow-emerald-500/5 hover:border-emerald-500 transition-all flex flex-col justify-between">
                 <div className="space-y-3">
-                  <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-2">
-                    <h5 className="font-extrabold text-sm text-slate-900 dark:text-white flex items-center gap-2">
-                      <Users2 className="w-4 h-4 text-teal-600" />
-                      <span>الأطقم الطبية والإدارية ({facilityMemberTier.length})</span>
-                    </h5>
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-lg bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300">
+                      مدير المجمع
+                    </span>
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-emerald-100 dark:bg-emerald-950/60 border-2 border-emerald-400 text-emerald-700 dark:text-emerald-300 flex items-center justify-center shadow-lg shrink-0">
+                      <Building2 className="w-10 h-10" />
+                    </div>
                   </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
-                    {facilityMemberTier.map((member) => (
-                      <div
-                        key={member.id}
-                        className="relative overflow-hidden rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 p-4 shadow-sm flex flex-col justify-between space-y-2 hover:border-teal-500/50 transition"
-                      >
-                        <div className="flex items-start gap-3">
-                          <div className="w-14 h-14 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 border-2 border-teal-500/30 shrink-0 flex items-center justify-center">
-                            {member.photoUrl ? (
-                              <img src={member.photoUrl} alt={member.name} className="w-full h-full object-cover" />
-                            ) : (
-                              <User className="w-6 h-6 text-slate-400" />
-                            )}
-                          </div>
-
-                          <div className="min-w-0 flex-1 space-y-0.5">
-                            {member.badge && (
-                              <span className="inline-block text-[10px] font-bold px-2 py-0.5 rounded bg-teal-50 dark:bg-teal-950 text-teal-700 dark:text-teal-300">
-                                {member.badge}
-                              </span>
-                            )}
-                            <h6 className="font-extrabold text-sm text-slate-900 dark:text-white truncate">
-                              {member.name}
-                            </h6>
-                            <p className="text-[11px] font-semibold text-slate-600 dark:text-slate-300 truncate">
-                              {member.role}
-                            </p>
-                            {member.department && (
-                              <p className="text-[10px] text-slate-500 dark:text-slate-400 truncate">
-                                {member.department}
-                              </p>
-                            )}
-                          </div>
-                        </div>
-
-                        {member.bio && (
-                          <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-2 border-t border-slate-100 dark:border-slate-800 pt-2">
-                            {member.bio}
-                          </p>
-                        )}
-
-                        {member.phone && (
-                          <div className="flex items-center gap-1.5 text-xs text-slate-500 font-mono pt-1" dir="ltr">
-                            <Phone className="w-3 h-3 text-teal-600" />
-                            <span>{member.phone}</span>
-                          </div>
-                        )}
-                      </div>
-                    ))}
+                  <div>
+                    <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">إدارة مجمع العاشر</p>
+                    <h4 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white mt-0.5">
+                      دكتورة / شهرت القاضي
+                    </h4>
                   </div>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-2">
+                    الإشراف الطبي والإداري على منظومة العيادات التخصصية واللجنة الطبية العامة
+                  </p>
                 </div>
-              )}
+                <div className="mt-3 pt-2 flex items-center gap-1.5 text-[11px] font-semibold text-emerald-600 dark:text-emerald-400 border-t border-slate-100 dark:border-slate-800">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>الإشراف العام على مجمع العاشر</span>
+                </div>
+              </div>
+
+              {/* Card 2: أستاذ علاء */}
+              <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-slate-900 border-2 border-teal-300 dark:border-teal-900/60 p-5 shadow-lg shadow-teal-500/5 hover:border-teal-500 transition-all flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-lg bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300">
+                      الشئون المالية والإدارية
+                    </span>
+                    <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-2xl bg-teal-100 dark:bg-teal-950/60 border-2 border-teal-400 text-teal-700 dark:text-teal-300 flex items-center justify-center shadow-lg shrink-0">
+                      <Briefcase className="w-10 h-10" />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">مدير مالي وإداري</p>
+                    <h4 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white mt-0.5">
+                      أستاذ / علاء
+                    </h4>
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-2">
+                    الإشراف الإداري والمالي وتوفير المستلزمات ودعم سير العمل بمجمع العاشر
+                  </p>
+                </div>
+                <div className="mt-3 pt-2 flex items-center gap-1.5 text-[11px] font-semibold text-teal-600 dark:text-teal-400 border-t border-slate-100 dark:border-slate-800">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>الإشراف المالي والإداري بالمجمع</span>
+                </div>
+              </div>
             </div>
-          )}
+          </div>
         </section>
 
+        
         {/* Vision & Mission Card */}
         <section className="relative overflow-hidden p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-sky-950 via-slate-900 to-blue-950 text-white shadow-2xl border border-sky-800/40 text-center space-y-3">
           <div className="absolute top-0 right-0 w-48 h-48 bg-sky-500/10 rounded-full blur-3xl pointer-events-none" />
