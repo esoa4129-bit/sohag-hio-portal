@@ -763,6 +763,89 @@ export default function TeamPage() {
 
             </div>
           </div>
+        
+
+          {/* ═══════════════════════════════════════════════════════════════════════ */}
+          {/* FEATURED: قيادات منطقة سوهاج للتأمين الصحي                              */}
+          {/* ═══════════════════════════════════════════════════════════════════════ */}
+          <div className="pt-6 border-t-2 border-slate-200/80 dark:border-slate-800 space-y-5">
+            <div className="text-center space-y-1">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/10 text-blue-700 dark:text-blue-400 border border-blue-500/30 text-xs font-black shadow-sm">
+                <Building2 className="w-4 h-4 text-blue-500" />
+                <span>إدارة منطقة سوهاج والمتابعة التأمينية</span>
+              </div>
+              <h3 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white pt-1">
+                قيادات منطقة سوهاج للتأمين الصحي
+              </h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xl mx-auto">
+                المتابعة الميدانية والإشراف الإداري والمالي على الوحدات التأمينية بالمنطقة
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto w-full">
+              {/* Card 1: دكتور محمد عصمت */}
+              <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-slate-900 border-2 border-blue-300 dark:border-blue-900/60 p-5 shadow-lg shadow-blue-500/5 hover:border-blue-500 transition-all flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-lg bg-blue-100 dark:bg-blue-950 text-blue-800 dark:text-blue-300">
+                      مدير المنطقة
+                    </span>
+                    <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border-2 border-blue-400 shadow-xl shrink-0 bg-blue-100 dark:bg-blue-950">
+                      <img
+                        src="/team/mohamed-esmat.jpg"
+                        alt="دكتور / محمد عصمت"
+                        className="w-full h-full object-cover object-center"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">إدارة منطقة سوهاج</p>
+                    <h4 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white mt-0.5">
+                      دكتور / محمد عصمت
+                    </h4>
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-2">
+                    المتابعة الميدانية والإشراف الطبي العام على كافة العيادات والوحدات التأمينية بمنطقة سوهاج
+                  </p>
+                </div>
+                <div className="mt-3 pt-2 flex items-center gap-1.5 text-[11px] font-semibold text-blue-600 dark:text-blue-400 border-t border-slate-100 dark:border-slate-800">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>الإشراف العام على منطقة سوهاج</span>
+                </div>
+              </div>
+
+              {/* Card 2: أستاذ خالد حمادي */}
+              <div className="relative overflow-hidden rounded-3xl bg-white dark:bg-slate-900 border-2 border-indigo-300 dark:border-indigo-900/60 p-5 shadow-lg shadow-indigo-500/5 hover:border-indigo-500 transition-all flex flex-col justify-between">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-[11px] font-bold px-2.5 py-0.5 rounded-lg bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300">
+                      الشئون المالية والإدارية
+                    </span>
+                    <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border-2 border-indigo-400 shadow-xl shrink-0 bg-indigo-100 dark:bg-indigo-950">
+                      <img
+                        src="/team/khaled-hammadi.jpg"
+                        alt="أستاذ / خالد حمادي"
+                        className="w-full h-full object-cover object-center"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">مدير مالي وإداري</p>
+                    <h4 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white mt-0.5">
+                      أستاذ / خالد حمادي
+                    </h4>
+                  </div>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-2">
+                    الإشراف المالي والإداري والمتابعة اللوجستية وتيسير العمل بوحدات منطقة سوهاج
+                  </p>
+                </div>
+                <div className="mt-3 pt-2 flex items-center gap-1.5 text-[11px] font-semibold text-indigo-600 dark:text-indigo-400 border-t border-slate-100 dark:border-slate-800">
+                  <CheckCircle2 className="w-3.5 h-3.5 text-emerald-500" />
+                  <span>الإشراف المالي والإداري بالمنطقة</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* ═══════════════════════════════════════════════════════════════════════ */}

@@ -301,6 +301,7 @@ export const INITIAL_FACILITY_LEADERSHIP: TeamMember[] = [
     department: "إدارة منطقة سوهاج للتأمين الصحي",
     bio: "المتابعة الميدانية والإشراف على الخدمات التأمينية بكافة وحدات المنطقة",
     badge: "مدير المنطقة",
+    photoUrl: "/team/mohamed-esmat.jpg",
     order: 1
   },
   {
@@ -312,6 +313,7 @@ export const INITIAL_FACILITY_LEADERSHIP: TeamMember[] = [
     department: "الشئون المالية والإدارية لمنطقة سوهاج",
     bio: "الإشراف المالي والإداري والمتابعة اللوجستية لوحدات منطقة سوهاج",
     badge: "مدير مالي وإداري",
+    photoUrl: "/team/khaled-hammadi.jpg",
     order: 2
   }
 ];
