@@ -140,6 +140,7 @@ export const BRANCH_CORE_LEADERSHIP: TeamMember[] = [
     department: "تكنولوجيا المعلومات والبنية التحتية",
     bio: "الإشراف الفني واستقرار السيرفرات والبنية التحتية",
     badge: "رئاسة تكنولوجيا المعلومات",
+    photoUrl: "/team/safwat-elgeziri.jpg",
     order: 5
   },
   {
@@ -228,6 +229,19 @@ export const INITIAL_FACILITY_LEADERSHIP: TeamMember[] = [
     photoUrl: "/team/sherif-mehrezi.jpg",
     order: 4
   },
+  {
+    id: "fac-hilal-5",
+    name: "أستاذ / أحمد حسن",
+    role: "مدير مكتب مدير المستشفى",
+    facility: "hilal",
+    hierarchyLevel: "head",
+    department: "مكتب الإدارة العامة لمستشفى الهلال",
+    bio: "التنسيق الإداري والمتابعة المباشرة لمكتب الإدارة ودعم سير العمل بمستشفى الهلال",
+    badge: "مدير مكتب مدير المستشفى",
+    photoUrl: "/team/ahmed-hassan.jpg",
+    order: 5
+  },
+
 
   // 2. عيادات التخصصية
   {

@@ -845,6 +845,17 @@ export default function HospitalsShowcase({ onOpenBooking }: HospitalsShowcasePr
                       </div>
                     </div>
 
+                    <div className="flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-slate-900 border-2 border-indigo-300/80 dark:border-indigo-700/70 shadow-md">
+                      <div className="w-20 h-20 rounded-xl overflow-hidden bg-indigo-100 dark:bg-indigo-950 border-2 border-indigo-400 shrink-0 shadow-md">
+                        <img src="/team/ahmed-hassan.jpg" alt="أستاذ أحمد حسن" className="w-full h-full object-cover object-center" />
+                      </div>
+                      <div className="min-w-0">
+                        <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300">مدير مكتب مدير المستشفى</span>
+                        <h5 className="font-extrabold text-sm text-slate-900 dark:text-white mt-1">أستاذ / أحمد حسن</h5>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5">التنسيق والمتابعة الإدارية بمكتب المدير</p>
+                      </div>
+                    </div>
+
                     <div className="flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-slate-900 border-2 border-red-300/80 dark:border-red-900/70 shadow-md">
                       <div className="w-20 h-20 rounded-xl bg-red-100 dark:bg-red-950/60 border-2 border-red-400 text-red-700 dark:text-red-300 flex items-center justify-center shrink-0 shadow-md">
                         <Building className="w-10 h-10" />
