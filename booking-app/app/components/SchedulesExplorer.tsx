@@ -28,7 +28,8 @@ import {
   Users2,
   Activity,
   Table,
-  LayoutGrid
+  LayoutGrid,
+  ChevronDown
 } from "lucide-react";
 import {
   ClinicScheduleRow,
@@ -58,6 +59,7 @@ export default function SchedulesExplorer({ onOpenBooking }: SchedulesExplorerPr
   const [lightboxZoom, setLightboxZoom] = useState(1);
   const [todayName, setTodayName] = useState<DayOfWeek | null>(null);
   const [viewMode, setViewMode] = useState<"cards" | "table">("cards");
+  const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
 
   // حساب اليوم الحالي بتوقيت مصر
   useEffect(() => {
@@ -577,12 +579,26 @@ export default function SchedulesExplorer({ onOpenBooking }: SchedulesExplorerPr
               return (
                 <div
                   key={row.id}
-                  className="p-4 sm:p-5 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-3 transition hover:shadow-md"
+                  className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm transition hover:shadow-md overflow-hidden"
                 >
-                  {/* Card Header: Specialty & Current Status Badge */}
-                  <div className="flex items-start justify-between gap-2.5">
-                    <div className="flex items-start gap-2.5 min-w-0">
-                      <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 mt-0.5 border border-emerald-200/50 dark:border-emerald-800/40">
+                  {/* Card Header: Always Visible - Click to expand */}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setExpandedCards(prev => {
+                        const next = new Set(prev);
+                        if (next.has(row.id)) {
+                          next.delete(row.id);
+                        } else {
+                          next.add(row.id);
+                        }
+                        return next;
+                      });
+                    }}
+                    className="w-full text-right p-4 sm:p-5 flex items-center justify-between gap-2.5 hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition"
+                  >
+                    <div className="flex items-center gap-2.5 min-w-0 flex-1">
+                      <div className="w-10 h-10 rounded-xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0 border border-emerald-200/50 dark:border-emerald-800/40">
                         {row.category === "pediatrics" ? (
                           <Baby className="w-5 h-5 text-pink-500" />
                         ) : row.category === "committees" ? (
@@ -593,121 +609,116 @@ export default function SchedulesExplorer({ onOpenBooking }: SchedulesExplorerPr
                           <Stethoscope className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                         )}
                       </div>
-                      <div className="min-w-0">
-                        <h4 className="font-black text-base text-slate-900 dark:text-white leading-tight">
+                      <div className="min-w-0 flex-1">
+                        <h4 className="font-black text-sm sm:text-base text-slate-900 dark:text-white leading-tight truncate">
                           {row.name}
                         </h4>
-                        <span className="text-xs text-slate-500 dark:text-slate-400 block mt-1">
-                          {row.facilityName} • <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{row.categoryLabel}</span>
-                        </span>
-                        {row.doctorTitle && (
-                          <span className="text-[11px] text-slate-400 font-normal block mt-0.5">
-                            👨‍⚕️ {row.doctorTitle}
+                        <div className="flex items-center gap-2 mt-1 flex-wrap">
+                          <span className="text-[11px] text-slate-500 dark:text-slate-400 truncate max-w-[140px]">
+                            {row.facilityName}
                           </span>
-                        )}
+                          <span className={`text-[10px] font-black px-2 py-0.5 rounded-md ${
+                            row.shift === "morning"
+                              ? "bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300"
+                              : "bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300"
+                          }`}>
+                            {row.shiftLabel} • {row.hours}
+                          </span>
+                        </div>
                       </div>
                     </div>
 
-                    {/* Status Badge (حالة الظهور والعمل الآن) */}
-                    <div className="shrink-0">
+                    <div className="flex items-center gap-2 shrink-0">
                       {openStatus.isOpen ? (
-                        <span className="px-3 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300 font-black text-xs shrink-0 flex items-center gap-1.5 border border-emerald-300 dark:border-emerald-800 shadow-xs">
+                        <span className="px-2.5 py-1 rounded-full bg-emerald-100 dark:bg-emerald-950/70 text-emerald-800 dark:text-emerald-300 font-black text-[11px] flex items-center gap-1 border border-emerald-300 dark:border-emerald-800">
                           <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                           <span>مفتوح الآن</span>
                         </span>
                       ) : isAvailableToday ? (
-                        <span className="px-3 py-1 rounded-full bg-sky-100 dark:bg-sky-950/70 text-sky-800 dark:text-sky-300 font-black text-xs shrink-0 flex items-center gap-1.5 border border-sky-300 dark:border-sky-800 shadow-xs">
-                          <Calendar className="w-3.5 h-3.5 text-sky-600 dark:text-sky-400" />
+                        <span className="px-2.5 py-1 rounded-full bg-sky-100 dark:bg-sky-950/70 text-sky-800 dark:text-sky-300 font-black text-[11px] flex items-center gap-1 border border-sky-300 dark:border-sky-800">
                           <span>متاح اليوم</span>
                         </span>
                       ) : (
-                        <span className="px-2.5 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 font-bold text-xs shrink-0 flex items-center gap-1 border border-slate-200 dark:border-slate-700">
-                          <Clock className="w-3.5 h-3.5 text-slate-400" />
-                          <span>مغلق الآن</span>
+                        <span className="px-2 py-1 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-500 dark:text-slate-400 font-bold text-[11px]">
+                          مغلق
                         </span>
                       )}
+                      <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${expandedCards.has(row.id) ? "rotate-180" : ""}`} />
                     </div>
-                  </div>
+                  </button>
 
-                  {/* Notes & Alerts */}
-                  {row.notes && (
-                    <div className="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/50 text-xs text-amber-900 dark:text-amber-200 font-medium">
-                      ⚠️ {row.notes}
+                  {/* Expandable Details Section */}
+                  {expandedCards.has(row.id) && (
+                    <div className="px-4 sm:px-5 pb-4 sm:pb-5 space-y-3 border-t border-slate-100 dark:border-slate-800 animate-in fade-in slide-in-from-top-2 duration-200">
+                      {/* Doctor Title */}
+                      {row.doctorTitle && (
+                        <div className="pt-3 text-xs text-slate-500 dark:text-slate-400 font-medium flex items-center gap-1.5">
+                          <span>👨‍⚕️</span>
+                          <span>{row.doctorTitle}</span>
+                        </div>
+                      )}
+
+                      {/* Notes & Alerts */}
+                      {row.notes && (
+                        <div className="p-2.5 rounded-xl bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800/50 text-xs text-amber-900 dark:text-amber-200 font-medium">
+                          ⚠️ {row.notes}
+                        </div>
+                      )}
+
+                      {/* Examination Days (أيام الكشف المحددة) */}
+                      <div className="space-y-1.5 pt-1">
+                        <div className="flex items-center justify-between text-xs font-bold text-slate-600 dark:text-slate-400">
+                          <span className="flex items-center gap-1.5">
+                            <Calendar className="w-3.5 h-3.5 text-sky-600" />
+                            <span>أيام الكشف والعمل:</span>
+                          </span>
+                          {todayName && row.days.includes(todayName) && (
+                            <span className="text-[11px] font-black text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 rounded-md border border-emerald-200 dark:border-emerald-900">
+                              ✓ العيادة تعمل اليوم
+                            </span>
+                          )}
+                        </div>
+                        <div className="flex flex-wrap gap-1.5">
+                          {row.days.map((d) => {
+                            const isDayToday = todayName === d;
+                            return (
+                              <span
+                                key={d}
+                                className={`px-2.5 py-1 rounded-lg text-xs font-bold transition ${
+                                  isDayToday
+                                    ? "bg-emerald-600 text-white font-black shadow-xs ring-2 ring-emerald-500/30 scale-105"
+                                    : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60"
+                                }`}
+                              >
+                                {d}
+                                {isDayToday && " (اليوم)"}
+                              </span>
+                            );
+                          })}
+                        </div>
+                      </div>
+
+                      {/* Booking CTA & Original View */}
+                      <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
+                        <button
+                          onClick={() => setLightboxImage({ src: row.imageSrc, title: row.facilityName })}
+                          className="px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition flex items-center gap-1.5 active:scale-95 shrink-0"
+                          title="معاينة الجدول الورقي المعتمد"
+                        >
+                          <Eye className="w-3.5 h-3.5" />
+                          <span>الأصل</span>
+                        </button>
+
+                        <button
+                          onClick={handleBookingClick}
+                          className="flex-1 min-h-[44px] py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm transition active:scale-95"
+                        >
+                          <span>احجز موعد في هذا التخصص</span>
+                          <ExternalLink className="w-3.5 h-3.5 opacity-80" />
+                        </button>
+                      </div>
                     </div>
                   )}
-
-                  {/* Shift & Operating Hours (الفترات ومواعيد العمل) */}
-                  <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800 space-y-1.5">
-                    <div className="flex items-center justify-between text-xs">
-                      <div className="flex items-center gap-2 font-bold text-slate-800 dark:text-slate-200">
-                        <Clock className="w-4 h-4 text-emerald-600 shrink-0" />
-                        <span>فترة التشغيل:</span>
-                        <span className={`px-2.5 py-0.5 rounded-md text-xs font-black ${
-                          row.shift === "morning"
-                            ? "bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-200 dark:border-amber-900"
-                            : "bg-indigo-100 dark:bg-indigo-950 text-indigo-800 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-900"
-                        }`}>
-                          {row.shiftLabel}
-                        </span>
-                      </div>
-                      <span className="font-mono text-slate-700 dark:text-slate-300 text-xs font-black bg-white dark:bg-slate-900 px-2 py-0.5 rounded border border-slate-200/60 dark:border-slate-700">
-                        {row.hours}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Examination Days (أيام الكشف المحددة) */}
-                  <div className="space-y-1.5">
-                    <div className="flex items-center justify-between text-xs font-bold text-slate-600 dark:text-slate-400">
-                      <span className="flex items-center gap-1.5">
-                        <Calendar className="w-3.5 h-3.5 text-sky-600" />
-                        <span>أيام الكشف والعمل:</span>
-                      </span>
-                      {todayName && row.days.includes(todayName) && (
-                        <span className="text-[11px] font-black text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 px-2 py-0.5 rounded-md border border-emerald-200 dark:border-emerald-900">
-                          ✓ العيادة تعمل اليوم
-                        </span>
-                      )}
-                    </div>
-                    <div className="flex flex-wrap gap-1.5">
-                      {row.days.map((d) => {
-                        const isDayToday = todayName === d;
-                        return (
-                          <span
-                            key={d}
-                            className={`px-2.5 py-1 rounded-lg text-xs font-bold transition ${
-                              isDayToday
-                                ? "bg-emerald-600 text-white font-black shadow-xs ring-2 ring-emerald-500/30 scale-105"
-                                : "bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200/60 dark:border-slate-700/60"
-                            }`}
-                          >
-                            {d}
-                            {isDayToday && " (اليوم)"}
-                          </span>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Booking CTA & Original View */}
-                  <div className="pt-2 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
-                    <button
-                      onClick={() => setLightboxImage({ src: row.imageSrc, title: row.facilityName })}
-                      className="px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-emerald-600 dark:hover:text-emerald-400 hover:bg-slate-50 dark:hover:bg-slate-800 transition flex items-center gap-1.5 active:scale-95 shrink-0"
-                      title="معاينة الجدول الورقي المعتمد"
-                    >
-                      <Eye className="w-3.5 h-3.5" />
-                      <span>الأصل</span>
-                    </button>
-
-                    <button
-                      onClick={handleBookingClick}
-                      className="flex-1 min-h-[44px] py-2.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-sm transition active:scale-95"
-                    >
-                      <span>احجز موعد في هذا التخصص</span>
-                      <ExternalLink className="w-3.5 h-3.5 opacity-80" />
-                    </button>
-                  </div>
                 </div>
               );
             })}
