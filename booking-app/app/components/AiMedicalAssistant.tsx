@@ -245,32 +245,94 @@ export default function AiMedicalAssistant({
     }
   };
 
+  const sendCustomPrompt = async (promptText: string) => {
+    const userMsg: Message = {
+      id: `user-${Date.now()}`,
+      sender: "user",
+      text: promptText,
+      timestamp: new Date().toLocaleTimeString("ar-EG", { hour: "2-digit", minute: "2-digit" })
+    };
+
+    setMessages((prev) => [...prev, userMsg]);
+    setIsLoading(true);
+
+    try {
+      const res = await fetch("/api/ai-assistant", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: promptText })
+      });
+
+      const data = await res.json();
+      const botMsgId = `bot-${Date.now()}`;
+      const botMsg: Message = {
+        id: botMsgId,
+        sender: "bot",
+        text: data.reply || "تمت معالجة استفسارك بنجاح.",
+        actions: data.actions || [],
+        adminCard: data.adminCard || null,
+        provider: data.provider || undefined,
+        timestamp: new Date().toLocaleTimeString("ar-EG", { hour: "2-digit", minute: "2-digit" })
+      };
+
+      setMessages((prev) => [...prev, botMsg]);
+
+      if (voiceEnabled && data.reply) {
+        speakText(data.reply, botMsgId);
+      }
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: `bot-err-${Date.now()}`,
+          sender: "bot",
+          text: "تعذر الاتصال بالمساعد الذكي في هذه اللحظة، يرجى المحاولة مرة أخرى.",
+          timestamp: "الآن"
+        }
+      ]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const handleActionClick = (action: ActionItem) => {
+    if (action.actionType === ("schedules_navigate" as any)) {
+      setIsOpen(false);
+      setTimeout(() => {
+        const el = document.getElementById("schedules-section");
+        if (el) {
+          const yOffset = -90;
+          const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        } else if (onOpenSchedules) {
+          onOpenSchedules();
+        } else {
+          window.location.href = "/#schedules-section";
+        }
+      }, 100);
+      return;
+    }
+
+    if (action.actionType === "schedules") {
+      // Send as prompt to the AI in the chat so it answers with complete schedule details!
+      sendCustomPrompt("ما هي مواعيد وجداول الأطباء والعيادات بفرع سوهاج؟");
+      return;
+    }
+
+    if (action.actionType === "admin") {
+      sendCustomPrompt("من هم مدراء الشئون المالية والإدارية بفرع سوهاج وما هي الأوراق المطلوبة؟");
+      return;
+    }
+
     if (action.actionType === "booking") {
       setIsOpen(false);
       setTimeout(() => {
         onOpenBooking?.();
       }, 100);
-    } else if (action.actionType === "schedules") {
-      setIsOpen(false);
-      setTimeout(() => {
-        if (onOpenSchedules) {
-          onOpenSchedules();
-        } else {
-          const el = document.getElementById("schedules-section");
-          if (el) {
-            el.scrollIntoView({ behavior: "smooth", block: "start" });
-          } else {
-            window.location.href = "/#schedules-section";
-          }
-        }
-      }, 120);
-    } else if (action.actionType === "admin") {
-      setIsOpen(false);
-      setTimeout(() => {
-        onOpenTeam?.();
-      }, 100);
-    } else if (action.actionType === "tel") {
+      return;
+    }
+
+    if (action.actionType === "tel") {
       window.location.href = `tel:${action.payload}`;
     }
   };
