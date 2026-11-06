@@ -60,6 +60,7 @@ export default function SchedulesExplorer({ onOpenBooking }: SchedulesExplorerPr
   const [todayName, setTodayName] = useState<DayOfWeek | null>(null);
   const [viewMode, setViewMode] = useState<"cards" | "table">("cards");
   const [expandedCards, setExpandedCards] = useState<Set<string>>(new Set());
+  const [visibleCount, setVisibleCount] = useState<number>(6);
 
   // حساب اليوم الحالي بتوقيت مصر
   useEffect(() => {
@@ -255,6 +256,30 @@ export default function SchedulesExplorer({ onOpenBooking }: SchedulesExplorerPr
           )}
         </div>
 
+        {/* Quick Popular Specialty Filter Pills */}
+        <div className="flex items-center gap-1.5 flex-wrap pt-0.5">
+          <span className="text-[11px] font-black text-slate-500 dark:text-slate-400 shrink-0">
+            تصفح سريع بالتخصص:
+          </span>
+          {["باطنة", "عظام", "صدر", "جراحة", "أطفال", "رمد", "أنف وأذن", "لجان طبية", "أورام"].map((spec) => {
+            const isActive = searchQuery === spec;
+            return (
+              <button
+                key={spec}
+                type="button"
+                onClick={() => setSearchQuery(isActive ? "" : spec)}
+                className={`px-2.5 py-1 rounded-xl text-xs font-bold transition ${
+                  isActive
+                    ? "bg-emerald-600 text-white shadow-xs ring-2 ring-emerald-500/30"
+                    : "bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-emerald-50 dark:hover:bg-emerald-950/40 hover:text-emerald-600"
+                }`}
+              >
+                {spec}
+              </button>
+            );
+          })}
+        </div>
+
         {/* Days Horizontal Scrollable Filter Strip */}
         <div className="space-y-1.5">
           <div className="flex items-center justify-between text-xs font-bold text-slate-600 dark:text-slate-400 px-1">
@@ -283,6 +308,21 @@ export default function SchedulesExplorer({ onOpenBooking }: SchedulesExplorerPr
             >
               جميع الأيام
             </button>
+
+            {todayName && (
+              <button
+                type="button"
+                onClick={() => setSelectedDay(selectedDay === todayName ? "all" : todayName)}
+                className={`px-4 py-2 rounded-xl text-xs font-black whitespace-nowrap transition shrink-0 flex items-center gap-1.5 ${
+                  selectedDay === todayName
+                    ? "bg-emerald-600 text-white shadow-md shadow-emerald-600/30 ring-2 ring-emerald-400/40"
+                    : "bg-emerald-50 dark:bg-emerald-950/70 border border-emerald-300 dark:border-emerald-700 text-emerald-800 dark:text-emerald-300 hover:bg-emerald-100"
+                }`}
+              >
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                <span>عيادات اليوم ({todayName})</span>
+              </button>
+            )}
 
             {DAYS_OF_WEEK.map((day) => {
               const isToday = todayName === day;
@@ -572,14 +612,14 @@ export default function SchedulesExplorer({ onOpenBooking }: SchedulesExplorerPr
           <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5 ${
             viewMode === "table" ? "md:hidden" : "md:grid"
           }`}>
-            {filteredRows.map((row) => {
+            {filteredRows.slice(0, visibleCount).map((row) => {
               const openStatus = isClinicOpenNow(row.shift, row.days);
               const isAvailableToday = todayName ? row.days.includes(todayName) : false;
 
               return (
                 <div
                   key={row.id}
-                  className="rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm transition hover:shadow-md overflow-hidden"
+                  className="rounded-2xl bg-gradient-to-b from-white to-slate-50/50 dark:from-slate-900 dark:to-slate-900/80 border border-slate-200/90 dark:border-slate-800 shadow-xs hover:shadow-md hover:border-emerald-500/40 dark:hover:border-emerald-600/40 transition-all duration-200 overflow-hidden"
                 >
                   {/* Card Header: Always Visible - Click to expand */}
                   <button
@@ -643,7 +683,13 @@ export default function SchedulesExplorer({ onOpenBooking }: SchedulesExplorerPr
                           مغلق
                         </span>
                       )}
-                      <ChevronDown className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${expandedCards.has(row.id) ? "rotate-180" : ""}`} />
+                      <div className={`w-6 h-6 rounded-lg flex items-center justify-center transition-colors shrink-0 ${
+                        expandedCards.has(row.id)
+                          ? "bg-emerald-100 dark:bg-emerald-950/70 text-emerald-600 dark:text-emerald-400"
+                          : "bg-slate-100 dark:bg-slate-800 text-slate-400"
+                      }`}>
+                        <ChevronDown className={`w-4 h-4 transition-transform duration-200 ${expandedCards.has(row.id) ? "rotate-180" : ""}`} />
+                      </div>
                     </div>
                   </button>
 
@@ -723,6 +769,43 @@ export default function SchedulesExplorer({ onOpenBooking }: SchedulesExplorerPr
               );
             })}
           </div>
+
+          {/* Progressive Disclosure (عرض المزيد) */}
+          {filteredRows.length > visibleCount && (
+            <div className="pt-6 flex flex-col items-center justify-center gap-2.5">
+              <button
+                type="button"
+                onClick={() => setVisibleCount((prev) => Math.min(prev + 6, filteredRows.length))}
+                className="w-full sm:w-auto min-w-[280px] px-8 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white font-black text-xs sm:text-sm flex items-center justify-center gap-2 shadow-lg shadow-emerald-700/25 transition-all hover:scale-[1.02] active:scale-95 group"
+              >
+                <span>عرض المزيد من العيادات (+{filteredRows.length - visibleCount} عيادة)</span>
+                <ChevronDown className="w-4 h-4 transition-transform group-hover:translate-y-0.5" />
+              </button>
+              <button
+                type="button"
+                onClick={() => setVisibleCount(filteredRows.length)}
+                className="text-xs text-slate-500 dark:text-slate-400 hover:text-emerald-600 dark:hover:text-emerald-400 font-bold transition hover:underline mt-0.5"
+              >
+                أو إظهار كافة النتائج معاً ({filteredRows.length} عيادة)
+              </button>
+            </div>
+          )}
+
+          {visibleCount > 6 && (
+            <div className="pt-2 text-center">
+              <button
+                type="button"
+                onClick={() => {
+                  setVisibleCount(6);
+                  const el = document.getElementById("schedules-section");
+                  el?.scrollIntoView({ behavior: "smooth" });
+                }}
+                className="text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition underline"
+              >
+                ↑ طي القائمة والعودة لـ 6 عيادات فقط
+              </button>
+            </div>
+          )}
         </div>
       ) : (
         /* Empty State */
