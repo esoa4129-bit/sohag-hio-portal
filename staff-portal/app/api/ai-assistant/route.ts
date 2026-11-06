@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
+// Comprehensive knowledge base for Sohag Health Insurance Branch
 interface FacilityInfo {
   name: string;
   type: string;
@@ -14,50 +15,216 @@ interface FacilityInfo {
 const SOHAG_FACILITIES: Record<string, FacilityInfo> = {
   helal: {
     name: "مستشفى الهلال للتأمين الصحي بسوهاج",
-    type: "مستشفى جراحي وطبي رئيسي",
+    type: "مستشفى جراحي وطبي رئيسي وطوارئ 24 ساعة",
     location: "سوهاج - شارع المحطة أمام محطة القطار",
     phone: "0932324567 / 0932324568",
     adminLead: "أستاذ / أشرف الجندي",
     adminRole: "مدير مالي وإداري بمستشفى الهلال",
     medicalLead: "دكتور / محمد خالد (مدير المستشفى) ودكتور / أحمد حسني (مدير الشئون العلاجية)",
-    specialties: ["جراحة عامة", "جراحة عظام", "جراحة مخ وأعصاب", "جراحة أوعية دموية", "رعاية مركزة", "حضانات مبتسرين", "طوارئ وعناية مركزة 24 ساعة", "غسيل كلوي", "أورام"]
+    specialties: [
+      "جراحة عامة", "جراحة عظام", "جراحة مخ وأعصاب", "جراحة أوعية دموية", 
+      "رعاية مركزة (ICU)", "حضانات مبتسرين", "طوارئ وعناية مركزة 24 ساعة", 
+      "غسيل كلوي", "أورام وعمليات كبرى"
+    ]
   },
   ramadan10: {
     name: "مجمع عيادات العاشر من رمضان واللجنة الطبية العامة",
-    type: "مجمع عيادات تخصصية ولجان طبية",
+    type: "مجمع عيادات تخصصية ولجان طبية عامة",
     location: "سوهاج - شارع ترعة باجا الغربي خلف المستشفى التعليمي",
     phone: "0932310987",
     adminLead: "أستاذ / علاء الدين خلف",
     adminRole: "مدير مالي وإداري بمجمع العاشر",
-    medicalLead: "دكتورة / شهرت القاضي (مدير المجمع) ودكتور / محمد أمين (مدير اللجنة الطبية العامة)",
-    specialties: ["لجنة العجز والتقارير الطبية العامة", "باطنة", "قلب", "كبد وجهاز هضمي", "صدر", "مسالك بولية", "أنف وأذن وحنجرة", "رمد", "أورام", "جلدية", "أوعية دموية", "أسنان", "سمعيات وتخاطب"]
+    medicalLead: "دكتورة / شهرت القاضي (مدير المجمع) ودكتور / محمد أمين (مدير اللجنة الطبية العامة بسوهاج)",
+    specialties: [
+      "لجنة العجز والتقارير الطبية العامة", "صدر", "جراحة عامة", "أنف وأذن وحنجرة", 
+      "باطنة عامة وسكر", "قلب وأوعية دموية", "كبد وجهاز هضمي", "عظام", "رمد وعيون", 
+      "أطفال ومبتسرين", "جلدية وتناسلية", "مسالك بولية", "أسنان وجراحة وجه وفكين", 
+      "سمعيات وتخاطب", "لجان طبية تخصصية"
+    ]
   },
   specialized: {
     name: "العيادات التخصصية بسوهاج (مجمع اللجان والعيادات)",
-    type: "عيادات تخصصية ولجان استشارية",
+    type: "عيادات استشارية متقدمة ولجان أمراض مزمنة",
     location: "سوهاج - ميدان العروبة - عمارة الأوقاف",
     phone: "0932331122",
     adminLead: "أستاذ / رفعت عمار",
     adminRole: "مدير مالي وإداري بالعيادات التخصصية",
     medicalLead: "دكتور / شريف طلعت أبوزيد (مدير العيادات التخصصية)",
-    specialties: ["لجان أمراض الدم وأورام الأطفال", "علاج الأورام", "أمراض الدم والهيموفيليا", "أمراض المناعة والروماتيزم", "لجان السكر والغدد الصماء", "أمراض الكلى المتقدمة"]
+    specialties: [
+      "لجان أمراض الدم وأورام الأطفال", "علاج الأورام وصرف الكيماوي", 
+      "أمراض الدم والهيموفيليا", "أمراض المناعة والروماتيزم والذئبة الحمراء", 
+      "لجان السكر والغدد الصماء", "أمراض الكلى المتقدمة"
+    ]
   },
   region1: {
     name: "إدارة منطقة سوهاج للتأمين الصحي",
-    type: "إدارة المنطقة والمتابعة الميدانية والاشتراكات",
+    type: "المقر الإداري وشئون الاشتراكات وخدمة العملاء",
     location: "سوهاج - شارع المدارس - بجوار مدرسة التجارة بنات",
     phone: "0932345566",
     adminLead: "أستاذ / خالد حمادي",
     adminRole: "مدير مالي وإداري لمنطقة سوهاج",
     medicalLead: "دكتور / محمد عصمت (مدير منطقة سوهاج)",
-    specialties: ["خدمة العملاء والاشتراكات", "استخراج وتجديد البطاقات التأمينية", "توزيع المنتفعين على الوحدات", "تسجيل المواليد والطلاب"]
+    specialties: [
+      "خدمة العملاء والاشتراكات", "استخراج وتجديد البطاقات التأمينية", 
+      "توزيع المنتفعين على الوحدات والمجمعات", "تسجيل المواليد والطلاب"
+    ]
   }
 };
+
+const SYSTEM_PROMPT = `أنت المساعد الذكي والمتحدث الرسمي لبوابة فرع سوهاج للتأمين الصحي (الهيئة العامة للتأمين الصحي - مصر).
+
+مهمتك:
+1. الرد بدقة وموثوقية باللغة العربية الفصحى السهلة والودودة، وخدمة منتفعي التأمين الصحي بسوهاج (موظفين، معاشات، طلاب، مواليد، عمالة غير منتظمة).
+2. الإلمام التام بكافة تفاصيل فرع سوهاج:
+   - مجمع عيادات العاشر من رمضان: يقع في شارع ترعة باجا الغربي خلف المستشفى التعليمي. مديرة المجمع دكتورة شهرت القاضي، مدير اللجنة الطبية العامة دكتور محمد أمين، والمدير المالي والإداري أستاذ علاء الدين خلف. فترات العمل: صباحية (8 ص - 2 م) ومسائية (2 م - 8 م).
+   - مستشفى الهلال للتأمين الصحي: شارع المحطة أمام محطة القطار. مدير المستشفى د. محمد خالد، مدير الشئون العلاجية د. أحمد حسني، المدير المالي والإداري أستاذ أشرف الجندي. (طوارئ 24 ساعة، جراحات، غسيل كلوي، رعاية مركزة).
+   - العيادات التخصصية: ميدان العروبة عمارة الأوقاف. المدير د. شريف طلعت أبوزيد، والمدير المالي والإداري أستاذ رفعت عمار (أورام، أمراض دم، مناعة، سكر وغدد).
+   - إدارة منطقة سوهاج: شارع المدارس. المدير د. محمد عصمت، والمدير المالي والإداري أستاذ خالد حمادي (بطاقات، اشتراكات، شباك واحد).
+3. عند السؤال عن الجداول والمواعيد:
+   - اذكر مواعيد الفترات الصباحية (8:00 ص إلى 2:00 م) والمسائية (2:00 م إلى 8:00 م).
+   - اذكر أن أيام الكشف من السبت إلى الخميس.
+   - وجه المريض للاطلاع على بطاقات الجداول التفاعلية المباشرة بالبوابة.
+4. عند تحليل الصور (روشتات، تقارير، تحاليل، بطاقات):
+   - اقرأ بدقة النص أو التشخيص أو التخصص الطبي المكتوب في الصورة.
+   - لخص الحالة بلطف، واذكر التخصص المطلوب والمنشأة المناسبة في سوهاج.
+   - ضع تنبيهاً طبياً مهنياً بأن الإرشاد استرشادي لتسهيل الإجراءات ولابد من مراجعة الطبيب.
+5. حافظ دائماً على نبرة رسمية، إنسانية، مطمئنة، ومنظمة في نقاط واضحة.`;
 
 interface SuggestedAction {
   label: string;
   actionType: "booking" | "schedules" | "admin" | "tel" | "location";
   payload: string;
+}
+
+// API Keys strictly from Environment Variables
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY || "";
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || "";
+
+// Engine 1: Google Gemini API (gemini-3.8-flash)
+async function callGemini(userText: string, imageBase64?: string): Promise<string | null> {
+  if (!GEMINI_API_KEY) return null;
+
+  const parts: any[] = [{ text: `${SYSTEM_PROMPT}\n\nسؤال المواطن: ${userText || "يرجى فحص المستند/الروشتة المرفقة وتوجيهي."}` }];
+
+  if (imageBase64) {
+    const cleanBase64 = imageBase64.replace(/^data:image\/\w+;base64,/, "");
+    const mimeMatch = imageBase64.match(/^data:(image\/\w+);base64,/);
+    const mimeType = mimeMatch ? mimeMatch[1] : "image/jpeg";
+
+    parts.push({
+      inline_data: {
+        mime_type: mimeType,
+        data: cleanBase64
+      }
+    });
+  }
+
+  // Try gemini-3.8-flash
+  const modelsToTry = ["gemini-3.8-flash", "gemma-4-26b-a4b-it"];
+  for (const model of modelsToTry) {
+    try {
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${GEMINI_API_KEY}`;
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ contents: [{ parts }] }),
+        cache: "no-store"
+      });
+
+      if (!res.ok) continue;
+      const data = await res.json();
+      const reply = data.candidates?.[0]?.content?.parts?.[0]?.text;
+      if (reply && reply.trim()) return reply.trim();
+    } catch {
+      // try next
+    }
+  }
+
+  return null;
+}
+
+// Engine 2: OpenRouter API (google/gemma-4-26b-a4b-it)
+async function callOpenRouter(userText: string, imageBase64?: string): Promise<string | null> {
+  if (!OPENROUTER_API_KEY) return null;
+
+  try {
+    let userContent: any = userText || "يرجى فحص المستند أو الروشتة المرفقة وتقديم التوجيه اللازم.";
+
+    if (imageBase64) {
+      userContent = [
+        { type: "text", text: userText || "يرجى فحص المستند الطبي/الروشتة وتوضيح التخصص المطلوب بالفرع." },
+        { type: "image_url", image_url: { url: imageBase64 } }
+      ];
+    }
+
+    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${OPENROUTER_API_KEY}`,
+        "Content-Type": "application/json",
+        "HTTP-Referer": "https://sohag-hio.gov.eg",
+        "X-Title": "Sohag Health Insurance Assistant"
+      },
+      body: JSON.stringify({
+        model: "google/gemma-4-26b-a4b-it",
+        messages: [
+          { role: "system", content: SYSTEM_PROMPT },
+          { role: "user", content: userContent }
+        ],
+        temperature: 0.2,
+        max_tokens: 650
+      }),
+      cache: "no-store"
+    });
+
+    if (!res.ok) return null;
+    const data = await res.json();
+    const reply = data.choices?.[0]?.message?.content;
+    if (reply && reply.trim()) return reply.trim();
+  } catch {
+    return null;
+  }
+
+  return null;
+}
+
+// Engine 3: Local Rule-Based Knowledge Engine (Fallback)
+function generateLocalReply(userText: string, hasImage: boolean) {
+  const isFinancialOrAdmin =
+    /مالي|اداري|إداري|شيك|شيكات|بدل|انتقال|سفر|استرداد|مصاريف|معاش|عجز|قرار|موافقة|كارنيه|بطاقة|تجديد|اوراق|أوراق|مستندات|فواتير|صرف|أشرف الجندي|رفعت عمار|علاء الدين|علاء|خالد حمادي/i.test(
+      userText
+    );
+  const isBookingOrSchedule =
+    /حجز|احجز|ميعاد|موعد|جدول|مواعيد|دكتور|طبيب|عيادة|كشف|ايام|أيام|فترة|صباح|مساء|شغال/i.test(userText);
+
+  if (isFinancialOrAdmin) {
+    if (/هلال/i.test(userText)) {
+      return `أهلاً بك. بخصوص الإجراءات المالية والإدارية بمستشفى الهلال بسوهاج، يمكنك التوجه لمكتب الشئون المالية والإدارية بقيادة ${SOHAG_FACILITIES.helal.adminLead}، لإنهاء إجراءاتك وتقديم المستندات المطلوبة.`;
+    }
+    if (/عاشر/i.test(userText)) {
+      return `مرحباً بك. المعاملات المالية والإدارية وقرارات اللجنة الطبية العامة بمجمع العاشر يتم مراجعتها وتنسيقها تحت إشراف ${SOHAG_FACILITIES.ramadan10.adminLead} واللجنة الطبية العامة برئاسة ${SOHAG_FACILITIES.ramadan10.medicalLead}.`;
+    }
+    return `للمعاملات الإدارية والمالية واستخراج البطاقات التأمينية، يمكنك التوجه لإدارة منطقة سوهاج ومراجعة مكتب ${SOHAG_FACILITIES.region1.adminLead} لتوجيهك للشباك المختص.`;
+  }
+
+  if (hasImage) {
+    return `تم استلام وفحص الصورة الطبية بنجاح! 
+بناءً على الفحص الاسترشادي للمستند:
+- يرجى مراجعة العيادة التخصصية المطلوبة بمجمع عيادات العاشر من رمضان أو مستشفى الهلال بسوهاج.
+- يمكنك حجز موعد الكشف مباشرة عبر البوابة الإلكترونية.
+⚠️ تنبيه طبي: هذا التحليل استرشادي لتسهيل إجراءاتك بالبوابة، ويرجى دائماً عرض أصل الروشتة على الطبيب المعالج.`;
+  }
+
+  if (isBookingOrSchedule) {
+    return `مرحباً بك في فرع سوهاج للتأمين الصحي 🏥
+مواعيد وفترات العمل بالعيادات:
+- الفترة الصباحية: من 8:00 صباحاً حتى 2:00 ظهراً (مجمع العاشر، الهلال، العيادات التخصصية).
+- الفترة المسائية: من 2:00 ظهراً حتى 8:00 مساءً.
+- أيام العمل: من السبت إلى الخميس أسبوعياً.
+يمكنك الضغط على زر "جدول مواعيد العيادات" بالأسفل للانتقال فوراً لبطاقات المواعيد وأيام الكشف التفاعلية.`;
+  }
+
+  return `أهلاً بك في بوابة فرع سوهاج للتأمين الصحي. أنا المساعد الذكي، يمكنني إرشادك لحجز العيادات، معرفة مواعيد الأطباء، فحص صور الروشتات، وتوجيهك للإدارات المالية واللجان الطبية. كيف يمكنني خدمتك؟`;
 }
 
 export async function POST(req: NextRequest) {
@@ -66,30 +233,71 @@ export async function POST(req: NextRequest) {
     const { message, image } = body;
 
     const userText = (message || "").trim();
-    const isFinancialOrAdmin = 
-      /مالي|اداري|إداري|شيك|شيكات|بدل|انتقال|سفر|استرداد|مصاريف|معاش|عجز|قرار|موافقة|كارنيه|بطاقة|تجديد|اوراق|أوراق|مستندات|فواتير|صرف|أشرف الجندي|رفعت عمار|علاء الدين|علاء|خالد حمادي/i.test(userText);
-
-    const isBookingOrSchedule = 
-      /حجز|احجز|ميعاد|موعد|جدول|مواعيد|دكتور|طبيب|عيادة|كشف|ايام|أيام|فترة|صباح|مساء|شغال/i.test(userText);
-
-    const isHelalHospital = /هلال|الهلال|جراح|طوارئ|عمليات|رعاية مركزة|حضانات/i.test(userText);
-    const isRamadan10 = /عاشر|العاشر|رمضان|لجنة عامة|لجنه عامه|تقارير طبية|عجز/i.test(userText);
-    const isSpecialized = /تخصصي|تخصصية|اورام|أورام|دم|سكر|مناعة|شريف طلعت/i.test(userText);
-
-    let reply = "";
-    const actions: SuggestedAction[] = [];
-    let adminCard: {
-      officerName: string;
-      role: string;
-      facility: string;
-      phone: string;
-      docsRequired: string[];
-    } | null = null;
-
     const hasImage = Boolean(image);
 
-    if (isFinancialOrAdmin) {
-      if (isHelalHospital) {
+    // Call AI Engines with automatic failover
+    let reply: string | null = null;
+    let providerUsed = "none";
+
+    // 1. Try Google Gemini
+    reply = await callGemini(userText, image);
+    if (reply) {
+      providerUsed = "Google Gemini";
+    }
+
+    // 2. Fallback to OpenRouter (Gemma) if Gemini fails or is unavailable
+    if (!reply) {
+      reply = await callOpenRouter(userText, image);
+      if (reply) {
+        providerUsed = "OpenRouter (Gemma)";
+      }
+    }
+
+    // 3. Fallback to Local Knowledge Base
+    if (!reply) {
+      reply = generateLocalReply(userText, hasImage);
+      providerUsed = "Local Sohag Knowledge Engine";
+    }
+
+    // Extract dynamic actions and admin cards
+    const actions: SuggestedAction[] = [];
+    let adminCard: any = null;
+
+    const lowerCombined = `${userText} ${reply}`.toLowerCase();
+
+    // Check for schedules intent
+    const isScheduleIntent = /جدول|مواعيد|موعد|عيادة|كشف|ايام|أيام|فترة|ساعات|تخصص/i.test(lowerCombined);
+    if (isScheduleIntent) {
+      actions.push({
+        label: "📅 جدول مواعيد العيادات",
+        actionType: "schedules",
+        payload: ""
+      });
+      actions.push({
+        label: "🩺 حجز موعد كشف رسمي",
+        actionType: "booking",
+        payload: ""
+      });
+    } else {
+      actions.push({
+        label: "🩺 حجز موعد كشف",
+        actionType: "booking",
+        payload: ""
+      });
+      actions.push({
+        label: "📅 جدول مواعيد العيادات",
+        actionType: "schedules",
+        payload: ""
+      });
+    }
+
+    // Check for admin intent
+    const isAdminIntent = /مالي|اداري|إداري|شيك|بدل|استرداد|مصاريف|معاش|عجز|قرار|أشرف الجندي|علاء الدين|رفعت عمار|خالد حمادي/i.test(
+      lowerCombined
+    );
+
+    if (isAdminIntent) {
+      if (/هلال/i.test(lowerCombined)) {
         adminCard = {
           officerName: SOHAG_FACILITIES.helal.adminLead,
           role: SOHAG_FACILITIES.helal.adminRole,
@@ -102,37 +310,21 @@ export async function POST(req: NextRequest) {
             "تقرير طبي معتمد من استشاري المستشفى"
           ]
         };
-        reply = `أهلاً بك. بخصوص الإجراءات المالية والإدارية بمستشفى الهلال، يمكنك التوجه لمكتب الشئون المالية والإدارية بقيادة ${SOHAG_FACILITIES.helal.adminLead}، لإنهاء إجراءاتك وتقديم المستندات المطلوبة.`;
-        actions.push({ label: "الاتصال بمستشفى الهلال", actionType: "tel", payload: "0932324567" });
-      } else if (isRamadan10) {
+        actions.push({ label: "📞 الاتصال بمستشفى الهلال", actionType: "tel", payload: "0932324567" });
+      } else if (/عاشر/i.test(lowerCombined)) {
         adminCard = {
           officerName: SOHAG_FACILITIES.ramadan10.adminLead,
           role: SOHAG_FACILITIES.ramadan10.adminRole,
           facility: SOHAG_FACILITIES.ramadan10.name,
           phone: SOHAG_FACILITIES.ramadan10.phone,
           docsRequired: [
-            "بطاقة التأمين الصحي والرقم القومي",
+            "بطاقة التأمين الصحي ورقم قومي ساري",
             "خطاب التحويل من جهة العمل أو المدرسة",
             "أصل تقرير اللجنة الطبية العامة وقرار الكشف",
-            "أي إيصالات سداد رسوم مقررة"
+            "إيصالات سداد الرسوم المقررة"
           ]
         };
-        reply = `مرحباً بك. المعاملات المالية والإدارية وقرارات اللجنة الطبية العامة بمجمع العاشر يتم مراجعتها وتنسيقها تحت إشراف ${SOHAG_FACILITIES.ramadan10.adminLead} واللجنة الطبية العامة برئاسة ${SOHAG_FACILITIES.ramadan10.medicalLead}.`;
-        actions.push({ label: "الاتصال بمجمع العاشر", actionType: "tel", payload: "0932310987" });
-      } else if (isSpecialized) {
-        adminCard = {
-          officerName: SOHAG_FACILITIES.specialized.adminLead,
-          role: SOHAG_FACILITIES.specialized.adminRole,
-          facility: SOHAG_FACILITIES.specialized.name,
-          phone: SOHAG_FACILITIES.specialized.phone,
-          docsRequired: [
-            "بطاقة التأمين الصحي وبطاقة الرقم القومي",
-            "قرار صرف العلاج أو تقرير لجنة الأورام/أمراض الدم",
-            "نموذج التحويل المعتمد من التأمين الصحي"
-          ]
-        };
-        reply = `أهلاً بك. للشئون الإدارية والموافقات المالية بالعيادات التخصصية يرجى التوجه لمكتب ${SOHAG_FACILITIES.specialized.adminLead} (المدير المالي والإداري) لتيسير صرف الدواء وإنهاء الموافقات.`;
-        actions.push({ label: "الاتصال بالعيادات التخصصية", actionType: "tel", payload: "0932331122" });
+        actions.push({ label: "📞 الاتصال بمجمع العاشر", actionType: "tel", payload: "0932310987" });
       } else {
         adminCard = {
           officerName: SOHAG_FACILITIES.region1.adminLead,
@@ -142,39 +334,12 @@ export async function POST(req: NextRequest) {
           docsRequired: [
             "بطاقة الرقم القومي سارية",
             "الرقم التأميني أو برنت التأمينات الاجتماعية",
-            "صورة شخصية حديثة (في حال استخراج بطاقة جديدة)",
+            "صورة شخصية حديثة للمنتفع",
             "استمارة التأمين المعتمدة من جهة العمل"
           ]
         };
-        reply = `للمعاملات الإدارية والمالية واستخراج البطاقات التأمينية، يمكنك التوجه لإدارة منطقة سوهاج ومراجعة مكتب ${SOHAG_FACILITIES.region1.adminLead} لتوجيهك للشباك المختص دون تأخير.`;
-        actions.push({ label: "الاتصال بإدارة المنطقة", actionType: "tel", payload: "0932345566" });
+        actions.push({ label: "📞 الاتصال بإدارة المنطقة", actionType: "tel", payload: "0932345566" });
       }
-    } else if (hasImage) {
-      reply = `تم استلام وفحص الصورة الطبية بنجاح! 
-بناءً على الفحص الاسترشادي:
-- يبدو أن المستند يحتوي على تقرير/روشتة طبية تتطلب استشارة عيادة متخصصة (مثل الباطنة أو العظام أو الجراحة).
-- يمكنك حجز موعد الكشف مباشرة في مجمع عيادات العاشر من رمضان أو مستشفى الهلال من خلال البوابة.
-⚠️ تنبيه طبي: هذا التحليل استرشادي لتسهيل توجيهك بالبوابة، ويرجى دائماً عرض الروشتة على الطبيب المعالج بالمنشأة.`;
-      actions.push({ label: "احجز موعد كشف الآن", actionType: "booking", payload: "" });
-      actions.push({ label: "استعراض جدول الأطباء", actionType: "schedules", payload: "" });
-    } else if (isBookingOrSchedule) {
-      reply = `يسعدنا مساعدتك في حجز كشف طبي أو معرفة مواعيد الأطباء بفرع سوهاج:
-- العيادات تعمل في فترات صباحية (من 8:00 ص إلى 2:00 م) ومسائية (من 2:00 م إلى 8:00 م).
-- يتوفر الحجز بمجمع عيادات العاشر من رمضان، مستشفى الهلال، والعيادات التخصصية.`;
-      actions.push({ label: "الانتقال لنمط حجز العيادات", actionType: "booking", payload: "" });
-      actions.push({ label: "عرض جداول العيادات والمواعيد", actionType: "schedules", payload: "" });
-    } else {
-      reply = `مرحباً بك في البوابة الرقمية لفرع سوهاج للتأمين الصحي! 🏥
-أنا مساعدك الذكي المتكامل، ويمكنني مساعدتك في:
-1. 🩺 حجز الكشف الطبي ومعرفة مواعيد وأيام عمل الاستشاريين.
-2. 📄 قراءة صور الروشتات والتحاليل وتوجيهك للمستشفى المختص.
-3. 💼 توجيهك المباشر للمكاتب المالية والإدارية وإرشادك للأوراق المطلوبة.
-4. 🎙️ التحدث الصوتي معي والاستماع للإجابات في أي وقت.
-
-كيف يمكنني خدمتك اليوم؟`;
-      actions.push({ label: "حجز موعد كشف", actionType: "booking", payload: "" });
-      actions.push({ label: "جدول مواعيد الأطباء", actionType: "schedules", payload: "" });
-      actions.push({ label: "القيادات والمدراء الماليين", actionType: "admin", payload: "" });
     }
 
     return NextResponse.json({
@@ -182,6 +347,7 @@ export async function POST(req: NextRequest) {
       reply,
       actions,
       adminCard,
+      provider: providerUsed,
       timestamp: new Date().toISOString()
     });
   } catch (error) {
@@ -189,13 +355,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         success: false,
-        reply: "عذراً، حدث خطأ مؤقت في الاتصال بالمساعد الذكي.",
+        reply:
+          "أهلاً بك. يمكنك حجز موعد الكشف أو استعراض جدول العيادات والمواعيد المحدثة مباشرة عبر البوابة.",
         actions: [
-          { label: "حجز موعد بالبوابة", actionType: "booking", payload: "" },
-          { label: "عرض الجداول والمواعيد", actionType: "schedules", payload: "" }
+          { label: "📅 جدول مواعيد العيادات", actionType: "schedules", payload: "" },
+          { label: "🩺 حجز موعد كشف", actionType: "booking", payload: "" }
         ]
       },
-      { status: 500 }
+      { status: 200 }
     );
   }
 }

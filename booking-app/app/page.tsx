@@ -609,7 +609,9 @@ export default function BookingPage() {
         {/* ═══════════════════════════════════════════════════════════════════════ */}
         {/* INTERACTIVE CLINIC SCHEDULES EXPLORER (Priority 1)                     */}
         {/* ═══════════════════════════════════════════════════════════════════════ */}
-        <SchedulesExplorer onOpenBooking={handleOpenBooking} />
+        <div id="schedules-section" className="scroll-mt-24">
+          <SchedulesExplorer onOpenBooking={handleOpenBooking} />
+        </div>
 
         {/* ═══════════════════════════════════════════════════════════════════════ */}
         {/* HOSPITALS & CLINICS NETWORK SHOWCASE                                    */}

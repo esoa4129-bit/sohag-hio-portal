@@ -44,6 +44,7 @@ interface Message {
   image?: string;
   adminCard?: AdminCardData | null;
   actions?: ActionItem[];
+  provider?: string;
   timestamp: string;
 }
 
@@ -219,6 +220,7 @@ export default function AiMedicalAssistant({
         text: data.reply || "تمت معالجة استفسارك بنجاح.",
         actions: data.actions || [],
         adminCard: data.adminCard || null,
+        provider: data.provider || undefined,
         timestamp: new Date().toLocaleTimeString("ar-EG", { hour: "2-digit", minute: "2-digit" })
       };
 
@@ -246,13 +248,28 @@ export default function AiMedicalAssistant({
   const handleActionClick = (action: ActionItem) => {
     if (action.actionType === "booking") {
       setIsOpen(false);
-      onOpenBooking?.();
+      setTimeout(() => {
+        onOpenBooking?.();
+      }, 100);
     } else if (action.actionType === "schedules") {
       setIsOpen(false);
-      onOpenSchedules?.();
+      setTimeout(() => {
+        if (onOpenSchedules) {
+          onOpenSchedules();
+        } else {
+          const el = document.getElementById("schedules-section");
+          if (el) {
+            el.scrollIntoView({ behavior: "smooth", block: "start" });
+          } else {
+            window.location.href = "/#schedules-section";
+          }
+        }
+      }, 120);
     } else if (action.actionType === "admin") {
       setIsOpen(false);
-      onOpenTeam?.();
+      setTimeout(() => {
+        onOpenTeam?.();
+      }, 100);
     } else if (action.actionType === "tel") {
       window.location.href = `tel:${action.payload}`;
     }
@@ -297,7 +314,7 @@ export default function AiMedicalAssistant({
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 </h3>
                 <p className="text-[11px] text-emerald-100 opacity-90">
-                  فهم الصور • توجيه مالي وإداري • صوت وفيديو
+                  ذكاء اصطناعي فائق (Gemini & Gemma) • رؤية حاسوبية • صوت
                 </p>
               </div>
             </div>
