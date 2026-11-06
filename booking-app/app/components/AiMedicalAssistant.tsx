@@ -126,29 +126,72 @@ export default function AiMedicalAssistant({
 
   // Text to Speech
   const speakText = (text: string, msgId: string) => {
-    if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
+      alert("خاصية النطق الصوتي غير مدعومة في متصفحك الحالي.");
+      return;
+    }
 
+    // Toggle stop if already speaking this message
     if (speakingMessageId === msgId) {
-      window.speechSynthesis.cancel();
+      try {
+        window.speechSynthesis.cancel();
+      } catch {}
       setSpeakingMessageId(null);
       return;
     }
 
-    window.speechSynthesis.cancel();
-    // Clean text of emojis & markdown markers
-    const cleanText = text
-      .replace(/[#*_~`]/g, "")
-      .replace(/[\uD83C-\uDBFF\uDC00-\uDFFF]/g, "");
+    try {
+      // Unfreeze mobile audio pipeline
+      if (window.speechSynthesis.paused) {
+        window.speechSynthesis.resume();
+      }
+      window.speechSynthesis.cancel();
+    } catch {}
+
+    // Clean text of markdown and bullets for clear speech
+    const cleanText = text.replace(/[*_#~]/g, "").replace(/[-•—]/g, " ").trim();
+    if (!cleanText) return;
 
     const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = "ar-SA";
+    utterance.lang = "ar-EG";
     utterance.rate = 0.95;
+    utterance.pitch = 1.0;
 
-    utterance.onend = () => setSpeakingMessageId(null);
-    utterance.onerror = () => setSpeakingMessageId(null);
+    // Pick best Arabic voice
+    try {
+      const voices = window.speechSynthesis.getVoices();
+      const arVoice =
+        voices.find((v) => v.lang && (v.lang === "ar-EG" || v.lang === "ar_EG")) ||
+        voices.find((v) => v.lang && v.lang.startsWith("ar")) ||
+        null;
+      if (arVoice) {
+        utterance.voice = arVoice;
+      }
+    } catch {}
+
+    utterance.onstart = () => {
+      setSpeakingMessageId(msgId);
+    };
+    utterance.onend = () => {
+      setSpeakingMessageId(null);
+    };
+    utterance.onerror = () => {
+      setSpeakingMessageId(null);
+    };
 
     setSpeakingMessageId(msgId);
-    window.speechSynthesis.speak(utterance);
+
+    // Small delay helps mobile iOS Safari audio context to catch up
+    setTimeout(() => {
+      try {
+        if (window.speechSynthesis.paused) {
+          window.speechSynthesis.resume();
+        }
+        window.speechSynthesis.speak(utterance);
+      } catch {
+        setSpeakingMessageId(null);
+      }
+    }, 40);
   };
 
   // Toggle Voice Input
@@ -495,18 +538,27 @@ export default function AiMedicalAssistant({
                     <div className="pt-1 flex items-center justify-between text-[10px] text-slate-400">
                       <span>{msg.timestamp}</span>
                       <button
-                        onClick={() => speakText(msg.text, msg.id)}
-                        className="flex items-center gap-1 hover:text-emerald-600 transition"
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          speakText(msg.text, msg.id);
+                        }}
+                        className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black transition active:scale-95 touch-manipulation shadow-xs ${
+                          speakingMessageId === msg.id
+                            ? "bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 ring-2 ring-amber-400/50"
+                            : "bg-emerald-50 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-300 border border-emerald-200/80 dark:border-emerald-800 hover:bg-emerald-100"
+                        }`}
+                        title="استماع للرد صوتياً"
                       >
                         {speakingMessageId === msg.id ? (
                           <>
-                            <VolumeX className="w-3 h-3 text-amber-500 animate-spin" />
+                            <VolumeX className="w-3.5 h-3.5 text-amber-600 animate-pulse" />
                             <span>إيقاف الصوت</span>
                           </>
                         ) : (
                           <>
-                            <Volume2 className="w-3 h-3 text-slate-400" />
-                            <span>استماع</span>
+                            <Volume2 className="w-3.5 h-3.5 text-emerald-600" />
+                            <span>🔊 استماع صوتي</span>
                           </>
                         )}
                       </button>
