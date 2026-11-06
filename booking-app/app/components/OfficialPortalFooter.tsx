@@ -182,6 +182,24 @@ export default function OfficialPortalFooter() {
               </p>
             </div>
 
+            {/* Sohag Branch Administration Phone */}
+            <div className="p-2.5 rounded-xl bg-emerald-50/80 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800/60 space-y-1">
+              <div className="flex items-center justify-between text-[11px]">
+                <span className="font-bold text-emerald-900 dark:text-emerald-200">هاتف إدارة فرع سوهاج:</span>
+                <a
+                  href="tel:0832156139"
+                  className="font-black text-emerald-700 dark:text-emerald-300 hover:underline"
+                  dir="ltr"
+                >
+                  0832156139
+                </a>
+              </div>
+              <div className="flex items-center gap-1.5 text-[10px] text-slate-500 dark:text-slate-400 pt-0.5">
+                <Building2 className="w-3 h-3 text-emerald-600 shrink-0" />
+                <span>المقر الرئيسي لديوان عام فرع سوهاج للتأمين الصحي</span>
+              </div>
+            </div>
+
             {/* Hilal Emergency Direct Phone */}
             <div className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700/60 space-y-1">
               <div className="flex items-center justify-between text-[11px]">
@@ -196,7 +214,7 @@ export default function OfficialPortalFooter() {
               </div>
               <div className="flex items-center gap-1.5 text-[10px] text-slate-500 dark:text-slate-400 pt-1">
                 <MapPin className="w-3 h-3 text-slate-400 shrink-0" />
-                <span>سوهاج - ميدان الثقافة - ديوان عام الفرع</span>
+                <span>سوهاج - شارع المحطة أمام محطة القطار</span>
               </div>
             </div>
           </div>

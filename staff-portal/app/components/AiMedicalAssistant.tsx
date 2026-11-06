@@ -360,7 +360,7 @@ export default function AiMedicalAssistant({
     }
 
     if (action.actionType === "tel") {
-      window.location.href = `tel:${action.payload}`;
+      try { window.location.assign(`tel:${action.payload}`); } catch { window.location.href = `tel:${action.payload}`; }
     }
   };
 
@@ -401,7 +401,7 @@ export default function AiMedicalAssistant({
                   <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 </h3>
                 <p className="text-[11px] text-emerald-100 opacity-90">
-                  ذكاء اصطناعي فائق (Gemini & Gemma) • رؤية حاسوبية • صوت
+                  خدمة الدعم والاسترشاد لمنتفعي التأمين الصحي بسوهاج
                 </p>
               </div>
             </div>
@@ -495,18 +495,32 @@ export default function AiMedicalAssistant({
 
                   {msg.actions && msg.actions.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 pt-1">
-                      {msg.actions.map((act, i) => (
-                        <button
-                          key={i}
-                          onClick={() => handleActionClick(act)}
-                          className="px-2.5 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 font-bold text-[11px] flex items-center gap-1.5 transition active:scale-95"
-                        >
-                          {act.actionType === "booking" && <Calendar className="w-3 h-3 text-emerald-600" />}
-                          {act.actionType === "admin" && <Building2 className="w-3 h-3 text-teal-600" />}
-                          {act.actionType === "tel" && <Phone className="w-3 h-3 text-blue-600" />}
-                          <span>{act.label}</span>
-                        </button>
-                      ))}
+                      {msg.actions.map((act, i) => {
+                        if (act.actionType === "tel") {
+                          return (
+                            <a
+                              key={i}
+                              href={`tel:${act.payload}`}
+                              className="px-2.5 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 font-bold text-[11px] flex items-center gap-1.5 transition active:scale-95"
+                            >
+                              <Phone className="w-3 h-3 text-blue-600" />
+                              <span>{act.label}</span>
+                            </a>
+                          );
+                        }
+                        return (
+                          <button
+                            key={i}
+                            type="button"
+                            onClick={() => handleActionClick(act)}
+                            className="px-2.5 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/80 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-800 font-bold text-[11px] flex items-center gap-1.5 transition active:scale-95"
+                          >
+                            {act.actionType === "booking" && <Calendar className="w-3 h-3 text-emerald-600" />}
+                            {act.actionType === "admin" && <Building2 className="w-3 h-3 text-teal-600" />}
+                            <span>{act.label}</span>
+                          </button>
+                        );
+                      })}
                     </div>
                   )}
 

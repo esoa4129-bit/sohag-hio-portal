@@ -709,13 +709,20 @@ export default function BookingPage() {
               </p>
             </div>
           </div>
-          <div className="flex items-center gap-2 w-full sm:w-auto">
+          <div className="flex flex-col sm:flex-row items-center gap-2.5 w-full sm:w-auto">
             <a
               href="tel:106"
-              className="flex-1 sm:flex-none text-center px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm transition min-h-[48px] flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20 active:scale-95"
+              className="w-full sm:w-auto text-center px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm transition min-h-[48px] flex items-center justify-center gap-2 shadow-md shadow-emerald-600/20 active:scale-95"
             >
               <PhoneCall className="w-4 h-4" />
-              <span>اتصل بالخط الساخن 106</span>
+              <span>الخط الساخن 106</span>
+            </a>
+            <a
+              href="tel:0832156139"
+              className="w-full sm:w-auto text-center px-5 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 font-extrabold text-sm transition min-h-[48px] flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 active:scale-95"
+            >
+              <PhoneCall className="w-4 h-4 text-emerald-600" />
+              <span>إدارة الفرع: <span dir="ltr">0832156139</span></span>
             </a>
           </div>
         </div>
