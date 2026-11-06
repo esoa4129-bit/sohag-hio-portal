@@ -512,6 +512,12 @@ export default function AiMedicalAssistant({
                         <p className="text-[11px] text-teal-700 dark:text-teal-400 font-semibold">
                           📌 {msg.adminCard.role} - {msg.adminCard.facility}
                         </p>
+                        {msg.adminCard.phone && (
+                          <p className="text-[11px] text-slate-600 dark:text-slate-300 font-semibold pt-1">
+                            ☎️ {msg.adminCard.facility.includes("ديوان عام") ? "هاتف ديوان عام الفرع (أرضي):" : "هاتف المنشأة الرسمي:"}{" "}
+                            <span className="font-bold text-teal-800 dark:text-teal-300" dir="ltr">{msg.adminCard.phone}</span>
+                          </p>
+                        )}
                       </div>
 
                       {msg.adminCard.docsRequired?.length > 0 && (

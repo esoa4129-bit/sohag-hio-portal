@@ -185,7 +185,7 @@ export default function OfficialPortalFooter() {
             {/* Sohag Branch Administration Phone */}
             <div className="p-2.5 rounded-xl bg-emerald-50/80 dark:bg-emerald-950/40 border border-emerald-300 dark:border-emerald-800/60 space-y-1">
               <div className="flex items-center justify-between text-[11px]">
-                <span className="font-bold text-emerald-900 dark:text-emerald-200">هاتف إدارة فرع سوهاج:</span>
+                <span className="font-bold text-emerald-900 dark:text-emerald-200">هاتف ديوان عام الفرع (أرضي):</span>
                 <a
                   href="tel:0832156139"
                   className="font-black text-emerald-700 dark:text-emerald-300 hover:underline"
