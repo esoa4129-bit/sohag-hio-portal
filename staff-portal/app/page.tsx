@@ -41,6 +41,9 @@ import {
 } from "lucide-react";
 import HospitalsShowcase from "./components/HospitalsShowcase";
 import OfficialPortalFooter from "./components/OfficialPortalFooter";
+import AiMedicalAssistant from "./components/AiMedicalAssistant";
+import QrShareModal from "./components/QrShareModal";
+import { QrCode as QrCodeIcon } from "lucide-react";
 
 // Types
 export type ConnectionType = "HTTPS" | "HTTP" | "HTTPS_IP" | "HTTP_IP" | "PORT";
@@ -352,6 +355,7 @@ export default function StaffPortalPage() {
   // PWA Prompt
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isStandalone, setIsStandalone] = useState(false);
+  const [showQrModal, setShowQrModal] = useState(false);
   const [showIosGuide, setShowIosGuide] = useState(false);
 
   // Security alert modal
@@ -971,6 +975,15 @@ export default function StaffPortalPage() {
             )}
 
             <button
+              onClick={() => setShowQrModal(true)}
+              title="مشاركة البوابة ورمز الاستجابة السريع QR"
+              className="p-2 sm:p-2.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/50 dark:hover:bg-emerald-900/50 text-emerald-700 dark:text-emerald-300 border border-emerald-300/50 transition"
+              aria-label="رمز QR"
+            >
+              <QrCodeIcon className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 dark:text-emerald-400" />
+            </button>
+
+            <button
               onClick={toggleDarkMode}
               title={darkMode ? "الوضع الفاتح" : "الوضع الليلي"}
               className="p-2 sm:p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition"
@@ -1539,6 +1552,26 @@ export default function StaffPortalPage() {
       </main>
 
       {/* Comprehensive Official Portal Footer */}
+      {/* QR Share Modal */}
+      <QrShareModal
+        isOpen={showQrModal}
+        onClose={() => setShowQrModal(false)}
+        title="لوحة منظومات وموظفي فرع سوهاج للتأمين الصحي"
+      />
+
+      {/* AI Medical & Financial Assistant */}
+      <AiMedicalAssistant
+        onOpenBooking={() => {
+          window.location.href = "/booking";
+        }}
+        onOpenSchedules={() => {
+          window.location.href = "/booking";
+        }}
+        onOpenTeam={() => {
+          window.location.href = "/team";
+        }}
+      />
+
       <OfficialPortalFooter />
 
       {/* MODAL 1: Security Alert / SSL Self-Signed Guide */}

@@ -38,6 +38,9 @@ import {
 import SchedulesExplorer from "./components/SchedulesExplorer";
 import HospitalsShowcase from "./components/HospitalsShowcase";
 import OfficialPortalFooter from "./components/OfficialPortalFooter";
+import AiMedicalAssistant from "./components/AiMedicalAssistant";
+import QrShareModal from "./components/QrShareModal";
+import { QrCode as QrCodeIcon } from "lucide-react";
 
 const BOOKING_URL = "https://reserv.hiocdis.org/hioClinicReservation.aspx";
 const SOFREG_URL = "https://196.219.219.184/sofreg/registerdata.aspx";
@@ -54,6 +57,7 @@ export default function BookingPage() {
   const [deferredPrompt, setDeferredPrompt] = useState<BeforeInstallPromptEvent | null>(null);
   const [isStandalone, setIsStandalone] = useState(false);
   const [showIosGuide, setShowIosGuide] = useState(false);
+  const [showQrModal, setShowQrModal] = useState(false);
   const [dismissFloating, setDismissFloating] = useState(false);
   const [dismissBanner, setDismissBanner] = useState(false);
   const [lastBookedTime, setLastBookedTime] = useState<string | null>(null);
@@ -381,6 +385,16 @@ export default function BookingPage() {
             </button>
 
             {/* Dark Mode Toggle */}
+            <button
+              onClick={() => setShowQrModal(true)}
+              className="p-2 sm:px-2.5 sm:py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 dark:bg-emerald-950/60 dark:hover:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-xs font-bold transition flex items-center gap-1 active:scale-95"
+              title="مشاركة البوابة ورمز الاستجابة السريع QR"
+              aria-label="رمز QR"
+            >
+              <QrCodeIcon className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" />
+              <span className="hidden sm:inline">رمز QR</span>
+            </button>
+
             <button
               onClick={toggleDarkMode}
               className="p-2 sm:p-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-600 dark:text-slate-300 transition"
@@ -764,6 +778,25 @@ export default function BookingPage() {
       {/* ═══════════════════════════════════════════════════════════════════════ */}
       {/* OFFICIAL COMPREHENSIVE GOVERNMENT FOOTER                                */}
       {/* ═══════════════════════════════════════════════════════════════════════ */}
+      {/* QR Share Modal */}
+      <QrShareModal
+        isOpen={showQrModal}
+        onClose={() => setShowQrModal(false)}
+        title="بوابة فرع سوهاج للتأمين الصحي"
+      />
+
+      {/* AI Medical & Financial Assistant */}
+      <AiMedicalAssistant
+        onOpenBooking={handleOpenBooking}
+        onOpenSchedules={() => {
+          const el = document.getElementById("schedules-section");
+          el?.scrollIntoView({ behavior: "smooth" });
+        }}
+        onOpenTeam={() => {
+          window.location.href = "/team";
+        }}
+      />
+
       <OfficialPortalFooter />
     </div>
   );
