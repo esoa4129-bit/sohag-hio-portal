@@ -186,11 +186,11 @@ export default function OfficialPortalFooter() {
               <div className="flex items-center justify-between text-[11px]">
                 <span className="font-bold text-emerald-900 dark:text-emerald-200">هاتف ديوان عام الفرع (أرضي):</span>
                 <a
-                  href="tel:0832156139"
+                  href="tel:0932156139"
                   className="font-black text-emerald-700 dark:text-emerald-300 hover:underline"
                   dir="ltr"
                 >
-                  0832156139
+                  0932156139
                 </a>
               </div>
               <div className="flex items-center gap-1.5 text-[10px] text-slate-500 dark:text-slate-400 pt-0.5">

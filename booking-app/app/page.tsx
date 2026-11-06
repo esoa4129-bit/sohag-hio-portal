@@ -718,11 +718,11 @@ export default function BookingPage() {
               <span>الخط الساخن 106</span>
             </a>
             <a
-              href="tel:0832156139"
+              href="tel:0932156139"
               className="w-full sm:w-auto text-center px-5 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-800 dark:text-slate-100 font-extrabold text-sm transition min-h-[48px] flex items-center justify-center gap-2 border border-slate-200 dark:border-slate-700 active:scale-95"
             >
               <PhoneCall className="w-4 h-4 text-emerald-600" />
-              <span>إدارة الفرع: <span dir="ltr">0832156139</span></span>
+              <span>إدارة الفرع: <span dir="ltr">0932156139</span></span>
             </a>
           </div>
         </div>
