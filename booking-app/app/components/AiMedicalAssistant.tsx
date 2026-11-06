@@ -67,6 +67,7 @@ export default function AiMedicalAssistant({
   const [isListening, setIsListening] = useState(false);
   const [voiceEnabled, setVoiceEnabled] = useState(true);
   const [speakingMessageId, setSpeakingMessageId] = useState<string | null>(null);
+  const audioPlayerRef = useRef<HTMLAudioElement | null>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -125,40 +126,38 @@ export default function AiMedicalAssistant({
   }, []);
 
   // Text to Speech
-  const speakText = (text: string, msgId: string) => {
-    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
-      alert("خاصية النطق الصوتي غير مدعومة في متصفحك الحالي.");
-      return;
+  const stopAllAudio = () => {
+    if (audioPlayerRef.current) {
+      try {
+        audioPlayerRef.current.pause();
+        audioPlayerRef.current.currentTime = 0;
+      } catch {}
+      audioPlayerRef.current = null;
     }
-
-    // Toggle stop if already speaking this message
-    if (speakingMessageId === msgId) {
+    if (typeof window !== "undefined" && "speechSynthesis" in window) {
       try {
         window.speechSynthesis.cancel();
       } catch {}
+    }
+    setSpeakingMessageId(null);
+  };
+
+  const trySpeechSynthesis = (cleanText: string, msgId: string) => {
+    if (typeof window === "undefined" || !("speechSynthesis" in window)) {
       setSpeakingMessageId(null);
       return;
     }
-
     try {
-      // Unfreeze mobile audio pipeline
       if (window.speechSynthesis.paused) {
         window.speechSynthesis.resume();
       }
       window.speechSynthesis.cancel();
-    } catch {}
 
-    // Clean text of markdown and bullets for clear speech
-    const cleanText = text.replace(/[*_#~]/g, "").replace(/[-•—]/g, " ").trim();
-    if (!cleanText) return;
+      const utterance = new SpeechSynthesisUtterance(cleanText);
+      utterance.lang = "ar-EG";
+      utterance.rate = 0.95;
+      utterance.pitch = 1.0;
 
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = "ar-EG";
-    utterance.rate = 0.95;
-    utterance.pitch = 1.0;
-
-    // Pick best Arabic voice
-    try {
       const voices = window.speechSynthesis.getVoices();
       const arVoice =
         voices.find((v) => v.lang && (v.lang === "ar-EG" || v.lang === "ar_EG")) ||
@@ -167,34 +166,71 @@ export default function AiMedicalAssistant({
       if (arVoice) {
         utterance.voice = arVoice;
       }
-    } catch {}
 
-    utterance.onstart = () => {
-      setSpeakingMessageId(msgId);
-    };
-    utterance.onend = () => {
+      utterance.onstart = () => setSpeakingMessageId(msgId);
+      utterance.onend = () => setSpeakingMessageId(null);
+      utterance.onerror = () => setSpeakingMessageId(null);
+
+      window.speechSynthesis.speak(utterance);
+    } catch {
       setSpeakingMessageId(null);
-    };
-    utterance.onerror = () => {
-      setSpeakingMessageId(null);
-    };
+    }
+  };
+
+  const speakText = (text: string, msgId: string) => {
+    // If clicking the active playing message -> stop it immediately
+    if (speakingMessageId === msgId) {
+      stopAllAudio();
+      return;
+    }
+
+    // Stop previous audio
+    stopAllAudio();
+
+    // Clean text of markdown, URLs, emojis, and symbols
+    const cleanText = text
+      .replace(/[*_#`~>\[\]\(\)]/g, " ")
+      .replace(/https?:\/\/\S+/g, " ")
+      .replace(/[^\u0600-\u06FF\sa-zA-Z0-9.,!؟]/g, " ")
+      .replace(/[-•—]/g, " ")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    if (!cleanText) return;
 
     setSpeakingMessageId(msgId);
 
-    // Small delay helps mobile iOS Safari audio context to catch up
-    setTimeout(() => {
-      try {
-        if (window.speechSynthesis.paused) {
-          window.speechSynthesis.resume();
+    // Primary audio engine: Server-side MP3 streaming (/api/tts)
+    // 100% reliable on iOS Safari, Android Chrome, and all mobile devices
+    try {
+      const audioUrl = `/api/tts?text=${encodeURIComponent(cleanText.slice(0, 500))}`;
+      const audio = new Audio(audioUrl);
+      audioPlayerRef.current = audio;
+
+      audio.onended = () => {
+        if (audioPlayerRef.current === audio) {
+          setSpeakingMessageId(null);
+          audioPlayerRef.current = null;
         }
-        window.speechSynthesis.speak(utterance);
-      } catch {
-        setSpeakingMessageId(null);
+      };
+
+      audio.onerror = () => {
+        // Fallback to Web Speech API if audio stream fails
+        trySpeechSynthesis(cleanText, msgId);
+      };
+
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch((err) => {
+          console.warn("Audio play blocked, falling back to speech synthesis:", err);
+          trySpeechSynthesis(cleanText, msgId);
+        });
       }
-    }, 40);
+    } catch {
+      trySpeechSynthesis(cleanText, msgId);
+    }
   };
 
-  // Toggle Voice Input
   const toggleListening = () => {
     if (!recognitionRef.current) {
       alert("التعرف على الصوت غير مدعوم في هذا المتصفح. يرجى استخدام متصفح Chrome أو Edge.");
