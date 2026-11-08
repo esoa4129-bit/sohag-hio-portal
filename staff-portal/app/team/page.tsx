@@ -975,7 +975,7 @@ export default function TeamPage() {
                     <div className="w-20 h-24 sm:w-24 sm:h-28 rounded-2xl overflow-hidden bg-teal-100 dark:bg-teal-950/60 border-2 border-teal-400 shrink-0 shadow-lg relative">
                       <Image
                         src="/team/alaa-khalaf.jpg"
-                        alt="أستاذ / علاء الدين خلف"
+                        alt="أستاذ / علاء الديب البدري"
                         width={96}
                         height={120}
                         className="w-full h-full object-cover object-top"
@@ -985,7 +985,7 @@ export default function TeamPage() {
                   <div>
                     <p className="text-xs font-semibold text-slate-500 dark:text-slate-400">مدير مالي وإداري</p>
                     <h4 className="text-lg sm:text-xl font-black text-slate-900 dark:text-white mt-0.5">
-                      أستاذ / علاء الدين خلف
+                      أستاذ / علاء الديب البدري
                     </h4>
                   </div>
                   <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed border-t border-slate-100 dark:border-slate-800 pt-2">

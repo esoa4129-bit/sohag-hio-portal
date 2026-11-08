@@ -283,7 +283,7 @@ export const INITIAL_FACILITY_LEADERSHIP: TeamMember[] = [
   },
   {
     id: "fac-ramadan-2",
-    name: "أستاذ / علاء الدين خلف",
+    name: "أستاذ / علاء الديب البدري",
     role: "مدير مالي وإداري",
     facility: "ramadan10",
     hierarchyLevel: "head",
