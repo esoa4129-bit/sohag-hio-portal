@@ -60,6 +60,18 @@ export default function TeamPage() {
       return Array.from(map.values());
     };
 
+    // Auto-invalidate stale cache if team version changed
+    const CURRENT_VERSION = "2026-11-08-v2";
+    try {
+      if (typeof window !== "undefined") {
+        const savedVer = localStorage.getItem("sohag_hio_team_version");
+        if (savedVer !== CURRENT_VERSION) {
+          localStorage.removeItem("sohag_hio_custom_team_members");
+          localStorage.setItem("sohag_hio_team_version", CURRENT_VERSION);
+        }
+      }
+    } catch {}
+
     const loadCustomMembers = () => {
       try {
         // 1. Check if sync payload passed in URL (e.g. from QR or direct sync link)
@@ -423,7 +435,7 @@ export default function TeamPage() {
                     </span>
                     <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border-2 border-teal-400 shadow-xl shrink-0 bg-teal-100 dark:bg-teal-950">
                       <img
-                        src="/team/safwat-elgeziri.jpg"
+                        src="/team/safwat-elgeziri-v2.jpg?v=20261108"
                         alt="مهندس / صفوت الجزيري"
                         className="w-full h-full object-cover object-top"
                       />

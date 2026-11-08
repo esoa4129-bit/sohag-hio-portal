@@ -140,7 +140,7 @@ export const BRANCH_CORE_LEADERSHIP: TeamMember[] = [
     department: "تكنولوجيا المعلومات والبنية التحتية",
     bio: "الإشراف الفني واستقرار السيرفرات والبنية التحتية",
     badge: "رئاسة تكنولوجيا المعلومات",
-    photoUrl: "/team/safwat-elgeziri.jpg",
+    photoUrl: "/team/safwat-elgeziri-v2.jpg?v=20261108",
     order: 5
   },
   {
