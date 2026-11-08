@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import {
   CalendarCheck,
+  CreditCard,
   Smartphone,
   ExternalLink,
   Copy,
@@ -37,6 +38,7 @@ import {
 } from "lucide-react";
 import SchedulesExplorer from "./components/SchedulesExplorer";
 import HospitalsShowcase from "./components/HospitalsShowcase";
+import CardsGuideSection from "./components/CardsGuideSection";
 import OfficialPortalFooter from "./components/OfficialPortalFooter";
 import AiMedicalAssistant from "./components/AiMedicalAssistant";
 import QrShareModal from "./components/QrShareModal";
@@ -415,6 +417,16 @@ export default function BookingPage() {
               <span className="hidden sm:inline">تحديث</span>
             </button>
 
+            {/* Cards & Benefits Guides Link */}
+            <a
+              href="#cards-guide-section"
+              className="p-2 sm:px-3 sm:py-2 rounded-xl bg-teal-50 hover:bg-teal-100 dark:bg-teal-950/50 text-teal-800 dark:text-teal-200 border border-teal-200 dark:border-teal-800/60 text-xs font-bold transition flex items-center gap-1.5"
+              title="دليل استخراج وتجديد البطاقات العلاجية"
+            >
+              <CreditCard className="w-4 h-4 text-teal-600 dark:text-teal-400" />
+              <span className="hidden md:inline">دليل البطاقات</span>
+            </a>
+
             {/* Team Honor Board Link */}
             <Link
               href="/team"
@@ -503,6 +515,31 @@ export default function BookingPage() {
                 <IdCard className="w-4 h-4 text-slate-900" />
                 <span>بوابة تسجيل البيانات</span>
               </button>
+            </div>
+
+            {/* Quick Category Navigation Pills */}
+            <div className="pt-2 pb-1 flex flex-wrap items-center justify-center gap-2 text-xs">
+              <a
+                href="#schedules-section"
+                className="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold transition flex items-center gap-1.5 backdrop-blur-sm border border-white/10"
+              >
+                <CalendarDays className="w-3.5 h-3.5 text-emerald-300" />
+                <span>مواعيد العيادات</span>
+              </a>
+              <a
+                href="#hospitals-section"
+                className="px-3 py-1.5 rounded-full bg-white/10 hover:bg-white/20 text-white font-bold transition flex items-center gap-1.5 backdrop-blur-sm border border-white/10"
+              >
+                <Building2 className="w-3.5 h-3.5 text-emerald-300" />
+                <span>المستشفيات والمراكز</span>
+              </a>
+              <a
+                href="#cards-guide-section"
+                className="px-3.5 py-1.5 rounded-full bg-emerald-400/20 hover:bg-emerald-400/30 text-emerald-200 font-extrabold transition flex items-center gap-1.5 border border-emerald-400/40 shadow-sm"
+              >
+                <CreditCard className="w-3.5 h-3.5 text-emerald-300" />
+                <span>🪪 دليل استخراج البطاقات والكارنيهات</span>
+              </a>
             </div>
 
             {/* Trust Strip */}
@@ -618,6 +655,13 @@ export default function BookingPage() {
         {/* ═══════════════════════════════════════════════════════════════════════ */}
         <div id="hospitals-section" className="scroll-mt-20">
           <HospitalsShowcase onOpenBooking={handleOpenBooking} />
+        </div>
+
+        {/* ═══════════════════════════════════════════════════════════════════════ */}
+        {/* OFFICIAL CARDS & BENEFITS INSTRUCTION GUIDES                             */}
+        {/* ═══════════════════════════════════════════════════════════════════════ */}
+        <div id="cards-guide-section" className="scroll-mt-20">
+          <CardsGuideSection />
         </div>
 
         {/* ═══════════════════════════════════════════════════════════════════════ */}

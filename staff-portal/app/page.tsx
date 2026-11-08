@@ -40,6 +40,7 @@ import {
   Calendar
 } from "lucide-react";
 import HospitalsShowcase from "./components/HospitalsShowcase";
+import CardsGuideSection from "./components/CardsGuideSection";
 import OfficialPortalFooter from "./components/OfficialPortalFooter";
 import AiMedicalAssistant from "./components/AiMedicalAssistant";
 import QrShareModal from "./components/QrShareModal";
@@ -1200,6 +1201,11 @@ export default function StaffPortalPage() {
           <div className="space-y-8 sm:space-y-10">
             {/* Hospitals & Centers Showcase Component */}
             <HospitalsShowcase onOpenBooking={() => window.open("/booking", "_self")} />
+
+            {/* Official Cards & Benefits Guides */}
+            <div id="cards-guide-section" className="scroll-mt-20">
+              <CardsGuideSection />
+            </div>
 
             {/* Quick Transition Banner to Systems Platform */}
             <section className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-slate-900 via-sky-950 to-indigo-950 text-white p-6 sm:p-8 border border-sky-700/50 shadow-2xl">

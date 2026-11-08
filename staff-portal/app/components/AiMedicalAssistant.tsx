@@ -360,6 +360,21 @@ export default function AiMedicalAssistant({
   };
 
   const handleActionClick = (action: ActionItem) => {
+    if (action.actionType === ("cards_navigate" as any)) {
+      setIsOpen(false);
+      setTimeout(() => {
+        const el = document.getElementById("cards-guide-section");
+        if (el) {
+          const yOffset = -90;
+          const y = el.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        } else {
+          window.location.href = "/#cards-guide-section";
+        }
+      }, 100);
+      return;
+    }
+
     if (action.actionType === ("schedules_navigate" as any)) {
       setIsOpen(false);
       setTimeout(() => {
