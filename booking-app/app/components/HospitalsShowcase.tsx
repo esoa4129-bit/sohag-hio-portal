@@ -979,11 +979,11 @@ export default function HospitalsShowcase({ onOpenBooking }: HospitalsShowcasePr
 
                     <div className="flex items-center gap-3 p-3 rounded-2xl bg-white dark:bg-slate-900 border-2 border-teal-300/80 dark:border-teal-700/70 shadow-md">
                       <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-teal-100 dark:bg-teal-950 border-2 border-teal-400 shrink-0 shadow-md">
-                        <img src="/team/alaa-khalaf.jpg" alt="أستاذ علاء الديب البدري" className="w-full h-full object-cover object-top" />
+                        <img src="/team/alaa-elbadry.jpg" alt="أستاذ علاء البدري" className="w-full h-full object-cover object-top" />
                       </div>
                       <div className="min-w-0">
                         <span className="text-[10px] font-bold px-2 py-0.5 rounded bg-teal-100 dark:bg-teal-950 text-teal-800 dark:text-teal-300">مدير مالي وإداري</span>
-                        <h5 className="font-extrabold text-sm text-slate-900 dark:text-white mt-1">أستاذ / علاء الديب البدري</h5>
+                        <h5 className="font-extrabold text-sm text-slate-900 dark:text-white mt-1">أستاذ / علاء البدري</h5>
                         <p className="text-[11px] text-slate-500 dark:text-slate-400 line-clamp-2 mt-0.5">الشئون المالية والإدارية بمجمع عيادات العاشر</p>
                       </div>
                     </div>

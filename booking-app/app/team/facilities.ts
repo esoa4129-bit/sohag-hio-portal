@@ -283,7 +283,7 @@ export const INITIAL_FACILITY_LEADERSHIP: TeamMember[] = [
   },
   {
     id: "fac-ramadan-2",
-    name: "أستاذ / علاء الديب البدري",
+    name: "أستاذ / علاء البدري",
     role: "مدير مالي وإداري",
     facility: "ramadan10",
     hierarchyLevel: "head",
@@ -291,7 +291,7 @@ export const INITIAL_FACILITY_LEADERSHIP: TeamMember[] = [
     bio: "الإشراف الإداري واللوجستي ودعم الخدمات الطبية للمنتفعين",
     badge: "مدير مالي وإداري",
     order: 2,
-    photoUrl: "/team/alaa-khalaf.jpg"
+    photoUrl: "/team/alaa-elbadry.jpg"
   },
   {
     id: "fac-ramadan-3",
